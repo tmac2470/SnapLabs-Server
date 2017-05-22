@@ -51,20 +51,17 @@ angular.module('snaplab').controller('MainCarouselCtrl', function ($scope) {
     ];
 })
 
-angular.module('snaplab').controller('UploadedListCtrl', function ($scope) {
-    $scope.list = [
-        {
-            title: 'Experiment 1',
-            downloads: '53'
-        },
-        {
-            title: 'Experiment 2',
-            downloads: '535'
-        }
-    ];
-    $scope.totalItems = 90;
-    $scope.currentPage = 4;
-    $scope.maxSize = 5;
+angular.module('snaplab').controller('UploadedListCtrl', function ($scope, $http) {
+    $http.get('experiment')
+        .then(function(response) {
+            $scope.list = response.data;
+            $scope.totalItems = response.data.length;
+            $scope.currentPage = 1;
+            $scope.maxSize = 5;
+        });
+
+
+
 
     $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
