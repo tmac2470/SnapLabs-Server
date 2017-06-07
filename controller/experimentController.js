@@ -24,7 +24,7 @@ exports.getOneExperiment = (req, res) => {
     });
 };
 
-exports.putOneExperiment = (req, res) => {
+exports.insertExperiment = (req, res) => {
     var content = req.body;
     var newExp = new Experiment(content);
     newExp.save(function(err, result){

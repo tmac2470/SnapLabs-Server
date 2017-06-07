@@ -5,8 +5,8 @@ var controller = require('../controller/experimentController');
 /* GET users listing. */
 router.get('/', controller.getAllExperiments);
 
-router.get('/getOne/:title', controller.getOneExperiment);
+router.get('/:title', controller.getOneExperiment);
 
-router.post('/putOne', controller.putOneExperiment);
+router.post('/', controller.insertExperiment);
 
 module.exports = router;
