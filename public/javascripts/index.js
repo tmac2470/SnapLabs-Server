@@ -97,7 +97,7 @@ angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http) {
             $scope.maxSize = 5;
 
             $scope.currentList = [];
-            for(var i = 0; i < 10 ;i++){
+            for(var i = 0; i < 10 && i<$scope.totalItems;i++){
                 $scope.currentList.push($scope.list[i]);
             }
         });
