@@ -284,6 +284,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $http) {
         expCfg.graphAutoStart = $scope.autoStartGraphs;
         expCfg.labTitle = $scope.expTitle;
         expCfg.sampleInterval = $scope.sampleInterval;
+        expCfg.description = $scope.expDesc;
         var sensorTagDict = {};
         for(var i in $scope.sensorTag){
             sensorTagDict[i] = $scope.sensorTag[i]

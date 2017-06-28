@@ -5,7 +5,7 @@ var Experiment = require('../model/Experiment');
 var ObjectId = require('mongodb').ObjectId;
 
 exports.getAllExperiments = (req, res) => {
-    Experiment.find({}, 'labTitle').exec((err, experiments) => {
+    Experiment.find({}, 'labTitle description').exec((err, experiments) => {
         if (err) {
             return res.send(err);
         }

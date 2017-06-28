@@ -8,6 +8,7 @@ var Schema = mongoose.Schema;
 
 var experimentSchema = new Schema({
     labTitle: String,
+    description: String,
     sampleInterval: String,
     captureOnClick: String,
     graphs: String,
