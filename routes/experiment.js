@@ -1,12 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var controller = require('../controller/experimentController');
+var jwt = require('express-jwt');
+
+var auth = jwt({
+    secret: 'mushrchun',
+    userProperty: 'payload'
+});
 
 /* GET users listing. */
 router.get('/', controller.getAllExperiments);
 
 router.get('/:title', controller.getOneExperiment);
 
-router.post('/', controller.insertExperiment);
+router.post('/', auth, controller.insertExperiment);
 
 module.exports = router;

@@ -28,6 +28,18 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
         templateUrl: 'templates/download.html'
     };
 
+    var signinState = {
+        name: 'signin',
+        url: '/signin',
+        templateUrl: 'templates/signin.html'
+    };
+
+    var signupState = {
+        name: 'signup',
+        url: '/signup',
+        templateUrl: 'templates/signup.html'
+    };
+
     $urlRouterProvider.otherwise('/');
 
     $stateProvider.state('zone', {
@@ -38,12 +50,30 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state(aboutState);
     $stateProvider.state(designState);
     $stateProvider.state(downloadState);
+    $stateProvider.state(signinState);
+    $stateProvider.state(signupState);
 });
 
-angular.module('snaplab').controller('NavCtrl', function ($scope) {
+angular.module('snaplab').run(function($rootScope, $transitions, authentication){
+    $rootScope.isLogin = authentication.isLoggedIn(authentication.getToken());
+
+    $transitions.onStart({ to: 'design.**' }, function(trans) {
+
+        if (!$rootScope.isLogin) {
+            return trans.router.stateService.target('signin');
+        }
+    });
+});
+
+
+angular.module('snaplab').controller('NavCtrl', function ($scope, $rootScope, authentication) {
     $scope.isNavCollapsed = true;
     $scope.isCollapsed = false;
     $scope.isCollapsedHorizontal = false;
+    $scope.logout = function(){
+        authentication.logout();
+        $rootScope.isLogin = false;
+    }
 });
 
 angular.module('snaplab').controller('NotificationCtrl', function ($scope) {
@@ -88,7 +118,8 @@ angular.module('snaplab').controller('MainCarouselCtrl', function ($scope) {
     ];
 })
 
-angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http) {
+angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http, authentication) {
+
     $http.get('experiment')
         .then(function(response) {
             $scope.list = response.data;
@@ -109,6 +140,38 @@ angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http) {
         }
     };
 
+})
+
+angular.module('snaplab').controller('SignUpCtrl', function ($scope, $http) {
+    $scope.signUp = function() {
+        var email = $scope.email;
+        var password = $scope.password;
+        var repassword = $scope.repassword;
+        if(password == repassword){
+            $http.post('auth/signup', {email: email, password: password})
+                .then(function(response) {
+                    if(response.data.status == 'success'){
+                        window.location.href = "/#!/signin";
+                    }
+                })
+        }
+    }
+})
+
+angular.module('snaplab').controller('SignInCtrl', function ($scope, $rootScope, $http, authentication) {
+    $scope.signIn = function() {
+        var email = $scope.email;
+        var password = $scope.password;
+        $http.post('auth/signin', {email: email, password: password})
+            .then(function(response) {
+                if(response.status == 200) {
+                    authentication.saveToken(response.data.token);
+                    $rootScope.isLogin = true;
+                }else {
+
+                }
+            })
+    }
 })
 
 angular.module('snaplab').controller('DesignCtrl', function ($scope, $http) {
@@ -303,3 +366,48 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $http) {
 
 
 })
+
+angular.module('snaplab').service('authentication', ['$http', '$window', function ($http, $window) {
+
+    var isLoggedIn = function(token) {
+        var payload;
+
+        if(token){
+            payload = token.split('.')[1];
+            payload = $window.atob(payload);
+            payload = JSON.parse(payload);
+
+            return payload.exp > Date.now() / 1000;
+        } else {
+            return false;
+        }
+    };
+
+    var wrapReq = function(content, token) {
+        content.headers = {
+            Authorization: 'Bearer '+ token
+        }
+    }
+
+    var saveToken = function (token) {
+        $window.localStorage['mean-token'] = token;
+    };
+
+    var getToken = function () {
+        return $window.localStorage['mean-token'];
+    };
+
+    var logout = function () {
+        $window.localStorage.removeItem('mean-token');
+    };
+
+    return {
+        saveToken: saveToken,
+        getToken: getToken,
+        logout: logout,
+        isLoggedIn: isLoggedIn,
+        wrapReq: wrapReq
+    };
+}]);
+
+

@@ -4,7 +4,8 @@
 var Experiment = require('../model/Experiment');
 var ObjectId = require('mongodb').ObjectId;
 
-exports.getAllExperiments = (req, res) => {
+exports.getAllExperiments = function(req, res){
+    console.log();
     Experiment.find({}, 'labTitle description').exec((err, experiments) => {
         if (err) {
             return res.send(err);
@@ -13,7 +14,7 @@ exports.getAllExperiments = (req, res) => {
     });
 };
 
-exports.getOneExperiment = (req, res) => {
+exports.getOneExperiment = function(req, res){
     var title = req.params.title;
     console.log(title)
     Experiment.findOne({labTitle: title}).exec((err, experiments) => {
@@ -24,7 +25,7 @@ exports.getOneExperiment = (req, res) => {
     });
 };
 
-exports.insertExperiment = (req, res) => {
+exports.insertExperiment = function(req, res){
     var content = req.body;
     var newExp = new Experiment(content);
     newExp.save(function(err, result){

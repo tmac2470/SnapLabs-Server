@@ -37,6 +37,13 @@
                 <li><a ui-sref="about" ui-sref-active="active">About</a></li>
                 <li><a ui-sref="download" ui-sref-active="active">Download</a></li>
             </ul>
+            <form class="navbar-form navbar-right" ng-show="!isLogin">
+                <button class="btn btn-default" ui-sref="signup" ui-sref-active="active">Sign up</button>
+                <button class="btn btn-default" ui-sref="signin" ui-sref-active="active">Sign in</button>
+            </form>
+            <p class="navbar-text navbar-right" ng-show="isLogin">Mark Otto <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                <button class="btn btn-default" ng-click="logout()">Log out</button>
+            </p>
         </div>
     </nav>
 </div>
