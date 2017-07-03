@@ -365,13 +365,14 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
 
         if(expCfg.description && expCfg.labTitle){
             $http.post('experiment', expCfg, postCfg)
-                .then(function(successResponse){
-                    window.location.href = "/#!/";
-                    $rootScope.addAlert({ type:'success', msg:'Add Experiment Success' });
-                }).then(function(failResponse){
-                    $rootScope.addAlert({ type:'danger', msg:'Add Experiment Fail' });
-            });
-
+                .then(
+                    function successCallback(successResponse){
+                        window.location.href = "/#!/";
+                        $rootScope.addAlert({ type:'success', msg:'Add Experiment Success' });
+                        },
+                    function failCallback(failResponse){
+                        $rootScope.addAlert({ type:'danger', msg:'Add Experiment Fail' })
+                    });
         }else{
             $rootScope.addAlert({ type:'danger', msg:'Experiment Info Incomplete' });
         }
