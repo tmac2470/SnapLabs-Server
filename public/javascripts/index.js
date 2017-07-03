@@ -181,7 +181,7 @@ angular.module('snaplab').controller('SignInCtrl', function ($scope, $rootScope,
     }
 })
 
-angular.module('snaplab').controller('DesignCtrl', function ($scope, $http) {
+angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope, $http, authentication) {
 
     var defaultSensorTag = {
         "connect" : true,
@@ -360,15 +360,21 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $http) {
             sensorTagDict[i] = $scope.sensorTag[i]
         }
         expCfg.sensorTags = sensorTagDict;
-        console.log(expCfg);
-        console.log($scope.expTitle);
-        $http.post('experiment', expCfg)
-            .then(function(successResponse){
-                window.location.href = "/#!/";
-            }).then(function(failResponse){
+        var postCfg = {};
+        postCfg.headers = authentication.genHeader(authentication.getToken());
 
-        })
+        if(expCfg.description && expCfg.labTitle){
+            $http.post('experiment', expCfg, postCfg)
+                .then(function(successResponse){
+                    window.location.href = "/#!/";
+                    $rootScope.addAlert({ type:'success', msg:'Add Experiment Success' });
+                }).then(function(failResponse){
+                    $rootScope.addAlert({ type:'danger', msg:'Add Experiment Fail' });
+            });
 
+        }else{
+            $rootScope.addAlert({ type:'danger', msg:'Experiment Info Incomplete' });
+        }
     }
 
 
@@ -396,10 +402,8 @@ angular.module('snaplab').service('authentication', ['$http', '$window', '$rootS
         return payload.email;
     }
 
-    var wrapReq = function(content, token) {
-        content.headers = {
-            Authorization: 'Bearer '+ token
-        }
+    var genHeader = function(token) {
+        return {Authorization: 'Bearer '+ token};
     }
 
     var saveToken = function (token) {
@@ -427,7 +431,7 @@ angular.module('snaplab').service('authentication', ['$http', '$window', '$rootS
         logout: logout,
         isLoggedIn: isLoggedIn,
         getLoginUser: getLoginUser,
-        wrapReq: wrapReq
+        genHeader: genHeader
     };
 }]);
 

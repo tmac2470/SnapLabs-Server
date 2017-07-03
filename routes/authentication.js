@@ -24,7 +24,7 @@ router.post('/signin', function(req, res, next){
     })(req, res, next);
 });
 
-router.post('/signup', function(req, res){
+router.post('/signup', function(req, res, next){
 
 
     var user = new User({
