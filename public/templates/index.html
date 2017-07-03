@@ -1,7 +1,5 @@
 <div class="container">
-<div ng-controller="NotificationCtrl">
-    <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
-</div>
+
 
 
 <div class="well well-lg">
@@ -9,11 +7,11 @@
         Welcome to SnapLab Platform
     </h2>
     <p>This website is under building</p>
-    <uib-progressbar class="progress-striped active" max="100" value="10"><i>10%</i></uib-progressbar>
+    <uib-progressbar class="progress-striped active" max="100" value="20"><i>20%</i></uib-progressbar>
 </div>
 
 <div ng-controller="MainCarouselCtrl">
-    <div style="height: 400px">
+    <div>
         <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
             <div uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
                 <img ng-src="{{slide.image}}" style="margin:auto;">

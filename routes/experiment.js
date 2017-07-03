@@ -4,7 +4,7 @@ var controller = require('../controller/experimentController');
 var jwt = require('express-jwt');
 
 var auth = jwt({
-    secret: 'mushrchun',
+    secret: process.env.JWT_SECRET,
     userProperty: 'payload'
 });
 

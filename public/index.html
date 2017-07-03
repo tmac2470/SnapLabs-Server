@@ -41,11 +41,15 @@
                 <button class="btn btn-default" ui-sref="signup" ui-sref-active="active">Sign up</button>
                 <button class="btn btn-default" ui-sref="signin" ui-sref-active="active">Sign in</button>
             </form>
-            <p class="navbar-text navbar-right" ng-show="isLogin">Mark Otto <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+            <p class="navbar-text navbar-right" ng-show="isLogin">{{email}} <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
                 <button class="btn btn-default" ng-click="logout()">Log out</button>
             </p>
         </div>
     </nav>
+</div>
+
+<div ng-controller="NotificationCtrl">
+    <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
 </div>
 
 <!--<div class="container">-->

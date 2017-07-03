@@ -45,7 +45,7 @@ userSchema.methods.generateJwt = function() {
         email: this.email,
         name: this.name,
         exp: parseInt(expiry.getTime() / 1000)
-    }, 'mushrchun');
+    }, process.env.JWT_SECRET);
 }
 
 var User = mongoose.model('User', userSchema);

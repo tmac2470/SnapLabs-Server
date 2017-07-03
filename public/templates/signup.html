@@ -7,19 +7,19 @@
          <br>
          <form name="signup">
             <div class="form-horizontal">
-               <div class="form-group" ng-class="{'has-success': signup.email.$invalid}">
+               <div class="form-group" ng-class="{'has-error': signup.email.$invalid}">
                   <label class="col-sm-4 control-label">Email</label>
                   <div class="btn-group col-sm-8">
                      <input name="email" type="email" ng-model="email"  class="form-control"  required>
                   </div>
                </div>
-               <div class="form-group" ng-class="{'has-success': signup.password.$invalid}">
+               <div class="form-group" ng-class="{'has-error': signup.password.$invalid}">
                   <label class="col-sm-4 control-label">Password</label>
                   <div class="btn-group col-sm-8">
                      <input name="password" type="text" ng-model="password"  class="form-control"  required>
                   </div>
                </div>
-               <div class="form-group" ng-class="{'has-success': signup.repassword.$invalid}">
+               <div class="form-group" ng-class="{'has-error': signup.repassword.$invalid}">
                   <label class="col-sm-4 control-label">RePassword</label>
                   <div class="btn-group col-sm-8">
                      <input name="repassword" type="text" ng-model="repassword"  class="form-control"  required>

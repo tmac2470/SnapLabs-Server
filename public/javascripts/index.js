@@ -56,7 +56,9 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
 
 angular.module('snaplab').run(function($rootScope, $transitions, authentication){
     $rootScope.isLogin = authentication.isLoggedIn(authentication.getToken());
-
+    if($rootScope.isLogin){
+        $rootScope.email = authentication.getLoginUser();
+    }
     $transitions.onStart({ to: 'design.**' }, function(trans) {
 
         if (!$rootScope.isLogin) {
@@ -76,16 +78,16 @@ angular.module('snaplab').controller('NavCtrl', function ($scope, $rootScope, au
     }
 });
 
-angular.module('snaplab').controller('NotificationCtrl', function ($scope) {
+angular.module('snaplab').controller('NotificationCtrl', function ($scope, $rootScope) {
     $scope.alerts = [
         { type: 'warning', msg: 'This website is for Test only' }
     ];
 
-    $scope.addAlert = function() {
-        $scope.alerts.push({msg: 'Another alert!'});
+    $rootScope.addAlert = function(content) {
+        $scope.alerts.push(content);
     };
 
-    $scope.closeAlert = function(index) {
+    $rootScope.closeAlert = function(index) {
         $scope.alerts.splice(index, 1);
     };
 });
@@ -104,16 +106,6 @@ angular.module('snaplab').controller('MainCarouselCtrl', function ($scope) {
             image: '/images/asell-uni-button.jpg',
             text: 'asell-uni-button',
             id: 1
-        },
-        {
-            image: '/images/usyd.png',
-            text: 'usyd',
-            id: 2
-        },
-        {
-            image: '/images/altc.jpg',
-            text: 'altc',
-            id: 3
         }
     ];
 })
@@ -142,18 +134,24 @@ angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http, aut
 
 })
 
-angular.module('snaplab').controller('SignUpCtrl', function ($scope, $http) {
+angular.module('snaplab').controller('SignUpCtrl', function ($scope, $rootScope, $http) {
     $scope.signUp = function() {
         var email = $scope.email;
         var password = $scope.password;
         var repassword = $scope.repassword;
-        if(password == repassword){
+        if(password && password == repassword && email){
             $http.post('auth/signup', {email: email, password: password})
-                .then(function(response) {
-                    if(response.data.status == 'success'){
+                .then(
+                    function successCallback(response) {
                         window.location.href = "/#!/signin";
+                        $rootScope.addAlert({ type:'success', msg:'Sign Up Success' });
+                        },
+                    function failCallback(response) {
+                        $rootScope.addAlert({ type:'danger', msg:'Sign Up Fail' });
                     }
-                })
+                )
+        }else{
+            $rootScope.addAlert({ type:'danger', msg:'Sign Up Information Incorrect' });
         }
     }
 })
@@ -162,15 +160,24 @@ angular.module('snaplab').controller('SignInCtrl', function ($scope, $rootScope,
     $scope.signIn = function() {
         var email = $scope.email;
         var password = $scope.password;
-        $http.post('auth/signin', {email: email, password: password})
-            .then(function(response) {
-                if(response.status == 200) {
-                    authentication.saveToken(response.data.token);
-                    $rootScope.isLogin = true;
-                }else {
 
-                }
-            })
+        var invalidJudgement = $scope.sign.email.$invalid || $scope.sign.password.$invalid;
+        if(!invalidJudgement){
+            $http.post('auth/signin', {email: email, password: password})
+                .then(
+                    function successCallback(response) {
+                        authentication.saveToken(response.data.token);
+                        $rootScope.isLogin = true;
+                        $rootScope.email = authentication.getLoginUser();
+                        $rootScope.addAlert({ type:'success', msg:'Sign In Success' });
+                        window.location.href = "/#!/";
+                    },
+                    function failCallback(response) {
+                        $rootScope.addAlert({ type:'danger', msg:'Sign In Fail' });
+                    })
+        }else{
+            $rootScope.addAlert({ type:'danger', msg:'Sign In Information Incomplete' });
+        }
     }
 })
 
@@ -367,10 +374,11 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $http) {
 
 })
 
-angular.module('snaplab').service('authentication', ['$http', '$window', function ($http, $window) {
+angular.module('snaplab').service('authentication', ['$http', '$window', '$rootScope', function ($http, $window, $rootScope) {
+
+    var payload;
 
     var isLoggedIn = function(token) {
-        var payload;
 
         if(token){
             payload = token.split('.')[1];
@@ -383,6 +391,11 @@ angular.module('snaplab').service('authentication', ['$http', '$window', functio
         }
     };
 
+    var getLoginUser = function() {
+        console.log(payload);
+        return payload.email;
+    }
+
     var wrapReq = function(content, token) {
         content.headers = {
             Authorization: 'Bearer '+ token
@@ -390,6 +403,11 @@ angular.module('snaplab').service('authentication', ['$http', '$window', functio
     }
 
     var saveToken = function (token) {
+        if(token){
+            payload = token.split('.')[1];
+            payload = $window.atob(payload);
+            payload = JSON.parse(payload);
+        }
         $window.localStorage['mean-token'] = token;
     };
 
@@ -399,6 +417,8 @@ angular.module('snaplab').service('authentication', ['$http', '$window', functio
 
     var logout = function () {
         $window.localStorage.removeItem('mean-token');
+        $rootScope.addAlert({ type:'success', msg:'Logout Success' });
+        window.location.href = "/#!/";
     };
 
     return {
@@ -406,6 +426,7 @@ angular.module('snaplab').service('authentication', ['$http', '$window', functio
         getToken: getToken,
         logout: logout,
         isLoggedIn: isLoggedIn,
+        getLoginUser: getLoginUser,
         wrapReq: wrapReq
     };
 }]);
