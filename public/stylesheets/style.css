@@ -1,8 +1,29 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/*quick-design module*/
+.qd{
+  list-style: none;
+  padding-left: 0px;
+  min-height: 10px;
 }
 
-a {
-  color: #00B7FF;
+.qd li{
+  /*padding:0px;*/
+  padding-bottom: 10px
+}
+
+.qd-block{
+  width: 260px;
+  height: 84px;
+  background-color: cornflowerblue;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  color: white;
+}
+
+.qd-block span{
+  padding-left: 20px;
+}
+
+.on-drag-enter{
+  background-color : #aaaaaa;
 }

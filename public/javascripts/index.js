@@ -1,7 +1,7 @@
 /**
  * Created by MushrChun on 16/5/17.
  */
-angular.module('snaplab', [ 'ui.bootstrap','ui.router', 'ui.toggle']);
+angular.module('snaplab', [ 'ui.bootstrap','ui.router', 'ui.toggle', 'ui.sortable']);
 
 angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
     var indexState = {
@@ -183,6 +183,80 @@ angular.module('snaplab').controller('SignInCtrl', function ($scope, $rootScope,
 
 angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope, $http, authentication) {
 
+    $scope.quickDesignBlock = [];
+
+    $scope.TemperatureBlock = [
+        { name:'Temperature Graph', url:'images/graphicon.png', parameters: [{field:'Temperature.graph.display', value:true}]},
+        { name:'Temperature Data Only', url:'images/dataicon.jpg', parameters: [{field:'Temperature.data.display', value:true}]},
+        { name:'4x4 Temperature Grid', url:'images/gridicon.png', parameters: [{field:'Temperature.grid.griddisplay', value:true}]}
+    ];
+
+    $scope.HumidityBlock = [
+        { name:'Humidity Graph', url:'images/graphicon.png', parameters: [{field:'Humidity.graph.display', value:true}]},
+        { name:'Humidity Data Only', url:'images/dataicon.jpg', parameters: [{field:'Humidity.data.display', value:true}]},
+        { name:'4x4 Humidity Grid', url:'images/gridicon.png', parameters: [{field:'Humidity.grid.griddisplay', value:true}]}
+    ];
+
+    $scope.BarometerBlock = [
+        { name:'Barometer Graph', url:'images/graphicon.png', parameters: [{field:'Barometer.graph.display', value:true}]},
+        { name:'Barometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Barometer.data.display', value:true}]},
+        { name:'4x4 Barometer Grid', url:'images/gridicon.png', parameters: [{field:'Barometer.grid.griddisplay', value:true}]}
+    ];
+
+    $scope.AccelerometerBlock = [
+        { name:'Accelerometer Graph', url:'images/graphicon.png', parameters: [{field:'Accelerometer.graph.display', value:true}]},
+        { name:'Accelerometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Accelerometer.data.display', value:true}]},
+        { name:'4x4 Accelerometer Grid', url:'images/gridicon.png', parameters: [{field:'Accelerometer.grid.griddisplay', value:true}]}
+    ];
+
+    $scope.GyroscopeBlock = [
+        { name:'Gyroscope Graph', url:'images/graphicon.png', parameters: [{field:'Gyroscope.graph.display', value:true}]},
+        { name:'Gyroscope Data Only', url:'images/dataicon.jpg', parameters: [{field:'Gyroscope.data.display', value:true}]},
+        { name:'4x4 Gyroscope Grid', url:'images/gridicon.png', parameters: [{field:'Gyroscope.grid.griddisplay', value:true}]}
+    ];
+
+    $scope.MagnetometerBlock = [
+        { name:'Magnetometer Graph', url:'images/graphicon.png', parameters: [{field:'Magnetometer.graph.display', value:true}]},
+        { name:'Magnetometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Magnetometer.data.display', value:true}]},
+        { name:'4x4 Magnetometer Grid', url:'images/gridicon.png', parameters: [{field:'Magnetometer.grid.griddisplay', value:true}]}
+    ];
+
+    $scope.LuxometerBlock = [
+        { name:'Luxometer Graph', url:'images/graphicon.png', parameters: [{field:'Luxometer.graph.display', value:true}]},
+        { name:'Luxometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Luxometer.data.display', value:true}]},
+        { name:'4x4 Luxometer Grid', url:'images/gridicon.png', parameters: [{field:'Luxometer.grid.griddisplay', value:true}]}
+    ];
+
+    $scope.sortableOptions = {
+        connectWith: ".qd",
+        stop: function(e, ui) {
+            console.log("stop");
+
+            //if drop into quick design area:
+            var flag = ui.item.sortable.droptargetModel == $scope.quickDesignBlock? true: false;
+            console.log(flag);
+
+
+            //get the element who moves
+            var movedItem = ui.item.sortable.model;
+            if(flag){
+                // if move in, set parameter values
+                movedItem.parameters.forEach(function(parameter) {
+                    var splits = parameter.field.split('.');
+                    defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = parameter.value;
+                });
+            }else{
+                //if move out of area, parameter values set to reverse
+                movedItem.parameters.forEach(function(parameter) {
+                    var splits = parameter.field.split('.');
+                    defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = !parameter.value;
+                });
+            }
+
+        }
+    };
+
+
     var defaultSensorTag = {
         "connect" : true,
         "title" : "SensorTag",
@@ -198,6 +272,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
                     "label" : "Gyroscope"
                 },
                 "graph" : {
+                    "display":false,
                     "graphType" : "spline",
                     "graphTitle" : "Gyroscope Graph",
                     "graphXAxis" : "Time (s)",
@@ -211,7 +286,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
                     "label" : "Temperature"
                 },
                 "graph" : {
-                    "display":true,
+                    "display":false,
                     "graphType" : "spline",
                     "graphTitle" : "Temperature Graph",
                     "graphXAxis" : "Time (s)",
@@ -219,7 +294,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
                 },
                 "captureOnClick" : true,
                 "grid" : {
-                    "griddisplay" : true,
+                    "griddisplay" : false,
                     "columns" : "4",
                     "rows" : "4"
                 },
@@ -230,11 +305,11 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
             },
             "Humidity" : {
                 "data" : {
-                    "display" : true,
+                    "display" : false,
                     "label" : "Humidity"
                 },
                 "graph" : {
-                    "display":true,
+                    "display":false,
                     "graphType" : "spline",
                     "graphTitle" : "Humidity Graph",
                     "graphXAxis" : "Time (s)",
@@ -253,6 +328,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
                     "label" : "Barometer"
                 },
                 "graph" : {
+                    "display":false,
                     "graphType" : "spline",
                     "graphTitle" : "Barometer Graph",
                     "graphXAxis" : "Time (s)",
@@ -271,6 +347,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
                     "label" : "Accelerometer"
                 },
                 "graph" : {
+                    "display":false,
                     "graphType" : "spline",
                     "graphTitle" : "Accelerometer Graph",
                     "graphXAxis" : "Time (s)",
@@ -289,7 +366,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
                     "label" : "Magnetometer"
                 },
                 "graph" : {
-                    "graphdisplay" : false,
+                    "display" : false,
                     "graphType" : "spline",
                     "graphTitle" : "Magnetometer Graph",
                     "graphXAxis" : "Time (s)",
@@ -312,6 +389,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
                     "label" : "Luxometer"
                 },
                 "graph" : {
+                    "display":false,
                     "graphType" : "spline",
                     "graphTitle" : "Luxometer Graph",
                     "graphXAxis" : "Time (s)",
