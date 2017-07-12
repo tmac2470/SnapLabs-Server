@@ -11,7 +11,9 @@ var userSchema = new Schema({
     password: String,
     registered: String,
     reset: String,
-    token: String
+    token: String,
+    passwordResetToken: String,
+    passwordResetExpires: String
 });
 
 /**
