@@ -4,10 +4,16 @@
 angular.module('snaplab', [ 'ui.bootstrap','ui.router', 'ui.toggle', 'ui.sortable']);
 
 angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
-    var indexState = {
-        name: 'index',
-        url: '/index',
-        templateUrl: 'templates/index.html'
+    var mainState = {
+        name: 'main',
+        url: '/main',
+        templateUrl: 'templates/main.html'
+    };
+
+    var experimentState = {
+        name: 'experiments',
+        url: '/experiments',
+        templateUrl: 'templates/experiments.html'
     };
 
     var aboutState = {
@@ -56,9 +62,10 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider.state('zone', {
         url: '/',
-        templateUrl: 'templates/index.html',
+        templateUrl: 'templates/main.html',
     });
-    $stateProvider.state(indexState);
+    $stateProvider.state(mainState);
+    $stateProvider.state(experimentState);
     $stateProvider.state(aboutState);
     $stateProvider.state(designState);
     $stateProvider.state(downloadState);
@@ -123,31 +130,6 @@ angular.module('snaplab').controller('MainCarouselCtrl', function ($scope) {
         }
     ];
 })
-
-angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http, authentication) {
-
-    $http.get('experiment')
-        .then(function(response) {
-            $scope.list = response.data;
-            $scope.totalItems = response.data.length;
-            $scope.currentPage = 1;
-            $scope.maxSize = 5;
-
-            $scope.currentList = [];
-            for(var i = 0; i < 10 && i<$scope.totalItems;i++){
-                $scope.currentList.push($scope.list[i]);
-            }
-        });
-
-    $scope.pageChanged = function() {
-        $scope.currentList = [];
-        for(var i = ($scope.currentPage-1)*10; i < $scope.currentPage*10 && i<$scope.totalItems; i++){
-            $scope.currentList.push($scope.list[i]);
-        }
-    };
-
-})
-
 
 
 angular.module('snaplab').service('authentication', ['$http', '$window', '$rootScope', function ($http, $window, $rootScope) {
