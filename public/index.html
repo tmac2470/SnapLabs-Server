@@ -20,9 +20,6 @@
     <script src="javascripts/auth-ctrl.js"></script>
     <script src="javascripts/experiments-ctrl.js"></script>
     <script src="javascripts/design-ctrl.js"></script>
-    <!--<script src="lib/angular.min.js"></script>-->
-    <!--<script src="lib/ui-bootstrap-tpls.js"></script>-->
-    <!--<link rel="stylesheet" href="lib/bootstrap.css">-->
 </head>
 <body>
 
@@ -49,9 +46,16 @@
                 <button class="btn btn-default" ui-sref="signup" ui-sref-active="active">Sign up</button>
                 <button class="btn btn-default" ui-sref="signin" ui-sref-active="active">Sign in</button>
             </form>
-            <p class="navbar-text navbar-right" ng-show="isLogin">{{email}} <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                <button class="btn btn-default" ng-click="logout()">Log out</button>
-            </p>
+            <ul class="nav navbar-nav navbar-right"  ng-show="isLogin">
+                <li class="dropdown" uib-dropdown>
+                    <a href class="dropdown-toggle" uib-dropdown-toggle>{{email}}<span class="caret"></span></a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li><a ui-sref="profile" ui-sref-active="active">Profile</a></li>
+                        <li><a ui-sref="myworks" ui-sref-active="active">My Creations</a></li>
+                        <li><a ng-click="logout()">Log out</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 </div>
@@ -60,47 +64,8 @@
     <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
 </div>
 
-<!--<div class="container">-->
-<!--<div ng-controller="NotificationCtrl">-->
-    <!--<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>-->
-<!--</div>-->
-
-
-<!--<div class="well well-lg">-->
-    <!--<h2>-->
-        <!--Welcome to SnapLab Platform-->
-    <!--</h2>-->
-    <!--<p>This website is under building</p>-->
-    <!--<uib-progressbar class="progress-striped active" max="100" value="10"><i>10%</i></uib-progressbar>-->
-<!--</div>-->
-
-<!--<div ng-controller="MainCarouselCtrl">-->
-    <!--<div style="height: 400px">-->
-        <!--<div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">-->
-            <!--<div uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">-->
-                <!--<img ng-src="{{slide.image}}" style="margin:auto;">-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
-<!--<h2>Uploaded Experiments Sheets</h2>-->
-
-<!--<div ng-controller="UploadedListCtrl">-->
-    <!--<uib-accordion close-others="true">-->
-        <!--<div uib-accordion-group class="panel-default" heading="{{item.labTitle}}" ng-repeat="item in list">-->
-        <!--{{item.labTitle}}-->
-        <!--</div>-->
-    <!--</uib-accordion>-->
-
-    <!--<ul uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination" boundary-link-numbers="true"></ul>-->
-<!--</div>-->
-
-
-<!--</div>-->
-
-
 <ui-view></ui-view>
+
 </body>
 </html>
 

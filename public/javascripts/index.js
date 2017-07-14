@@ -58,6 +58,18 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
         templateUrl: 'templates/reset.html'
     };
 
+    var profileState = {
+        name: 'profile',
+        url: '/profile',
+        templateUrl: 'templates/profile.html'
+    }
+
+    var myworksState = {
+        name: 'myworks',
+        url: '/myworks',
+        templateUrl: 'templates/myworks.html'
+    }
+
     $urlRouterProvider.otherwise('/');
 
     $stateProvider.state('zone', {
@@ -73,6 +85,8 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state(signupState);
     $stateProvider.state(forgetState);
     $stateProvider.state(resetState);
+    $stateProvider.state(profileState);
+    $stateProvider.state(myworksState);
 });
 
 angular.module('snaplab').run(function($rootScope, $transitions, authentication){

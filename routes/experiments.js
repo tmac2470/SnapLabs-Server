@@ -9,7 +9,7 @@ var auth = jwt({
 });
 
 /* GET users listing. */
-router.get('/', controller.getAllExperiments);
+router.get('/', controller.getExperiments);
 
 router.get('/:title', controller.getOneExperiment);
 

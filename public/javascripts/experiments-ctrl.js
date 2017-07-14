@@ -2,7 +2,7 @@
  * Created by MushrChun on 13/7/17.
  */
 angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http, authentication) {
-    
+
     $scope.dtStart = new Date();
     $scope.dtEnd = new Date();
 
@@ -32,7 +32,7 @@ angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http, aut
 
     }
 
-    $http.get('experiment')
+    $http.get('experiments')
         .then(function(response) {
             $scope.list = response.data;
             $scope.totalItems = response.data.length;

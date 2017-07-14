@@ -1,856 +1,856 @@
 <div class="container">
-    <form name = "design" novalidate ng-controller="DesignCtrl">
-        <div class="page-header">
-            <h1>Design an Investigation in a Quick Way</h1>
-        </div>
+    <div class="page-header">
+        <h1>Design an Investigation in a Quick Way</h1>
+    </div>
 
-        <div class="form-horizontal well">
-            <div class="form-group" ng-class="{'has-error': design.title.$invalid}">
-                <label class="col-sm-4 control-label">Provide an Experiment Title</label>
-                <div class="btn-group col-sm-8">
-                    <input name="title" type="text" ng-model="expTitle" placeholder="SensorTag Investigation" class="form-control"  required>
+    <form name = "design" novalidate ng-controller="DesignCtrl">
+            <div class="form-horizontal well">
+                <div class="form-group" ng-class="{'has-error': design.title.$invalid}">
+                    <label class="col-sm-4 control-label">Provide an Experiment Title</label>
+                    <div class="btn-group col-sm-8">
+                        <input name="title" type="text" ng-model="expTitle" placeholder="SensorTag Investigation" class="form-control"  required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Description</label>
+                    <div class="btn-group col-sm-8">
+                        <textarea class="form-control" ng-model="expDesc" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Sampling Rate</label>
+                    <div class="btn-group col-sm-8" uib-dropdown>
+                        <button type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                            {{sampleRateStr}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li ng-click="setSampleRate(1, '1 sample per second')" role="menuitem"><a>1 sample per second</a></li>
+                            <li ng-click="setSampleRate(2, '2 samples per second')" role="menuitem"><a>2 samples per second</a></li>
+                            <li ng-click="setSampleRate(3, '3 samples per second')" role="menuitem"><a>3 samples per second</a></li>
+                            <li ng-click="setSampleRate(4, '4 samples per second')" role="menuitem"><a>4 samples per second</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Allow Data Storage</label>
+                    <div class="btn-group col-sm-8">
+                        <toggle ng-model="allowDataStorage" ></toggle>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Allow Video</label>
+                    <div class="btn-group col-sm-8">
+                        <toggle ng-model="allowVideo" ></toggle>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Autostart Graphs</label>
+                    <div class="btn-group col-sm-8">
+                        <toggle ng-model="autoStartGraphs" ></toggle>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Description</label>
-                <div class="btn-group col-sm-8">
-                    <textarea class="form-control" ng-model="expDesc" rows="3"></textarea>
-                </div>
+
+            <div class="well" >
+                <ul class="row qd" ui-sortable="sortableOptions"  ng-model="quickDesignBlock">
+                    <li class="col-sm-4"
+                        ng-repeat="item in quickDesignBlock track by $index">
+                        <div class="qd-block">
+                            <img ng-src="{{item.url}}" width="80px" height="80px">
+                            <span>{{item.name}}</span>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Sampling Rate</label>
-                <div class="btn-group col-sm-8" uib-dropdown>
-                    <button type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-                        {{sampleRateStr}} <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                        <li ng-click="setSampleRate(1, '1 sample per second')" role="menuitem"><a>1 sample per second</a></li>
-                        <li ng-click="setSampleRate(2, '2 samples per second')" role="menuitem"><a>2 samples per second</a></li>
-                        <li ng-click="setSampleRate(3, '3 samples per second')" role="menuitem"><a>3 samples per second</a></li>
-                        <li ng-click="setSampleRate(4, '4 samples per second')" role="menuitem"><a>4 samples per second</a></li>
+
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="panel-default" heading="Temperature">
+                    <ul class="row qd" ui-sortable="sortableOptions" ng-model="TemperatureBlock">
+                        <li class="col-sm-4"
+                            ng-repeat="item in TemperatureBlock track by $index">
+                            <div class="qd-block">
+                                <img ng-src="{{item.url}}" width="80px" height="80px">
+                                <span>{{item.name}}</span>
+                            </div>
+                        </li>
                     </ul>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Allow Data Storage</label>
-                <div class="btn-group col-sm-8">
-                    <toggle ng-model="allowDataStorage" ></toggle>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Allow Video</label>
-                <div class="btn-group col-sm-8">
-                    <toggle ng-model="allowVideo" ></toggle>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Autostart Graphs</label>
-                <div class="btn-group col-sm-8">
-                    <toggle ng-model="autoStartGraphs" ></toggle>
-                </div>
-            </div>
-        </div>
+            </uib-accordion>
 
-        <div class="well" >
-            <ul class="row qd" ui-sortable="sortableOptions"  ng-model="quickDesignBlock">
-                <li class="col-sm-4"
-                     ng-repeat="item in quickDesignBlock track by $index">
-                    <div class="qd-block">
-                        <img ng-src="{{item.url}}" width="80px" height="80px">
-                        <span>{{item.name}}</span>
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="panel-default" heading="Humidity">
+                    <ul class="row qd" ui-sortable="sortableOptions"  ng-model="HumidityBlock">
+                        <li class="col-sm-4"
+                            ng-repeat="item in HumidityBlock track by $index">
+                            <div class="qd-block">
+                                <img ng-src="{{item.url}}" width="80px" height="80px">
+                                <span>{{item.name}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </uib-accordion>
+
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="panel-default" heading="Barometer">
+                    <ul class="row qd" ui-sortable="sortableOptions"  ng-model="BarometerBlock">
+                        <li class="col-sm-4"
+                            ng-repeat="item in BarometerBlock track by $index">
+                            <div class="qd-block">
+                                <img ng-src="{{item.url}}" width="80px" height="80px">
+                                <span>{{item.name}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </uib-accordion>
+
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="panel-default" heading="Accelerometer">
+                    <ul class="row qd"  ui-sortable="sortableOptions"  ng-model="AccelerometerBlock">
+                        <li class="col-sm-4"
+                            ng-repeat="item in AccelerometerBlock track by $index">
+                            <div class="qd-block">
+                                <img ng-src="{{item.url}}" width="80px" height="80px">
+                                <span>{{item.name}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </uib-accordion>
+
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="panel-default" heading="Gyroscope">
+                    <ul class="row qd"  ui-sortable="sortableOptions"  ng-model="GyroscopeBlock">
+                        <li class="col-sm-4"
+                            ng-repeat="item in GyroscopeBlock track by $index">
+                            <div class="qd-block">
+                                <img ng-src="{{item.url}}" width="80px" height="80px">
+                                <span>{{item.name}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </uib-accordion>
+
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="panel-default" heading="Magnetometer">
+                    <ul class="row qd"  ui-sortable="sortableOptions"  ng-model="MagnetometerBlock">
+                        <li class="col-sm-4"
+                            ng-repeat="item in MagnetometerBlock track by $index">
+                            <div class="qd-block">
+                                <img ng-src="{{item.url}}" width="80px" height="80px">
+                                <span>{{item.name}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </uib-accordion>
+
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="panel-default" heading="Luxometer">
+                    <ul class="row qd"  ui-sortable="sortableOptions"  ng-model="LuxometerBlock">
+                        <li class="col-sm-4"
+                            ng-repeat="item in LuxometerBlock track by $index">
+                            <div class="qd-block">
+                                <img ng-src="{{item.url}}" width="80px" height="80px">
+                                <span>{{item.name}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </uib-accordion>
+
+
+            <div class="page-header">
+                <h1>Design an Investigation in Details</h1>
+            </div>
+
+            <div class="form-horizontal well">
+                <div class="form-group" ng-class="{'has-error': design.title.$invalid}">
+                    <label class="col-sm-4 control-label">Provide an Experiment Title</label>
+                    <div class="btn-group col-sm-8">
+                        <input name="title" type="text" ng-model="expTitle" placeholder="SensorTag Investigation" class="form-control"  required>
                     </div>
-                </li>
-            </ul>
-        </div>
-
-        <uib-accordion close-others="true">
-            <div uib-accordion-group class="panel-default" heading="Temperature">
-                <ul class="row qd" ui-sortable="sortableOptions" ng-model="TemperatureBlock">
-                    <li class="col-sm-4"
-                        ng-repeat="item in TemperatureBlock track by $index">
-                        <div class="qd-block">
-                            <img ng-src="{{item.url}}" width="80px" height="80px">
-                            <span>{{item.name}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </uib-accordion>
-
-        <uib-accordion close-others="true">
-            <div uib-accordion-group class="panel-default" heading="Humidity">
-                <ul class="row qd" ui-sortable="sortableOptions"  ng-model="HumidityBlock">
-                    <li class="col-sm-4"
-                        ng-repeat="item in HumidityBlock track by $index">
-                        <div class="qd-block">
-                            <img ng-src="{{item.url}}" width="80px" height="80px">
-                            <span>{{item.name}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </uib-accordion>
-
-        <uib-accordion close-others="true">
-            <div uib-accordion-group class="panel-default" heading="Barometer">
-                <ul class="row qd" ui-sortable="sortableOptions"  ng-model="BarometerBlock">
-                    <li class="col-sm-4"
-                        ng-repeat="item in BarometerBlock track by $index">
-                        <div class="qd-block">
-                            <img ng-src="{{item.url}}" width="80px" height="80px">
-                            <span>{{item.name}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </uib-accordion>
-
-        <uib-accordion close-others="true">
-            <div uib-accordion-group class="panel-default" heading="Accelerometer">
-                <ul class="row qd"  ui-sortable="sortableOptions"  ng-model="AccelerometerBlock">
-                    <li class="col-sm-4"
-                        ng-repeat="item in AccelerometerBlock track by $index">
-                        <div class="qd-block">
-                            <img ng-src="{{item.url}}" width="80px" height="80px">
-                            <span>{{item.name}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </uib-accordion>
-
-        <uib-accordion close-others="true">
-            <div uib-accordion-group class="panel-default" heading="Gyroscope">
-                <ul class="row qd"  ui-sortable="sortableOptions"  ng-model="GyroscopeBlock">
-                    <li class="col-sm-4"
-                        ng-repeat="item in GyroscopeBlock track by $index">
-                        <div class="qd-block">
-                            <img ng-src="{{item.url}}" width="80px" height="80px">
-                            <span>{{item.name}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </uib-accordion>
-
-        <uib-accordion close-others="true">
-            <div uib-accordion-group class="panel-default" heading="Magnetometer">
-                <ul class="row qd"  ui-sortable="sortableOptions"  ng-model="MagnetometerBlock">
-                    <li class="col-sm-4"
-                        ng-repeat="item in MagnetometerBlock track by $index">
-                        <div class="qd-block">
-                            <img ng-src="{{item.url}}" width="80px" height="80px">
-                            <span>{{item.name}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </uib-accordion>
-
-        <uib-accordion close-others="true">
-            <div uib-accordion-group class="panel-default" heading="Luxometer">
-                <ul class="row qd"  ui-sortable="sortableOptions"  ng-model="LuxometerBlock">
-                    <li class="col-sm-4"
-                        ng-repeat="item in LuxometerBlock track by $index">
-                        <div class="qd-block">
-                            <img ng-src="{{item.url}}" width="80px" height="80px">
-                            <span>{{item.name}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </uib-accordion>
-
-
-        <div class="page-header">
-            <h1>Design an Investigation in Details</h1>
-        </div>
-
-        <div class="form-horizontal well">
-            <div class="form-group" ng-class="{'has-error': design.title.$invalid}">
-                <label class="col-sm-4 control-label">Provide an Experiment Title</label>
-                <div class="btn-group col-sm-8">
-                    <input name="title" type="text" ng-model="expTitle" placeholder="SensorTag Investigation" class="form-control"  required>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Description</label>
-                <div class="btn-group col-sm-8">
-                    <textarea class="form-control" ng-model="expDesc" rows="3"></textarea>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Description</label>
+                    <div class="btn-group col-sm-8">
+                        <textarea class="form-control" ng-model="expDesc" rows="3"></textarea>
+                    </div>
                 </div>
-            </div>
-            <!--<div class="form-group">-->
+                <!--<div class="form-group">-->
                 <!--<label class="col-sm-4 control-label">Number of SensorTags</label>-->
                 <!--<div class="btn-group col-sm-8" uib-dropdown>-->
-                    <!--<button type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">-->
-                        <!--Select <span class="caret"></span>-->
-                    <!--</button>-->
-                    <!--<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">-->
-                        <!--<li ng-click="setNumber(1)" role="menuitem"><a>1</a></li>-->
-                        <!--<li ng-click="setNumber(2)" role="menuitem"><a>2</a></li>-->
-                        <!--<li ng-click="setNumber(3)" role="menuitem"><a>3</a></li>-->
-                        <!--<li ng-click="setNumber(4)" role="menuitem"><a>4</a></li>-->
-                    <!--</ul>-->
+                <!--<button type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">-->
+                <!--Select <span class="caret"></span>-->
+                <!--</button>-->
+                <!--<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">-->
+                <!--<li ng-click="setNumber(1)" role="menuitem"><a>1</a></li>-->
+                <!--<li ng-click="setNumber(2)" role="menuitem"><a>2</a></li>-->
+                <!--<li ng-click="setNumber(3)" role="menuitem"><a>3</a></li>-->
+                <!--<li ng-click="setNumber(4)" role="menuitem"><a>4</a></li>-->
+                <!--</ul>-->
                 <!--</div>-->
-            <!--</div>-->
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Sampling Rate</label>
-                <div class="btn-group col-sm-8" uib-dropdown>
-                    <button type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-                        {{sampleRateStr}} <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                        <li ng-click="setSampleRate(1, '1 sample per second')" role="menuitem"><a>1 sample per second</a></li>
-                        <li ng-click="setSampleRate(2, '2 samples per second')" role="menuitem"><a>2 samples per second</a></li>
-                        <li ng-click="setSampleRate(3, '3 samples per second')" role="menuitem"><a>3 samples per second</a></li>
-                        <li ng-click="setSampleRate(4, '4 samples per second')" role="menuitem"><a>4 samples per second</a></li>
-                    </ul>
+                <!--</div>-->
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Sampling Rate</label>
+                    <div class="btn-group col-sm-8" uib-dropdown>
+                        <button type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                            {{sampleRateStr}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li ng-click="setSampleRate(1, '1 sample per second')" role="menuitem"><a>1 sample per second</a></li>
+                            <li ng-click="setSampleRate(2, '2 samples per second')" role="menuitem"><a>2 samples per second</a></li>
+                            <li ng-click="setSampleRate(3, '3 samples per second')" role="menuitem"><a>3 samples per second</a></li>
+                            <li ng-click="setSampleRate(4, '4 samples per second')" role="menuitem"><a>4 samples per second</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Allow Data Storage</label>
+                    <div class="btn-group col-sm-8">
+                        <toggle ng-model="allowDataStorage" ></toggle>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Allow Video</label>
+                    <div class="btn-group col-sm-8">
+                        <toggle ng-model="allowVideo" ></toggle>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Autostart Graphs</label>
+                    <div class="btn-group col-sm-8">
+                        <toggle ng-model="autoStartGraphs" ></toggle>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Allow Data Storage</label>
-                <div class="btn-group col-sm-8">
-                    <toggle ng-model="allowDataStorage" ></toggle>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Allow Video</label>
-                <div class="btn-group col-sm-8">
-                    <toggle ng-model="allowVideo" ></toggle>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Autostart Graphs</label>
-                <div class="btn-group col-sm-8">
-                    <toggle ng-model="autoStartGraphs" ></toggle>
-                </div>
-            </div>
-        </div>
 
 
-        <uib-accordion close-others="true">
-            <div uib-accordion-group class="panel-default" heading="{{item.title}}" ng-repeat="item in sensorTag track by $index">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Display SensorTag</label>
-                        <div class="btn-group col-sm-8">
-                            <toggle ng-model="item.connect" ></toggle>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Name of SensorTag</label>
-                        <div class="btn-group col-sm-4">
-                            <input type="text" ng-model="item.title" class="form-control">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="well">
-                    <p class="lead">Temperature</p>
-
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="panel-default" heading="{{item.title}}" ng-repeat="item in sensorTag track by $index">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Infrared or object temperature</label>
+                            <label class="col-sm-4 control-label">Display SensorTag</label>
                             <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Temperature.parameters.IR" ></toggle>
+                                <toggle ng-model="item.connect" ></toggle>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Ambient temperature</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Temperature.parameters.ambient" ></toggle>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Data</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Temperature.data.display" ></toggle>
-                            </div>
-                        </div>
-                        <div ng-show="item.sensors.Temperature.data.display" class="form-group">
-                            <label class="col-sm-4 control-label">Temperature Data Label</label>
+                            <label class="col-sm-4 control-label">Name of SensorTag</label>
                             <div class="btn-group col-sm-4">
-                                <input type="text" ng-model="item.sensors.Temperature.data.label" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Graph</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle  ng-model="item.sensors.Temperature.graph.display"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Temperature.graph.display">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Graph Type</label>
-                                <div class="btn-group col-sm-3">
-                                    <select class="form-control" ng-model="item.sensors.Temperature.graph.graphType">
-                                        <option value="spline">Smoothed Line Graph</option>
-                                        <option value="line">Line Graph</option>
-                                        <option value="scatter">Scatter Graph</option>
-                                        <option value="area">Area Graph</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Temperature Graph Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Temperature.graph.graphTitle" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Temperature X Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Temperature.graph.graphXAxis" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Temperature Y Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Temperature.graph.graphYAxis" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Grid</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Temperature.grid.griddisplay"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Temperature.grid.griddisplay">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Columns</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Temperature.grid.columns" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Rows</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Temperature.grid.rows" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Capture on Click</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Temperature.captureOnClick"></toggle>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="well">
-                    <p class="lead">Humidity</p>
-
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Data</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Humidity.data.display" ></toggle>
-                            </div>
-                        </div>
-                        <div ng-show="item.sensors.Humidity.data.display" class="form-group">
-                            <label class="col-sm-4 control-label">Humidity Data Label</label>
-                            <div class="btn-group col-sm-4">
-                                <input type="text" ng-model="item.sensors.Humidity.data.label" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Graph</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle  ng-model="item.sensors.Humidity.graph.display"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Humidity.graph.display">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Graph Type</label>
-                                <div class="btn-group col-sm-3">
-                                    <select class="form-control" ng-model="item.sensors.Humidity.graph.graphType">
-                                        <option value="spline">Smoothed Line Graph</option>
-                                        <option value="line">Line Graph</option>
-                                        <option value="scatter">Scatter Graph</option>
-                                        <option value="area">Area Graph</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Humidity Graph Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Humidity.graph.graphTitle" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Humidity X Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Humidity.graph.graphXAxis" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Humidity Y Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Humidity.graph.graphYAxis" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Grid</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Humidity.grid.griddisplay"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Humidity.grid.griddisplay">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Columns</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Humidity.grid.columns" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Rows</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Humidity.grid.rows" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Capture on Click</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Humidity.captureOnClick"></toggle>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="well">
-                    <p class="lead">Barometer</p>
-
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Data</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Barometer.data.display" ></toggle>
-                            </div>
-                        </div>
-                        <div ng-show="item.sensors.Barometer.data.display" class="form-group">
-                            <label class="col-sm-4 control-label">Barometer Data Label</label>
-                            <div class="btn-group col-sm-4">
-                                <input type="text" ng-model="item.sensors.Barometer.data.label" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Graph</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle  ng-model="item.sensors.Barometer.graph.display"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Barometer.graph.display">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Graph Type</label>
-                                <div class="btn-group col-sm-3">
-                                    <select class="form-control" ng-model="item.sensors.Barometer.graph.graphType">
-                                        <option value="spline">Smoothed Line Graph</option>
-                                        <option value="line">Line Graph</option>
-                                        <option value="scatter">Scatter Graph</option>
-                                        <option value="area">Area Graph</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Barometer Graph Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Barometer.graph.graphTitle" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Barometer X Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Barometer.graph.graphXAxis" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Barometer Y Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Barometer.graph.graphYAxis" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Grid</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Barometer.grid.griddisplay"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Barometer.grid.griddisplay">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Columns</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Barometer.grid.columns" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Rows</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Barometer.grid.rows" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Capture on Click</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Barometer.captureOnClick"></toggle>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="well">
-                    <p class="lead">Accelerometer</p>
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">x-y-z axis values</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Accelerometer.parameters.xyz" ></toggle>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Scalar</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Accelerometer.parameters.scalar" ></toggle>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Data</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Accelerometer.data.display" ></toggle>
-                            </div>
-                        </div>
-                        <div ng-show="item.sensors.Accelerometer.data.display" class="form-group">
-                            <label class="col-sm-4 control-label">Accelerometer Data Label</label>
-                            <div class="btn-group col-sm-4">
-                                <input type="text" ng-model="item.sensors.Accelerometer.data.label" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Graph</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle  ng-model="item.sensors.Accelerometer.graph.display"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Accelerometer.graph.display">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Graph Type</label>
-                                <div class="btn-group col-sm-3">
-                                    <select class="form-control" ng-model="item.sensors.Accelerometer.graph.graphType">
-                                        <option value="spline">Smoothed Line Graph</option>
-                                        <option value="line">Line Graph</option>
-                                        <option value="scatter">Scatter Graph</option>
-                                        <option value="area">Area Graph</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Accelerometer Graph Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Accelerometer.graph.graphTitle" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Accelerometer X Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Accelerometer.graph.graphXAxis" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Accelerometer Y Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Accelerometer.graph.graphYAxis" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Grid</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Accelerometer.grid.griddisplay"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Accelerometer.grid.griddisplay">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Columns</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Accelerometer.grid.columns" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Rows</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Accelerometer.grid.rows" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Capture on Click</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Accelerometer.captureOnClick"></toggle>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="well">
-                    <p class="lead">Gyroscope</p>
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Data</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Gyroscope.data.display" ></toggle>
-                            </div>
-                        </div>
-                        <div ng-show="item.sensors.Gyroscope.data.display" class="form-group">
-                            <label class="col-sm-4 control-label">Barometer Data Label</label>
-                            <div class="btn-group col-sm-4">
-                                <input type="text" ng-model="item.sensors.Gyroscope.data.label" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Graph</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle  ng-model="item.sensors.Gyroscope.graph.display"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Gyroscope.graph.display">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Graph Type</label>
-                                <div class="btn-group col-sm-3">
-                                    <select class="form-control" ng-model="item.sensors.Gyroscope.graph.graphType">
-                                        <option value="spline">Smoothed Line Graph</option>
-                                        <option value="line">Line Graph</option>
-                                        <option value="scatter">Scatter Graph</option>
-                                        <option value="area">Area Graph</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Gyroscope Graph Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Gyroscope.graph.graphTitle" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Gyroscope X Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Gyroscope.graph.graphXAxis" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Gyroscope Y Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Gyroscope.graph.graphYAxis" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Grid</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Gyroscope.grid.griddisplay"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Gyroscope.grid.griddisplay">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Columns</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Gyroscope.grid.columns" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Rows</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Gyroscope.grid.rows" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Capture on Click</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Gyroscope.captureOnClick"></toggle>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="well">
-                    <p class="lead">Magnetometer</p>
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">x-y-z axis values</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Magnetometer.parameters.xyz" ></toggle>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Scalar</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Magnetometer.parameters.scalar" ></toggle>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Data</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Magnetometer.data.display" ></toggle>
-                            </div>
-                        </div>
-                        <div ng-show="item.sensors.Magnetometer.data.display" class="form-group">
-                            <label class="col-sm-4 control-label">Magnetometer Data Label</label>
-                            <div class="btn-group col-sm-4">
-                                <input type="text" ng-model="item.sensors.Magnetometer.data.label" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Graph</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle  ng-model="item.sensors.Magnetometer.graph.display"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Magnetometer.graph.display">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Graph Type</label>
-                                <div class="btn-group col-sm-3">
-                                    <select class="form-control" ng-model="item.sensors.Magnetometer.graph.graphType">
-                                        <option value="spline">Smoothed Line Graph</option>
-                                        <option value="line">Line Graph</option>
-                                        <option value="scatter">Scatter Graph</option>
-                                        <option value="area">Area Graph</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Magnetometer Graph Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Magnetometer.graph.graphTitle" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Magnetometer X Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Magnetometer.graph.graphXAxis" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Magnetometer Y Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Magnetometer.graph.graphYAxis" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Grid</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Magnetometer.grid.griddisplay"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Magnetometer.grid.griddisplay">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Columns</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Magnetometer.grid.columns" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Rows</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Magnetometer.grid.rows" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Capture on Click</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Magnetometer.captureOnClick"></toggle>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="well">
-                    <p class="lead">Luxometer</p>
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Data</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle ng-model="item.sensors.Luxometer.data.display" ></toggle>
-                            </div>
-                        </div>
-                        <div ng-show="item.sensors.Luxometer.data.display" class="form-group">
-                            <label class="col-sm-4 control-label">Luxometer Data Label</label>
-                            <div class="btn-group col-sm-4">
-                                <input type="text" ng-model="item.sensors.Luxometer.data.label" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Graph</label>
-                            <div class="btn-group col-sm-8">
-                                <toggle  ng-model="item.sensors.Luxometer.graph.display"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Luxometer.graph.display">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Graph Type</label>
-                                <div class="btn-group col-sm-3">
-                                    <select class="form-control" ng-model="item.sensors.Luxometer.graph.graphType">
-                                        <option value="spline">Smoothed Line Graph</option>
-                                        <option value="line">Line Graph</option>
-                                        <option value="scatter">Scatter Graph</option>
-                                        <option value="area">Area Graph</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Luxometer Graph Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Luxometer.graph.graphTitle" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Luxometer X Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Luxometer.graph.graphXAxis" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Luxometer Y Axis Title</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Luxometer.graph.graphYAxis" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Grid</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Luxometer.grid.griddisplay"></toggle>
-                            </div>
-                        </div>
-                        <div  ng-show="item.sensors.Luxometer.grid.griddisplay">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Columns</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Luxometer.grid.columns" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">Grid Rows</label>
-                                <div class="btn-group col-sm-4">
-                                    <input type="text" ng-model="item.sensors.Luxometer.grid.rows" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Capture on Click</label>
-                            <div class="btn-group col-sm-4">
-                                <toggle  ng-model="item.sensors.Luxometer.captureOnClick"></toggle>
+                                <input type="text" ng-model="item.title" class="form-control">
                             </div>
                         </div>
                     </div>
 
-                </div>
-                <button type="button" class="btn btn-default btn-sm" ng-click="duplicate(item)" aria-label="Left Align"><span class="glyphicon glyphicon-magnet" aria-hidden="true"></span></button>
-            </div>
-        </uib-accordion>
+                    <div class="well">
+                        <p class="lead">Temperature</p>
 
-        <button type="button" class="btn btn-default">Cancel</button>
-        <button type="button" class="btn btn-primary" ng-click="store()">Submit</button>
-    </form>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Infrared or object temperature</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Temperature.parameters.IR" ></toggle>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Ambient temperature</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Temperature.parameters.ambient" ></toggle>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Data</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Temperature.data.display" ></toggle>
+                                </div>
+                            </div>
+                            <div ng-show="item.sensors.Temperature.data.display" class="form-group">
+                                <label class="col-sm-4 control-label">Temperature Data Label</label>
+                                <div class="btn-group col-sm-4">
+                                    <input type="text" ng-model="item.sensors.Temperature.data.label" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Graph</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle  ng-model="item.sensors.Temperature.graph.display"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Temperature.graph.display">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Graph Type</label>
+                                    <div class="btn-group col-sm-3">
+                                        <select class="form-control" ng-model="item.sensors.Temperature.graph.graphType">
+                                            <option value="spline">Smoothed Line Graph</option>
+                                            <option value="line">Line Graph</option>
+                                            <option value="scatter">Scatter Graph</option>
+                                            <option value="area">Area Graph</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Temperature Graph Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Temperature.graph.graphTitle" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Temperature X Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Temperature.graph.graphXAxis" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Temperature Y Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Temperature.graph.graphYAxis" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Grid</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Temperature.grid.griddisplay"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Temperature.grid.griddisplay">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Columns</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Temperature.grid.columns" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Rows</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Temperature.grid.rows" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Capture on Click</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Temperature.captureOnClick"></toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="well">
+                        <p class="lead">Humidity</p>
+
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Data</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Humidity.data.display" ></toggle>
+                                </div>
+                            </div>
+                            <div ng-show="item.sensors.Humidity.data.display" class="form-group">
+                                <label class="col-sm-4 control-label">Humidity Data Label</label>
+                                <div class="btn-group col-sm-4">
+                                    <input type="text" ng-model="item.sensors.Humidity.data.label" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Graph</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle  ng-model="item.sensors.Humidity.graph.display"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Humidity.graph.display">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Graph Type</label>
+                                    <div class="btn-group col-sm-3">
+                                        <select class="form-control" ng-model="item.sensors.Humidity.graph.graphType">
+                                            <option value="spline">Smoothed Line Graph</option>
+                                            <option value="line">Line Graph</option>
+                                            <option value="scatter">Scatter Graph</option>
+                                            <option value="area">Area Graph</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Humidity Graph Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Humidity.graph.graphTitle" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Humidity X Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Humidity.graph.graphXAxis" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Humidity Y Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Humidity.graph.graphYAxis" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Grid</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Humidity.grid.griddisplay"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Humidity.grid.griddisplay">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Columns</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Humidity.grid.columns" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Rows</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Humidity.grid.rows" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Capture on Click</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Humidity.captureOnClick"></toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="well">
+                        <p class="lead">Barometer</p>
+
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Data</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Barometer.data.display" ></toggle>
+                                </div>
+                            </div>
+                            <div ng-show="item.sensors.Barometer.data.display" class="form-group">
+                                <label class="col-sm-4 control-label">Barometer Data Label</label>
+                                <div class="btn-group col-sm-4">
+                                    <input type="text" ng-model="item.sensors.Barometer.data.label" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Graph</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle  ng-model="item.sensors.Barometer.graph.display"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Barometer.graph.display">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Graph Type</label>
+                                    <div class="btn-group col-sm-3">
+                                        <select class="form-control" ng-model="item.sensors.Barometer.graph.graphType">
+                                            <option value="spline">Smoothed Line Graph</option>
+                                            <option value="line">Line Graph</option>
+                                            <option value="scatter">Scatter Graph</option>
+                                            <option value="area">Area Graph</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Barometer Graph Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Barometer.graph.graphTitle" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Barometer X Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Barometer.graph.graphXAxis" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Barometer Y Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Barometer.graph.graphYAxis" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Grid</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Barometer.grid.griddisplay"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Barometer.grid.griddisplay">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Columns</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Barometer.grid.columns" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Rows</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Barometer.grid.rows" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Capture on Click</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Barometer.captureOnClick"></toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="well">
+                        <p class="lead">Accelerometer</p>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">x-y-z axis values</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Accelerometer.parameters.xyz" ></toggle>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Scalar</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Accelerometer.parameters.scalar" ></toggle>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Data</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Accelerometer.data.display" ></toggle>
+                                </div>
+                            </div>
+                            <div ng-show="item.sensors.Accelerometer.data.display" class="form-group">
+                                <label class="col-sm-4 control-label">Accelerometer Data Label</label>
+                                <div class="btn-group col-sm-4">
+                                    <input type="text" ng-model="item.sensors.Accelerometer.data.label" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Graph</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle  ng-model="item.sensors.Accelerometer.graph.display"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Accelerometer.graph.display">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Graph Type</label>
+                                    <div class="btn-group col-sm-3">
+                                        <select class="form-control" ng-model="item.sensors.Accelerometer.graph.graphType">
+                                            <option value="spline">Smoothed Line Graph</option>
+                                            <option value="line">Line Graph</option>
+                                            <option value="scatter">Scatter Graph</option>
+                                            <option value="area">Area Graph</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Accelerometer Graph Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Accelerometer.graph.graphTitle" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Accelerometer X Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Accelerometer.graph.graphXAxis" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Accelerometer Y Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Accelerometer.graph.graphYAxis" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Grid</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Accelerometer.grid.griddisplay"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Accelerometer.grid.griddisplay">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Columns</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Accelerometer.grid.columns" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Rows</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Accelerometer.grid.rows" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Capture on Click</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Accelerometer.captureOnClick"></toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="well">
+                        <p class="lead">Gyroscope</p>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Data</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Gyroscope.data.display" ></toggle>
+                                </div>
+                            </div>
+                            <div ng-show="item.sensors.Gyroscope.data.display" class="form-group">
+                                <label class="col-sm-4 control-label">Barometer Data Label</label>
+                                <div class="btn-group col-sm-4">
+                                    <input type="text" ng-model="item.sensors.Gyroscope.data.label" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Graph</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle  ng-model="item.sensors.Gyroscope.graph.display"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Gyroscope.graph.display">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Graph Type</label>
+                                    <div class="btn-group col-sm-3">
+                                        <select class="form-control" ng-model="item.sensors.Gyroscope.graph.graphType">
+                                            <option value="spline">Smoothed Line Graph</option>
+                                            <option value="line">Line Graph</option>
+                                            <option value="scatter">Scatter Graph</option>
+                                            <option value="area">Area Graph</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Gyroscope Graph Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Gyroscope.graph.graphTitle" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Gyroscope X Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Gyroscope.graph.graphXAxis" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Gyroscope Y Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Gyroscope.graph.graphYAxis" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Grid</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Gyroscope.grid.griddisplay"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Gyroscope.grid.griddisplay">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Columns</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Gyroscope.grid.columns" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Rows</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Gyroscope.grid.rows" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Capture on Click</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Gyroscope.captureOnClick"></toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="well">
+                        <p class="lead">Magnetometer</p>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">x-y-z axis values</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Magnetometer.parameters.xyz" ></toggle>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Scalar</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Magnetometer.parameters.scalar" ></toggle>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Data</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Magnetometer.data.display" ></toggle>
+                                </div>
+                            </div>
+                            <div ng-show="item.sensors.Magnetometer.data.display" class="form-group">
+                                <label class="col-sm-4 control-label">Magnetometer Data Label</label>
+                                <div class="btn-group col-sm-4">
+                                    <input type="text" ng-model="item.sensors.Magnetometer.data.label" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Graph</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle  ng-model="item.sensors.Magnetometer.graph.display"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Magnetometer.graph.display">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Graph Type</label>
+                                    <div class="btn-group col-sm-3">
+                                        <select class="form-control" ng-model="item.sensors.Magnetometer.graph.graphType">
+                                            <option value="spline">Smoothed Line Graph</option>
+                                            <option value="line">Line Graph</option>
+                                            <option value="scatter">Scatter Graph</option>
+                                            <option value="area">Area Graph</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Magnetometer Graph Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Magnetometer.graph.graphTitle" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Magnetometer X Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Magnetometer.graph.graphXAxis" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Magnetometer Y Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Magnetometer.graph.graphYAxis" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Grid</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Magnetometer.grid.griddisplay"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Magnetometer.grid.griddisplay">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Columns</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Magnetometer.grid.columns" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Rows</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Magnetometer.grid.rows" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Capture on Click</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Magnetometer.captureOnClick"></toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="well">
+                        <p class="lead">Luxometer</p>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Data</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle ng-model="item.sensors.Luxometer.data.display" ></toggle>
+                                </div>
+                            </div>
+                            <div ng-show="item.sensors.Luxometer.data.display" class="form-group">
+                                <label class="col-sm-4 control-label">Luxometer Data Label</label>
+                                <div class="btn-group col-sm-4">
+                                    <input type="text" ng-model="item.sensors.Luxometer.data.label" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Graph</label>
+                                <div class="btn-group col-sm-8">
+                                    <toggle  ng-model="item.sensors.Luxometer.graph.display"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Luxometer.graph.display">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Graph Type</label>
+                                    <div class="btn-group col-sm-3">
+                                        <select class="form-control" ng-model="item.sensors.Luxometer.graph.graphType">
+                                            <option value="spline">Smoothed Line Graph</option>
+                                            <option value="line">Line Graph</option>
+                                            <option value="scatter">Scatter Graph</option>
+                                            <option value="area">Area Graph</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Luxometer Graph Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Luxometer.graph.graphTitle" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Luxometer X Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Luxometer.graph.graphXAxis" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Luxometer Y Axis Title</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Luxometer.graph.graphYAxis" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Grid</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Luxometer.grid.griddisplay"></toggle>
+                                </div>
+                            </div>
+                            <div  ng-show="item.sensors.Luxometer.grid.griddisplay">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Columns</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Luxometer.grid.columns" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">Grid Rows</label>
+                                    <div class="btn-group col-sm-4">
+                                        <input type="text" ng-model="item.sensors.Luxometer.grid.rows" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Capture on Click</label>
+                                <div class="btn-group col-sm-4">
+                                    <toggle  ng-model="item.sensors.Luxometer.captureOnClick"></toggle>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="duplicate(item)" aria-label="Left Align"><span class="glyphicon glyphicon-magnet" aria-hidden="true"></span></button>
+                </div>
+            </uib-accordion>
+
+            <button type="button" class="btn btn-default">Cancel</button>
+            <button type="button" class="btn btn-primary" ng-click="store()">Submit</button>
+        </form>
 </div>

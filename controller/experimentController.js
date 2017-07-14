@@ -2,11 +2,48 @@
  * Created by MushrChun on 22/5/17.
  */
 var Experiment = require('../model/Experiment');
+var debug = require('debug')('snaplab-server');
 var ObjectId = require('mongodb').ObjectId;
 
-exports.getAllExperiments = function(req, res){
-    console.log();
-    Experiment.find({}, 'labTitle description').exec((err, experiments) => {
+exports.getExperiments = function(req, res){
+
+    var today = new Date();
+    var day20Before = new Date(today.setDate(today.getDate()-20));
+
+    var field = req.query.field || 'title';
+    var startDate = req.query.startdate || day20Before;
+    var endDate = req.query.enddate || today;
+    var sortType = req.query.sorttype || 'createdDateDescend';
+    var content = req.query.content;
+
+    debug(content)
+    var pageNum = req.query.pagenum || 1;
+    var pageItems = req.query.pageitems ||20;
+
+
+    debug(req.query);
+
+    var queryOption = {};
+
+    if(content){
+        var fields = field.split(';');
+        fields.forEach( function(entry) {
+            switch (entry){
+                case 'title':
+                    queryOption.labTitle = new RegExp(content, "i");
+                    break;
+                case 'author':
+                    break;
+            }
+        });
+    }
+
+    debug(queryOption)
+
+    Experiment.find(queryOption, 'labTitle description')
+        .skip((pageNum-1) * pageItems)
+        .limit(pageItems)
+        .exec((err, experiments) => {
         if (err) {
             return res.send(err);
         }

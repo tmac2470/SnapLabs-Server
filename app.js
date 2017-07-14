@@ -9,7 +9,7 @@ var dotenv = require('dotenv');
 
 dotenv.load({ path: '.env' });
 var passport = require('./config/passport');
-var experiment = require('./routes/experiment');
+var experiments = require('./routes/experiments');
 var auth = require('./routes/authentication');
 
 
@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 
-app.use('/experiment', experiment);
+app.use('/experiments', experiments);
 app.use('/auth', auth);
 
 // catch 404 and forward to error handler
