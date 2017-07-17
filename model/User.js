@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
@@ -9,9 +11,6 @@ var userSchema = new Schema({
     name: String,
     email: String,
     password: String,
-    registered: String,
-    reset: String,
-    token: String,
     passwordResetToken: String,
     passwordResetExpires: String
 });

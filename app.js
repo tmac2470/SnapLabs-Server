@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -11,6 +13,7 @@ dotenv.load({ path: '.env' });
 var passport = require('./config/passport');
 var experiments = require('./routes/experiments');
 var auth = require('./routes/authentication');
+var profiles = require('./routes/profiles');
 
 
 /**
@@ -37,6 +40,7 @@ app.use(passport.initialize());
 
 app.use('/experiments', experiments);
 app.use('/auth', auth);
+app.use('/profiles', profiles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

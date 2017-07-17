@@ -1,6 +1,5 @@
-/**
- * Created by MushrChun on 13/7/17.
- */
+'use strict';
+
 angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http, authentication) {
 
     $scope.dtStart = new Date();

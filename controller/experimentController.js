@@ -1,6 +1,5 @@
-/**
- * Created by MushrChun on 22/5/17.
- */
+'use strict';
+
 var Experiment = require('../model/Experiment');
 var debug = require('debug')('snaplab-server');
 var ObjectId = require('mongodb').ObjectId;

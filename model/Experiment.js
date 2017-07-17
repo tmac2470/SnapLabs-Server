@@ -1,6 +1,5 @@
-/**
- * Created by MushrChun on 22/5/17.
- */
+'use strict';
+
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;

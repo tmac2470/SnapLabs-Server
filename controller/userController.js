@@ -1,8 +1,12 @@
+'use strict';
+
 var passport = require('passport');
 var crypto = require('crypto');
 var async = require('async');
 var nodemailer = require('nodemailer');
+var debug = require('debug')('snaplab-server');
 var aws = require('aws-sdk');
+var Message = require('../utils').Message;
 var User = require('../model/User');
 
 
@@ -36,7 +40,6 @@ exports.signUp = function(req, res, next){
         if (existingUser) {
             return res.json({ status:'fail', mgs:'email exsists'});
         }
-
 
         user.save(function(err){
             if (err) {
@@ -158,4 +161,35 @@ exports.reset = function(req, res, next){
             return next(err);
         }
     });
+}
+
+exports.updateProfile = function(req, res, next){
+    var id = req.params.id;
+    var name = req.body.name;
+    User.update({_id: id}, {$set:{name: name}}, function(err){
+        next(err);
+    })
+}
+
+exports.updatePassword = function(req, res, next){
+    var id = req.params.id;
+    var cPassword = req.body.cPassword;
+    var nPassword = req.body.nPassword;
+
+    User.findById(id, function(err, user) {
+        debug(user)
+        user.comparePassword(cPassword, function(err, isMatch){
+            if(err) return next(err);
+            if(isMatch){
+                user.password = nPassword;
+                user.save(function(err) {
+                    if(!err){
+                        res.status(200).json(new Message('200', 'updating succeeded'));
+                    }
+                })
+            }else {
+                res.status(400).json(new Message('400', 'updating failed'));
+            }
+        })
+    })
 }

@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope, $http, authentication) {
 
     $scope.quickDesignBlock = [];
@@ -259,7 +261,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
         postCfg.headers = authentication.genHeader(authentication.getToken());
 
         if(expCfg.description && expCfg.labTitle){
-            $http.post('experiment', expCfg, postCfg)
+            $http.post('experiments', expCfg, postCfg)
                 .then(
                     function successCallback(successResponse){
                         window.location.href = "/#!/";
