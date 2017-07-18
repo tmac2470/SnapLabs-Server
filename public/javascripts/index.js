@@ -81,13 +81,7 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
     };
     $stateProvider.state(myworksState);
 
-    var zoneState = {
-        name: 'zone',
-        url: '/',
-        templateUrl: 'templates/main.html'
-    }
-
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/main');
 });
 
 
@@ -98,29 +92,29 @@ angular.module('snaplab').run(function($rootScope, $transitions, authentication)
     }
 
 // filter pre-login page transitions
-    $transitions.onStart({ to: 'design' }, function(trans) {
+    $transitions.onStart({ to: 'design.**' }, function(trans) {
         if (!$rootScope.isLogin) {
             return trans.router.stateService.target('signin');
         }
     });
-    //
-    // $transitions.onStart({ to: 'profile.**' }, function(trans) {
-    //     if (!$rootScope.isLogin) {
-    //         return trans.router.stateService.target('signin');
-    //     }
-    // });
-    //
-    // $transitions.onStart({ to: 'mywork.**' }, function(trans) {
-    //     if (!$rootScope.isLogin) {
-    //         return trans.router.stateService.target('signin');
-    //     }
-    // });
-    //
-    // $transitions.onStart({ to: 'signin.**' }, function(trans) {
-    //     if ($rootScope.isLogin) {
-    //         return trans.router.stateService.target('about');
-    //     }
-    // });
+
+    $transitions.onStart({ to: 'profile.**' }, function(trans) {
+        if (!$rootScope.isLogin) {
+            return trans.router.stateService.target('signin');
+        }
+    });
+
+    $transitions.onStart({ to: 'mywork.**' }, function(trans) {
+        if (!$rootScope.isLogin) {
+            return trans.router.stateService.target('signin');
+        }
+    });
+
+    $transitions.onStart({ to: 'signin.**' }, function(trans) {
+        if ($rootScope.isLogin) {
+            return trans.router.stateService.target('about');
+        }
+    });
 
 });
 
@@ -142,6 +136,7 @@ angular.module('snaplab').controller('NotificationCtrl', function ($scope, $root
     ];
 
     $rootScope.addAlert = function(content) {
+        $scope.alerts.pop();
         $scope.alerts.push(content);
     };
 
@@ -167,4 +162,14 @@ angular.module('snaplab').controller('MainCarouselCtrl', function ($scope) {
             id: 1
         }
     ];
-})
+});
+
+
+angular.module('snaplab').controller('AlertModalInstanceCtrl', function ($uibModalInstance, content) {
+    var $ctrl = this;
+
+    $ctrl.content = content;
+    $ctrl.ok = function () {
+        $uibModalInstance.dismiss();
+    };
+});

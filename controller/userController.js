@@ -166,9 +166,18 @@ exports.reset = function(req, res, next){
 exports.updateProfile = function(req, res, next){
     var id = req.params.id;
     var name = req.body.name;
-    User.update({_id: id}, {$set:{name: name}}, function(err){
-        next(err);
-    })
+
+    // todo: sanitize it in the future
+    if(id != undefined && name !=undefined){
+        User.update({_id: id}, {$set:{name: name}}, function(err){
+            if(err){
+                return next(err)
+            }
+            res.status(200).json(new Message('200', 'Update Successfully'));
+        })
+    }else{
+        res.status(400).json(new Message('400','Update Failed'));
+    }
 }
 
 exports.updatePassword = function(req, res, next){

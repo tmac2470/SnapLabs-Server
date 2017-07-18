@@ -10,8 +10,8 @@ var auth = jwt({
     userProperty: 'payload'
 });
 
-router.post('/:id', userController.updateProfile);
+router.post('/:id', auth, userController.updateProfile);
 
-router.post('/:id/password', userController.updatePassword);
+router.post('/:id/password', auth, userController.updatePassword);
 
 module.exports = router;

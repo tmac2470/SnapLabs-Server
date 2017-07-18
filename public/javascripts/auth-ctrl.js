@@ -34,7 +34,7 @@ angular.module('snaplab').controller('SignInCtrl', function ($scope, $rootScope,
                     function successCallback(response) {
                         authentication.saveToken(response.data.token);
                         $rootScope.isLogin = true;
-                        $rootScope.email = authentication.getLoginUser();
+                        $rootScope.user = authentication.getLoginUser();
                         $rootScope.addAlert({ type:'success', msg:'Sign In Success' });
                         window.location.href = "/#!/";
                     },
