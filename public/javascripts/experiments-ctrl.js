@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http, authentication) {
+angular.module('snaplab').controller('ExpListCtrl', function ($scope, $rootScope, $http, authentication) {
 
     $scope.dtStart = new Date();
     $scope.dtEnd = new Date();
@@ -44,7 +44,38 @@ angular.module('snaplab').controller('ExpListCtrl', function ($scope, $http, aut
             }
         });
 
+    // if user login, request experiments belonged to him/her
+    if($rootScope.isLogin){
+        var user = $rootScope.user;
+        var getOpt = {};
+        getOpt.headers = authentication.genHeader(authentication.getToken());
+
+        $http.get('experiments/' + user.id, getOpt)
+            .then(
+                function successCallback(response) {
+                    $scope.pList = response.data;
+                    $scope.pTotalItems = response.data.length;
+                    $scope.pCurrentPage = 1;
+                    $scope.pMaxSize = 5;
+
+                    $scope.pCurrentList = [];
+                    for(var i = 0; i < 10 && i<$scope.pTotalItems;i++){
+                        $scope.pCurrentList.push($scope.list[i]);
+                    }
+                },
+                function failCallback(response) {
+
+            });
+    }
+
     $scope.pageChanged = function() {
+        $scope.currentList = [];
+        for(var i = ($scope.currentPage-1)*10; i < $scope.currentPage*10 && i<$scope.totalItems; i++){
+            $scope.currentList.push($scope.list[i]);
+        }
+    };
+
+    $scope.pPageChanged = function() {
         $scope.currentList = [];
         for(var i = ($scope.currentPage-1)*10; i < $scope.currentPage*10 && i<$scope.totalItems; i++){
             $scope.currentList.push($scope.list[i]);

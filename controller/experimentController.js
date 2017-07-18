@@ -1,6 +1,7 @@
 'use strict';
 
 var Experiment = require('../model/Experiment');
+var User = require('../model/User');
 var debug = require('debug')('snaplab-server');
 var ObjectId = require('mongodb').ObjectId;
 
@@ -37,6 +38,12 @@ exports.getExperiments = function(req, res){
         });
     }
 
+    var id = req.params.id;
+
+    if(id){
+        queryOption.createdBy = id;
+    }
+
     debug(queryOption)
 
     Experiment.find(queryOption, 'labTitle description')
@@ -46,7 +53,12 @@ exports.getExperiments = function(req, res){
         if (err) {
             return res.send(err);
         }
-        res.json(experiments);
+        debug(experiments)
+        if(experiments){
+            res.json(experiments);
+        }else{
+            res.json([]);
+        }
     });
 };
 

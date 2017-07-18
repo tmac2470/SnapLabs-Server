@@ -13,8 +13,10 @@ var auth = jwt({
 /* GET users listing. */
 router.get('/', controller.getExperiments);
 
-router.get('/:title', controller.getOneExperiment);
+// router.get('/:title', controller.getOneExperiment);
 
-router.post('/', auth, controller.insertExperiment);
+router.post('/:id', auth, controller.insertExperiment);
+
+router.get('/:id',  auth, controller.getExperiments);
 
 module.exports = router;

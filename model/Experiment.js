@@ -16,7 +16,9 @@ var experimentSchema = new Schema({
     dataStorageAllowed: String,
     dataStoragePrefix: String,
     videoPrefix: String,
-    graphAutoStart: String
+    graphAutoStart: String,
+    createdBy: String,
+    lastUpdatedAt: Date
 });
 
 
