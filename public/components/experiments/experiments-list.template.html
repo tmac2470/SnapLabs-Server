@@ -1,0 +1,9 @@
+<uib-accordion close-others="true">
+    <div uib-accordion-group class="panel-default" template-url="components/experiments/experiments-panel.template.html" heading="{{item.labTitle}} - Created By {{item.createdBy}}" ng-repeat="item in $ctrl.currentList track by $index">
+        <p>Desciprtion: {{item.description}}</p>
+        <p>CreatedBy: {{item.createdBy}}</p>
+        <p>LastUpdatedAt: {{item.lastUpdatedAt}}</p>
+        {{finder.test}}
+    </div>
+    <ul uib-pagination total-items="$ctrl.totalItems" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()" max-size="maxSize" class="pagination" boundary-link-numbers="true"></ul>
+</uib-accordion>

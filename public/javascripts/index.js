@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('snaplab', [ 'ui.bootstrap','ui.router', 'ui.toggle', 'ui.sortable']);
+angular.module('snaplab', [ 'ui.bootstrap','ui.router', 'ui.toggle', 'ui.sortable', 'snaplab.experiments']);
 
 
 angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {

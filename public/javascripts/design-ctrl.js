@@ -257,11 +257,15 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
             sensorTagDict[i] = $scope.sensorTag[i]
         }
         expCfg.sensorTags = sensorTagDict;
+
+        var user = authentication.getLoginUser();
+        expCfg.createdBy = user.id;
+
         var postCfg = {};
         postCfg.headers = authentication.genHeader(authentication.getToken());
 
         if(expCfg.description && expCfg.labTitle){
-            $http.post('experiments', expCfg, postCfg)
+            $http.post('experiments/' + user.id, expCfg, postCfg)
                 .then(
                     function successCallback(successResponse){
                         window.location.href = "/#!/";
