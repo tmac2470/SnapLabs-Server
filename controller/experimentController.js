@@ -3,25 +3,21 @@
 var Experiment = require('../model/Experiment');
 var User = require('../model/User');
 var debug = require('debug')('snaplab-server');
-var ObjectId = require('mongodb').ObjectId;
 
 exports.getExperiments = function(req, res){
+
 
     var today = new Date();
     var day20Before = new Date(today.setDate(today.getDate()-20));
 
     var field = req.query.field || 'title';
-    var startDate = req.query.startdate || day20Before;
-    var endDate = req.query.enddate || today;
-    var sortType = req.query.sorttype || 'createdDateDescend';
+    var after = req.query.after || day20Before;
+    var before = req.query.before || today;
+    var sort = req.query.sort || '-createdDated';
     var content = req.query.content;
 
-    debug(content)
-    var pageNum = req.query.pagenum || 1;
-    var pageItems = req.query.pageitems ||20;
-
-
-    debug(req.query);
+    var page = parseInt(req.query.page) || 1;
+    var perPage = parseInt(req.query.per_page) ||20;
 
     var queryOption = {};
 
@@ -46,14 +42,13 @@ exports.getExperiments = function(req, res){
 
     debug(queryOption)
 
-    Experiment.find(queryOption, 'labTitle description')
-        .skip((pageNum-1) * pageItems)
-        .limit(pageItems)
+    Experiment.find(queryOption, 'labTitle description createdBy lastUpdatedAt')
+        .skip((page-1) * perPage)
+        .limit(perPage)
         .exec((err, experiments) => {
         if (err) {
             return res.send(err);
         }
-        debug(experiments)
         if(experiments){
             res.json(experiments);
         }else{

@@ -17,10 +17,14 @@ var experimentSchema = new Schema({
     dataStoragePrefix: String,
     videoPrefix: String,
     graphAutoStart: String,
-    createdBy: String,
+    createdBy: Schema.Types.ObjectId,
     lastUpdatedAt: Date
 });
 
+experimentSchema.pre('save', function save(next) {
+    this.lastUpdatedAt = new Date();
+    next();
+});
 
 var Experiment = mongoose.model('Experiments', experimentSchema);
 module.exports = Experiment;
