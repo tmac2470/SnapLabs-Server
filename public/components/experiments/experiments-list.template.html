@@ -3,7 +3,14 @@
         <p>Desciprtion: {{item.description}}</p>
         <p>CreatedBy: {{item.createdBy}}</p>
         <p>LastUpdatedAt: {{item.lastUpdatedAt}}</p>
-        {{finder.test}}
+
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="false" aria-label="Left Align">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-click="$ctrl.edit(item)" aria-label="Left Align">
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+        </button>
     </div>
+
     <ul uib-pagination total-items="$ctrl.totalItems" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()" max-size="maxSize" class="pagination" boundary-link-numbers="true"></ul>
 </uib-accordion>

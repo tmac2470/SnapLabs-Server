@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('snaplab.core.auth').service('authentication', ['$http', '$window', '$rootScope', function ($http, $window, $rootScope) {
+angular.module('snaplab.core.auth').service('auth', ['$http', '$window', '$rootScope', function ($http, $window, $rootScope) {
 
     var payload;
 

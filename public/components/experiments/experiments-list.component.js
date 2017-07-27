@@ -9,7 +9,7 @@ angular.module('snaplab.experiments')
     bindings:{
         initData:'<'
     },
-    controller: ['$rootScope', '$http', 'authentication', function ($rootScope, $http, authentication) {
+    controller: ['$rootScope', '$http', 'auth','$state', function ($rootScope, $http, auth, $state) {
 
         var self = this;
 
@@ -39,6 +39,13 @@ angular.module('snaplab.experiments')
                 self.currentList.push(self.list[i]);
             }
         };
+
+        self.edit = function(item) {
+            console.log('edit');
+            // $state.transitionTo('design', {item: item});
+            $state.transitionTo('design', {newParam: '123'});
+            console.log(item);
+        }
 
     }]
 });

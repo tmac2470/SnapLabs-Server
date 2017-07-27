@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope, $http, authentication) {
+angular.module('snaplab').controller('DesignCtrl',
+function ($scope, $rootScope, $http, auth, $state) {
 
     $scope.quickDesignBlock = [];
 
@@ -75,6 +76,7 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
         }
     };
 
+    console.log($state.params);
 
     var defaultSensorTag = {
         "connect" : true,
@@ -280,4 +282,5 @@ angular.module('snaplab').controller('DesignCtrl', function ($scope, $rootScope,
     }
 
 
-})
+}
+)
