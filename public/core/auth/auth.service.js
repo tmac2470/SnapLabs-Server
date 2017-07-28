@@ -3,14 +3,18 @@
 angular.module('snaplab.core.auth').service('auth', ['$http', '$window', '$rootScope', function ($http, $window, $rootScope) {
 
     var payload;
+    var token;
 
-    var isLoggedIn = function(token) {
+    var isLoggedIn = function() {
+
+        if(!token){
+            getToken();
+        }
 
         if(token){
             payload = token.split('.')[1];
             payload = $window.atob(payload);
             payload = JSON.parse(payload);
-
             return payload.exp > Date.now() / 1000;
         } else {
             return false;
@@ -40,7 +44,8 @@ angular.module('snaplab.core.auth').service('auth', ['$http', '$window', '$rootS
     };
 
     var getToken = function () {
-        return $window.localStorage['mean-token'];
+        token = $window.localStorage['mean-token'];
+        return token;
     };
 
     var logout = function () {
