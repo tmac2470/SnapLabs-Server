@@ -4,17 +4,19 @@ angular.module('snaplab.notification')
 .component('notification', {
     templateUrl: 'components/notification/notification.template.html',
     controller: ['$rootScope', function ($rootScope) {
-        this.alerts = [
+        var self = this;
+
+        self.alerts = [
             { type: 'warning', msg: 'This website is for Test only' }
         ];
 
-        this.addAlert = function(content) {
-            this.alerts.pop();
-            this.alerts.push(content);
+        $rootScope.addAlert = function(content) {
+            self.alerts.pop();
+            self.alerts.push(content);
         };
 
-        this.closeAlert = function(index) {
-            this.alerts.splice(index, 1);
+        self.closeAlert = function(index) {
+            self.alerts.splice(index, 1);
         };
     }]
 });

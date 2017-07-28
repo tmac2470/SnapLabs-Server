@@ -3,16 +3,15 @@
 angular.module('snaplab.auth')
 .component('signup',{
     templateUrl: 'components/auth/auth-signup.template.html',
-    controller: ['$rootScope', '$http', function ($rootScope, $http) {
+    controller: ['$rootScope', '$http','$state', function ($rootScope, $http, $state) {
         this.signUp = function() {
-            var email = $scope.email;
-            var password = $scope.password;
-            var repassword = $scope.repassword;
-            if(password && password == repassword && email){
-                $http.post('auth/signup', {email: email, password: password})
+            var self = this;
+
+            if(self.password && self.password == self.repassword && self.email){
+                $http.post('auth/signup', {email: self.email, password: self.password})
                     .then(
                         function successCallback(response) {
-                            window.location.href = "/#!/signin";
+                            $state.go('signin');
                             $rootScope.addAlert({ type:'success', msg:'Sign Up Success' });
                         },
                         function failCallback(response) {
