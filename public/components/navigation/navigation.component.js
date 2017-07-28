@@ -3,17 +3,27 @@
 angular.module('snaplab.navigation')
 .component('navigation', {
     templateUrl:'components/navigation/navigation.template.html',
-    controller: ['$rootScope', 'auth', function ($rootScope, auth) {
+    controller: ['$rootScope', 'auth', '$scope', '$state', function ($rootScope, auth, $scope, $state) {
         var self = this;
 
-        self.isNavCollapsed = true;
-
-        $rootScope.isLoggedIn = auth.isLoggedIn();
-        self.isLogin = $rootScope.isLoggedIn;
-
-        if(self.isLogin){
-            self.user = auth.getLoginUser();
+        $rootScope.isLogin = auth.isLoggedIn();
+        if($rootScope.isLogin){
+            self.isLogin = true;
+            $rootScope.user = auth.getLoginUser();
+            self.user = $rootScope.user;
+        }else{
+            self.isLogin = false;
         }
+        $scope.$watch('$root.isLogin', function(){
+            if($rootScope.isLogin){
+                self.isLogin = true;
+                $rootScope.user = auth.getLoginUser();
+                self.user = $rootScope.user;
+            }
+        });
+
+
+        self.isNavCollapsed = true;
 
         self.navCollapsedTrigger = function(){
             self.isNavCollapsed = !self.isNavCollapsed;
@@ -22,7 +32,8 @@ angular.module('snaplab.navigation')
 
         self.logout = function(){
             auth.logout();
-            self.isLogin = false;
+            $rootScope.isLogin = false;
+            $state.go('welcome');
         }
     }]
 });

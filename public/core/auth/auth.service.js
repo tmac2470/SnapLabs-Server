@@ -30,7 +30,10 @@ angular.module('snaplab.core.auth').service('auth', ['$http', '$window', '$rootS
         return user;
     }
 
-    var genHeader = function(token) {
+    var genHeader = function() {
+        if(angular.isUndefined(token)){
+            getToken();
+        }
         return {Authorization: 'Bearer '+ token};
     }
 
@@ -51,7 +54,6 @@ angular.module('snaplab.core.auth').service('auth', ['$http', '$window', '$rootS
     var logout = function () {
         $window.localStorage.removeItem('mean-token');
         $rootScope.addAlert({ type:'success', msg:'Logout Success' });
-        window.location.href = "/#!/";
     };
 
     return {

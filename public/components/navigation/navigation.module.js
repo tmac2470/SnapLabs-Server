@@ -1,3 +1,6 @@
 'use strict';
 
-angular.module('snaplab.navigation', ['snaplab.core.auth']);
+angular.module('snaplab.navigation', [
+    'snaplab.core.auth',
+    'ui.router'
+]);

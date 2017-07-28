@@ -4,16 +4,18 @@ angular.module('snaplab.profile')
 .component('profile', {
     templateUrl:'components/profile/profile.template.html',
     controller: ['$rootScope','$http', '$uibModal', 'auth', function ($rootScope, $http, $uibModal, auth) {
+        var self = this;
+
         var user = auth.getLoginUser();
-        this.name = user.name;
-        this.email = user.email;
+        self.email = user.email;
+        self.name = user.name;
 
         function popNewAlert(content) {
             var modalInstance = $uibModal.open({
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: 'templates/alert.html',
+                templateUrl: 'components/modal/modal.template.html',
                 controller: 'AlertModalInstanceCtrl',
                 controllerAs: '$ctrl',
                 size: 'sm',
@@ -24,23 +26,27 @@ angular.module('snaplab.profile')
                 }
             });
 
-            modalInstance.result.then(function closeDone() {
-            }, function dismissDone() {
-                console.log('Modal dismissed at: ' + new Date());
-            });
+            modalInstance.result
+                .then(
+                    function closeDone() {
+                    },
+                    function dismissDone() {
+                        console.log('Modal dismissed at: ' + new Date());
+                    }
+                );
         };
 
-        this.updateProfile = function() {
+        self.updateProfile = function() {
 
-            if(!this.name){
+            if(angular.isUndefined(self.name)){
                 popNewAlert('new name required');
                 return;
             }
 
             var postCfg = {};
-            postCfg.headers = auth.genHeader(auth.getToken());
+            postCfg.headers = auth.genHeader();
 
-            $http.post('profiles/' + user.id, {name: this.name}, postCfg)
+            $http.post('profiles/' + user.id, {name: self.name}, postCfg)
                 .then(
                     function successCallback(successResponse){
                         $rootScope.addAlert({ type:'success', msg:'Profile Updating Succeeded(re-login to view the change)' });
@@ -52,17 +58,17 @@ angular.module('snaplab.profile')
 
         };
 
-        this.updatePassword = function(){
+        self.updatePassword = function(){
             var postCfg = {};
-            postCfg.headers = auth.genHeader(auth.getToken());
+            postCfg.headers = auth.genHeader();
 
-            var invalidJudge = this.cPassword && this.cPassword.length >= 4 && this.nPassword && this.nPassword == this.nPassword2;
-            if(!invalidJudge){
+            var validJudge = angular.isDefined(self.cPassword) && angular.isDefined(self.nPassword) && self.nPassword == self.nPassword2;
+            if(!validJudge){
                 popNewAlert('input has conflict');
                 return;
             }
 
-            $http.post('profiles/' + user.id + '/password', {cPassword: this.cPassword, nPassword: this.nPassword}, postCfg)
+            $http.post('profiles/' + user.id + '/password', {cPassword: self.cPassword, nPassword: self.nPassword}, postCfg)
                 .then(
                     function successCallback(successResponse){
                         $rootScope.addAlert({ type:'success', msg:'Password Updating Succeeded' });
