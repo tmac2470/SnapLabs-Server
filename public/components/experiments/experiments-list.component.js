@@ -4,14 +4,27 @@ angular.module('snaplab.experiments')
 .component('experimentsList', {
     templateUrl: 'components/experiments/experiments-list.template.html',
     require: {
-        finderCtrl: '^experimentsFinder'
+        finderCtrl: '?^experimentsFinder'
     },
     bindings:{
-        initData:'<'
+        initData:'<',
+        isolated:"@"
     },
     controller: ['$rootScope', '$http', 'auth','$state', function ($rootScope, $http, auth, $state) {
 
         var self = this;
+
+        function loadList(self, data){
+            self.list = data.data;
+            self.totalItems = data.data.length;
+            self.currentPage = 1;
+            self.maxSize = 5;
+
+            self.currentList = [];
+            for (var i = 0; i < 10 && i < self.totalItems; i++) {
+                self.currentList.push(self.list[i]);
+            }
+        }
 
         self.$onChanges = function(changesObj){
 
@@ -19,18 +32,20 @@ angular.module('snaplab.experiments')
             // filter change of data from search result
             if(!angular.isUndefined(changesObj.initData) && !angular.isUndefined(self.initData)){
                 var response = self.initData;
-                self.list = response.data;
-                self.totalItems = response.data.length;
-                self.currentPage = 1;
-                self.maxSize = 5;
-
-                self.currentList = [];
-                for (var i = 0; i < 10 && i < self.totalItems; i++) {
-                    self.currentList.push(self.list[i]);
-                }
+                loadList(self, response);
             }
         };
 
+        self.$onInit = function() {
+            if (self.isolated == "true") {
+                $http.get('experiments')
+                    .then(function (response) {
+                        loadList(self, response);
+                    });
+            } else {
+                console.log("not isolated");
+            }
+        }
 
 
         self.pageChanged = function () {
@@ -42,8 +57,7 @@ angular.module('snaplab.experiments')
 
         self.edit = function(item) {
             console.log('edit');
-            // $state.transitionTo('design', {item: item});
-            $state.transitionTo('design', {newParam: '123'});
+            $state.go('design', {id: item._id});
             console.log(item);
         }
 
