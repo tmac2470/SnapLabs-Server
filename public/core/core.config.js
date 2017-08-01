@@ -19,8 +19,18 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
         },
         {
             name: 'design',
-            url: '/design/:id',
+            url: '/design',
             component: 'design'
+        },
+        {
+            name: 'design.quick',
+            url: '/design/quick/:id',
+            component: 'designQuick'
+        },
+        {
+            name: 'design.detail',
+            url: '/design/detail/:id',
+            component: 'designDetail'
         },
         {
             name: 'download',
