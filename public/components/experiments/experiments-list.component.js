@@ -10,9 +10,10 @@ angular.module('snaplab.experiments')
         initData:'<',
         isolated:"@"
     },
-    controller: ['$rootScope', '$http', 'auth','$state', function ($rootScope, $http, auth, $state) {
+    controller: ['$rootScope', '$http', 'auth','$state','$uibModal', function ($rootScope, $http, auth, $state, $uibModal) {
 
         var self = this;
+        var user = auth.getLoginUser();
 
         function loadList(self, data){
             self.list = data.data;
@@ -38,7 +39,9 @@ angular.module('snaplab.experiments')
 
         self.$onInit = function() {
             if (self.isolated == "true") {
-                $http.get('experiments')
+                var httpCfg = {};
+                httpCfg.headers = auth.genHeader();
+                $http.get('experiments/user/' + user.id, httpCfg)
                     .then(function (response) {
                         loadList(self, response);
                     });
@@ -55,11 +58,58 @@ angular.module('snaplab.experiments')
             }
         };
 
+        self.remove = function(item) {
+            console.log('remove');
+
+            var httpCfg = {};
+            httpCfg.headers = auth.genHeader();
+            
+            $http.delete('experiments/' + item._id, httpCfg)
+                    .then(
+                        function successCallback(successResponse){
+                            $rootScope.addAlert({ type:'success', msg:'Remove Experiment Success' });
+                            $state.reload();
+                        },
+                        function failCallback(failResponse){
+                            $rootScope.addAlert({ type:'danger', msg:'Remove Experiment Fail' })
+                        });
+        }
+
         self.edit = function(item) {
             console.log('edit');
-            $state.go('design', {id: item._id});
+            $state.go('design.detail', {id: item._id});
             console.log(item);
-        }
+        };
+
+        self.copy = function() {
+            popNewAlert('copy target experiment to create my own function is under development!');
+        };
+
+        function popNewAlert(content) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'components/modal/modal.template.html',
+                controller: 'AlertModalInstanceCtrl',
+                controllerAs: '$ctrl',
+                size: 'sm',
+                resolve: {
+                    content: function () {
+                        return content;
+                    }
+                }
+            });
+
+            modalInstance.result
+                .then(
+                    function closeDone() {
+                    },
+                    function dismissDone() {
+                        console.log('Modal dismissed at: ' + new Date());
+                    }
+                );
+        };
 
     }]
 });

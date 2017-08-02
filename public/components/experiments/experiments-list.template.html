@@ -3,11 +3,13 @@
         <p>Desciprtion: {{item.description}}</p>
         <p>CreatedBy: {{item.createdBy}}</p>
         <p>LastUpdatedAt: {{item.lastUpdatedAt}}</p>
-
-        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="false" aria-label="Left Align">
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="$ctrl.isolated" ng-click="$ctrl.remove(item)" aria-label="Left Align">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="true" ng-click="$ctrl.copy()" aria-label="Left Align">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </button>
-        <button type="button" class="pull-right btn btn-default btn-sm" ng-click="$ctrl.edit(item)" aria-label="Left Align">
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="$ctrl.isolated" ng-click="$ctrl.edit(item)" aria-label="Left Align">
             <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
         </button>
     </div>

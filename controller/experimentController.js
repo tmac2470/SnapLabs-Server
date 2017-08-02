@@ -6,7 +6,6 @@ var debug = require('debug')('snaplab-server');
 
 exports.getExperiments = function(req, res){
 
-
     var today = new Date();
     var day20Before = new Date(today.setDate(today.getDate()-20));
 
@@ -45,7 +44,7 @@ exports.getExperiments = function(req, res){
     Experiment.find(queryOption, 'labTitle description createdBy lastUpdatedAt')
         .skip((page-1) * perPage)
         .limit(perPage)
-        .exec((err, experiments) => {
+        .exec(function(err, experiments) {
         if (err) {
             return res.send(err);
         }
@@ -58,17 +57,55 @@ exports.getExperiments = function(req, res){
 };
 
 exports.getOneExperiment = function(req, res){
-    var title = req.params.title;
-    console.log(title)
-    Experiment.findOne({labTitle: title}).exec((err, experiments) => {
+    var id = req.params.id;
+    console.log(id)
+    Experiment.findOne({_id: id}).exec(function (err, experiments) {
         if (err) {
             return res.send(err);
         }
+        console.log(experiments);
         res.json(experiments);
     });
 };
 
-exports.insertExperiment = function(req, res){
+exports.updateOneExperiment = function(req, res){
+    var content = req.body;
+    var id = req.params.id;
+    console.log(id);
+    Experiment.findById(id).exec(function(err, result){
+        result.videoPrefix = content.videoPredix;
+        result.dataStorageAllowed = content.dataStorageAllowed;
+        result.dataStoragePrefix = content.dataStoragePrefix;
+        result.graphAutoStart = content.graphAutoStart;
+        result.labTitle = content.labTitle;
+        result.sampleInterval = content.sampleInterval;
+        result.description = content.description;
+        result.sensorTags = content.sensorTags;
+        result.save(function (err, result){
+            console.log(err);
+            if(err){
+            }else{
+                console.log('return success');
+                res.json({status: 'success'});
+            }
+        });
+
+    });
+};
+
+exports.deleteOneExperiment = function(req, res){
+    console.log(req.params.id);
+    Experiment.findByIdAndRemove( req.params.id, function(err){
+        console.log('in here');
+        if(err){
+            return next(err);
+        }else {
+            res.json({status:'success'});
+        }
+    });
+};
+
+exports.insertOneExperiment = function(req, res){
     var content = req.body;
     var newExp = new Experiment(content);
     newExp.save(function(err, result){
@@ -77,6 +114,17 @@ exports.insertExperiment = function(req, res){
             res.json({status: 'fail'});
         }else{
             res.json({status: 'success'});
+        }
+    });
+};
+
+exports.getUserExperiments = function(req, res){
+    var userId = req.params.userId;
+    Experiment.find({ createdBy: userId }, function(err, experiments) {
+        if(err){
+            return next(err);
+        }else {
+            res.json(experiments);
         }
     });
 };

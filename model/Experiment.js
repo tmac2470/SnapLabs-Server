@@ -9,16 +9,17 @@ var experimentSchema = new Schema({
     labTitle: String,
     description: String,
     sampleInterval: String,
-    captureOnClick: String,
+    captureOnClick: Boolean,
     graphs: String,
     grids: String,
     sensorTags: Schema.Types.Mixed,
-    dataStorageAllowed: String,
+    dataStorageAllowed: Boolean,
     dataStoragePrefix: String,
     videoPrefix: String,
-    graphAutoStart: String,
+    graphAutoStart: Boolean,
     createdBy: Schema.Types.ObjectId,
-    lastUpdatedAt: Date
+    lastUpdatedAt: Date,
+    isPublished: Boolean
 });
 
 experimentSchema.pre('save', function save(next) {

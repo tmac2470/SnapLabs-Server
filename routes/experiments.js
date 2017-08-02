@@ -10,13 +10,17 @@ var auth = jwt({
     userProperty: 'payload'
 });
 
-/* GET users listing. */
+/* retrive all experiments based on conditional query. */
 router.get('/', controller.getExperiments);
 
-// router.get('/:title', controller.getOneExperiment);
+/* retrive and add experiment to specific user */
+router.get('/user/:userId', auth, controller.getUserExperiments);
+router.post('/user/:userId', auth, controller.insertOneExperiment);
 
-router.post('/:id', auth, controller.insertExperiment);
 
-router.get('/:id',  auth, controller.getExperiments);
+/* retrive, update and delete specific experiment */
+router.get('/:id', controller.getOneExperiment);
+router.put('/:id', auth, controller.updateOneExperiment);
+router.delete('/:id', auth, controller.deleteOneExperiment);
 
 module.exports = router;
