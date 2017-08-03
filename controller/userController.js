@@ -17,8 +17,7 @@ exports.signIn = function(req, res, next){
         }
         if (user) {
             var token = user.generateJwt();
-            res.status(200);
-            res.json({
+            res.status(200).json({
                 "token" : token
             });
         } else {
@@ -38,7 +37,7 @@ exports.signUp = function(req, res, next){
     User.findOne({email: req.body.email}, function(err, existingUser){
         if (err) next(err);
         if (existingUser) {
-            return res.json({ status:'fail', mgs:'email exsists'});
+            return res.status(200).json(new Message('200', 'Email Exsistes'));
         }
 
         user.save(function(err){
@@ -46,7 +45,7 @@ exports.signUp = function(req, res, next){
                 console.log('error');
                 return next(err);
             }
-            return res.json({ status:'success'});
+            return res.status.json(new Message('200', 'Success'));
         });
     });
 }
@@ -56,7 +55,7 @@ exports.forget = function(req, res, next){
     User.findOne({email: req.body.email}, function(err, existingUser){
         if (err) next(err);
         if (!existingUser) {
-            return res.json({ status:'fail', msg:'email have not been registered'});
+            return res.status(400).json(new Message('400','email have not been registered'));
         } else {
             async.waterfall([
                 function setRandomToken(done) {
@@ -99,7 +98,7 @@ exports.forget = function(req, res, next){
                 function (err, result){
                     if(err) return next(err);
                     else{
-                        res.json({ status:'success'});
+                        res.status(200).json(new Message('200','success'));
                     }
                 }
             );
@@ -120,7 +119,7 @@ exports.reset = function(req, res, next){
                         return next(err);
                     }
                     if (!user) {
-                        return res.json({status:'fail', msg: 'Password reset token is invalid or has expired.'});
+                        return res.status(400).json(new Message('400','Password reset token is invalid or has expired.'));
                     }
                     user.password = req.body.password;
                     user.passwordResetToken = undefined;
@@ -149,7 +148,7 @@ exports.reset = function(req, res, next){
             };
             transporter.sendMail(mailOptions, function (err) {
                 if(!err){
-                    res.json({status:'success', msg:'Success! Your password has been changed.'});
+                    res.status(200).json(new Message('200','Success! Your password has been changed.'));
                 }else{
                     console.log(err);
                 }
