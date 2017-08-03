@@ -6,7 +6,6 @@ angular.module('snaplab.navigation')
     controller: ['$rootScope', 'auth', '$scope', '$state', function ($rootScope, auth, $scope, $state) {
         var self = this;
 
-        $rootScope.isLogin = auth.isLoggedIn();
         if($rootScope.isLogin){
             self.isLogin = true;
             $rootScope.user = auth.getLoginUser();

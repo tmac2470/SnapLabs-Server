@@ -3,7 +3,19 @@
 var Experiment = require('../model/Experiment');
 var User = require('../model/User');
 var debug = require('debug')('snaplab-server');
+var Message = require('../utils').Message;
 
+/**
+ * search controller
+ * query parameter: 
+ *      after: date
+ *      before: date
+ *      sort: lastUpdated, -lastUpdated, author, -author
+ *      content:
+ *      field: title, author, all
+ *      page: number
+ *      perPage: number
+ */
 exports.getExperiments = function(req, res){
 
     var today = new Date();
@@ -12,13 +24,17 @@ exports.getExperiments = function(req, res){
     var field = req.query.field || 'title';
     var after = req.query.after || day20Before;
     var before = req.query.before || today;
-    var sort = req.query.sort || '-createdDated';
+    var sort = req.query.sort || '-lastupdated';
     var content = req.query.content;
 
     var page = parseInt(req.query.page) || 1;
     var perPage = parseInt(req.query.per_page) ||20;
 
     var queryOption = {};
+    queryOption.lastUpdatedAt = {
+        $gte: new Date(after),
+        $lt: new Date(before)
+    }
 
     if(content){
         var fields = field.split(';');
@@ -33,25 +49,34 @@ exports.getExperiments = function(req, res){
         });
     }
 
-    var id = req.params.id;
-
-    if(id){
-        queryOption.createdBy = id;
+    var sortField;
+    switch(sort){
+        case '-lastupdated':
+            sortField = {lastUpdatedAt: -1};
+            break;
+        case 'lastupdated':
+            sortField = {lastUpdatedAt: 1};
+            break;
+        case 'author':
+            sortField = {createdBy: 1};
+            break;
+        case '-author':
+            sortField = {createdBy: -1};
+            break;
     }
-
-    debug(queryOption)
 
     Experiment.find(queryOption, 'labTitle description createdBy lastUpdatedAt')
         .skip((page-1) * perPage)
         .limit(perPage)
+        .sort(sortField)
         .exec(function(err, experiments) {
         if (err) {
-            return res.send(err);
+            return next(err);
         }
         if(experiments){
-            res.json(experiments);
+            res.status(200).json(experiments);
         }else{
-            res.json([]);
+            res.status(200).json([]);
         }
     });
 };
@@ -63,15 +88,13 @@ exports.getOneExperiment = function(req, res){
         if (err) {
             return res.send(err);
         }
-        console.log(experiments);
-        res.json(experiments);
+        res.status(200).json(experiments);
     });
 };
 
 exports.updateOneExperiment = function(req, res){
     var content = req.body;
     var id = req.params.id;
-    console.log(id);
     Experiment.findById(id).exec(function(err, result){
         result.videoPrefix = content.videoPredix;
         result.dataStorageAllowed = content.dataStorageAllowed;
@@ -82,11 +105,9 @@ exports.updateOneExperiment = function(req, res){
         result.description = content.description;
         result.sensorTags = content.sensorTags;
         result.save(function (err, result){
-            console.log(err);
             if(err){
             }else{
-                console.log('return success');
-                res.json({status: 'success'});
+                res.status(200).json(new Message('200', 'Success'));
             }
         });
 
@@ -96,11 +117,10 @@ exports.updateOneExperiment = function(req, res){
 exports.deleteOneExperiment = function(req, res){
     console.log(req.params.id);
     Experiment.findByIdAndRemove( req.params.id, function(err){
-        console.log('in here');
         if(err){
             return next(err);
         }else {
-            res.json({status:'success'});
+            res.status(200).json(new Message('200', 'Success'));
         }
     });
 };
@@ -110,10 +130,9 @@ exports.insertOneExperiment = function(req, res){
     var newExp = new Experiment(content);
     newExp.save(function(err, result){
         if(err){
-            console.log(err);
-            res.json({status: 'fail'});
+            next(err);
         }else{
-            res.json({status: 'success'});
+            res.status(200).json(new Message('200', 'Success'));
         }
     });
 };
@@ -124,7 +143,7 @@ exports.getUserExperiments = function(req, res){
         if(err){
             return next(err);
         }else {
-            res.json(experiments);
+            res.status(200).json(experiments);
         }
     });
 };

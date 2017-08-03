@@ -5,8 +5,8 @@ angular.module('snaplab.experiments')
     templateUrl: 'components/experiments/experiments-finder.template.html',
     controller: ['$http', function($http){
         var self =this;
-        self.dtStart = new Date();
         self.dtEnd = new Date();
+        self.dtStart = new Date(new Date().setDate(self.dtEnd.getDate()-20));
 
         self.searchContent = '';
 
@@ -26,7 +26,16 @@ angular.module('snaplab.experiments')
             console.log(type + ":" + searchContent + ":"
                 + dtStart + ":" + dtEnd + ":" + sortType);
 
-            $http.get('experiments')
+            var httpCfg = {
+                params: {
+                    after: dtStart,
+                    before: dtEnd,
+                    sort: sortType,
+                    content: searchContent,
+                    field: type
+                }
+            };
+            $http.get('experiments', httpCfg)
                 .then(function (response) {
                     self.initData = response;
                     console.log(self.initData);
