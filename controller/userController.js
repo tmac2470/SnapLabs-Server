@@ -45,7 +45,7 @@ exports.signUp = function(req, res, next){
                 console.log('error');
                 return next(err);
             }
-            return res.status.json(new Message('200', 'Success'));
+            return res.status(200).json(new Message('200', 'Success'));
         });
     });
 }

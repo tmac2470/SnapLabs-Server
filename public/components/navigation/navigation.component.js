@@ -18,6 +18,8 @@ angular.module('snaplab.navigation')
                 self.isLogin = true;
                 $rootScope.user = auth.getLoginUser();
                 self.user = $rootScope.user;
+            }else{
+                self.isLogin = false;
             }
         });
 
