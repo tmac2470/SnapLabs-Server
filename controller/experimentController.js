@@ -31,6 +31,7 @@ exports.getExperiments = function(req, res){
     var perPage = parseInt(req.query.per_page) ||20;
 
     var queryOption = {};
+    queryOption.isPublished = true;
     queryOption.lastUpdatedAt = {
         $gte: new Date(after),
         $lt: new Date(before)
@@ -95,6 +96,7 @@ exports.getOneExperiment = function(req, res){
 exports.updateOneExperiment = function(req, res){
     var content = req.body;
     var id = req.params.id;
+    console.log(content);
     Experiment.findById(id).exec(function(err, result){
         result.videoPrefix = content.videoPredix;
         result.dataStorageAllowed = content.dataStorageAllowed;
@@ -104,6 +106,7 @@ exports.updateOneExperiment = function(req, res){
         result.sampleInterval = content.sampleInterval;
         result.description = content.description;
         result.sensorTags = content.sensorTags;
+        result.isPublished = content.isPublished;
         result.save(function (err, result){
             if(err){
             }else{
@@ -127,6 +130,8 @@ exports.deleteOneExperiment = function(req, res){
 
 exports.insertOneExperiment = function(req, res){
     var content = req.body;
+    // console.log(content);
+
     var newExp = new Experiment(content);
     newExp.save(function(err, result){
         if(err){

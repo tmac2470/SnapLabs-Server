@@ -168,6 +168,7 @@ function transferToCfg($scope) {
     expCfg.labTitle = $scope.expTitle;
     expCfg.sampleInterval = $scope.sampleInterval;
     expCfg.description = $scope.expDesc;
+    expCfg.isPublished = $scope.isPublished || false;
     var sensorTagDict = {};
     for(var i in $scope.sensorTag){
         sensorTagDict[i] = $scope.sensorTag[i]
@@ -203,6 +204,7 @@ function designController($scope, $rootScope, $http, auth, $state) {
                         $scope.allowDataStorage = response.data.dataStorageAllowed;
                         $scope.allowVideo = response.data.videoAllowed;
                         $scope.autoStartGraphs = response.data.graphAutoStart;
+                        $scope.isPublished = response.data.isPublished;
                     },
                     function failCallback(response){
                         console.log(response);
