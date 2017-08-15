@@ -24,12 +24,12 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
         },
         {
             name: 'design.quick',
-            url: '/design/quick/:id',
+            url: '/quick/:id',
             component: 'designQuick'
         },
         {
             name: 'design.detail',
-            url: '/design/detail/:id',
+            url: '/detail/:id',
             component: 'designDetail'
         },
         {

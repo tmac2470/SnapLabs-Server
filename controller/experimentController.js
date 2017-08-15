@@ -130,8 +130,6 @@ exports.deleteOneExperiment = function(req, res){
 
 exports.insertOneExperiment = function(req, res){
     var content = req.body;
-    // console.log(content);
-
     var newExp = new Experiment(content);
     newExp.save(function(err, result){
         if(err){

@@ -29,9 +29,12 @@ exports.signIn = function(req, res, next){
 
 exports.signUp = function(req, res, next){
 
+    var extractedName = req.body.email.split('@')[0];
+
     var user = new User({
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        name: extractedName
     });
 
     User.findOne({email: req.body.email}, function(err, existingUser){
