@@ -6,7 +6,7 @@ angular.module('snaplab.design')
         controller: ['$scope', '$rootScope', '$http', 'auth', '$state', designController]
     });
 
-function loadDraggableBlocks(self){
+function loadDraggableBlocks(self, defaultSensorTag){
     self.quickDesignBlock = [];
 
     self.TemperatureBlock = [
@@ -236,7 +236,6 @@ function createDefaultSensorTag() {
 function designController($scope, $rootScope, $http, auth, $state) {
 
         var self = this;
-        loadDraggableBlocks(self);
 
         var defaultSensorTag;
         if($state.params.id != '0'){
@@ -246,6 +245,9 @@ function designController($scope, $rootScope, $http, auth, $state) {
         else{
             defaultSensorTag = createDefaultSensorTag();
         };
+
+
+        loadDraggableBlocks(self, defaultSensorTag);
 
         $scope.expTitle = 'SensorTag Investigation';
         $scope.sampleInterval = 1000;
