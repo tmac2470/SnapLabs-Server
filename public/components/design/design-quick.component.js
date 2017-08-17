@@ -71,6 +71,7 @@ function loadDraggableBlocks(self, defaultSensorTag){
                 });
             }else{
                 //if move out of area, parameter values set to reverse
+                console.log('move out');
                 movedItem.parameters.forEach(function(parameter) {
                     var splits = parameter.field.split('.');
                     defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = !parameter.value;
@@ -276,6 +277,7 @@ function designController($scope, $rootScope, $http, auth, $state) {
             expCfg.labTitle = $scope.expTitle;
             expCfg.sampleInterval = $scope.sampleInterval;
             expCfg.description = $scope.expDesc;
+            expCfg.isPublished = $scope.isPublished || false;
             var sensorTagDict = {};
             for(var i in $scope.sensorTag){
                 sensorTagDict[i] = $scope.sensorTag[i]
@@ -289,7 +291,7 @@ function designController($scope, $rootScope, $http, auth, $state) {
             postCfg.headers = auth.genHeader(auth.getToken());
 
             if(expCfg.description && expCfg.labTitle){
-                $http.post('experiments/' + user.id, expCfg, postCfg)
+                $http.post('experiments/user/' + user.id, expCfg, postCfg)
                     .then(
                         function successCallback(successResponse){
                             window.location.href = "/#!/";
