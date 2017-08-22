@@ -3,16 +3,16 @@
 angular.module('snaplab.design')
     .component('designQuick', {
         templateUrl: 'components/design/design-quick.template.html',
-        controller: ['$scope', '$rootScope', '$http', 'auth', '$state', designController]
+        controller: ['$rootScope', '$http', 'auth', '$state','$uibModal', designController]
     });
 
-function loadDraggableBlocks(self, defaultSensorTag){
+function loadDraggableBlocks(self, defaultSensorTag, popNewAlert){
     self.quickDesignBlock = [];
 
     self.TemperatureBlock = [
-        { name:'Temperature Graph', url:'images/graphicon.png', parameters: [{field:'Temperature.graph.display', value:true}]},
-        { name:'Temperature Data Only', url:'images/dataicon.jpg', parameters: [{field:'Temperature.data.display', value:true}]},
-        { name:'4x4 Temperature Grid', url:'images/gridicon.png', parameters: [{field:'Temperature.grid.griddisplay', value:true}]}
+        { class:'Temperature', name:'Temperature Graph', url:'images/graphicon.png', parameters: [{field:'Temperature.graph.display', value:true}]},
+        { class:'Temperature', name:'Temperature Data Only', url:'images/dataicon.jpg', parameters: [{field:'Temperature.data.display', value:true}]},
+        { class:'Temperature', name:'4x4 Temperature Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Temperature.grid.griddisplay', value:true}]}
     ];
 
     self.HumidityBlock = [
@@ -53,32 +53,65 @@ function loadDraggableBlocks(self, defaultSensorTag){
 
     self.sortableOptions = {
         connectWith: ".qd",
-        stop: function(e, ui) {
-            console.log("stop");
 
-            //if drop into quick design area:
-            var flag = ui.item.sortable.droptargetModel == self.quickDesignBlock? true: false;
-            console.log(flag);
+        update: function(e, ui) {
+            if(!ui.item.sortable.received){
+                if(ui.item.sortable.sourceModel == self.quickDesignBlock){
 
+                    console.log(ui.item.sortable.sourceModel);
+                    console.log(self.quickDesignBlock);
+                    popNewAlert('moving out of quick panel is forbidden');
+                    ui.item.sortable.cancel();
+                }
+                // console.log(ui.item.sortable.droptargetModel);
+                // console.log(self.quickDesignBlock);
+                if(ui.item.sortable.droptargetModel == self.quickDesignBlock){
+                    var sourceModel = ui.item.sortable.sourceModel;
+                    var numOfGraphOrGrid = sourceModel.filter(function(item) {
+                        var hasGraph = item.name.indexOf('Graph')>=0;
+                        var hasGrid = item.name.indexOf('Grid')>=0;
+                        return hasGraph||hasGrid;
+                    }).length;
+                    if(numOfGraphOrGrid<2 && 
+                        (ui.item.sortable.model.name.indexOf('Grid')>=0 
+                        || ui.item.sortable.model.name.indexOf('Graph')>=0)){
+                        popNewAlert('Only one can be selected from Graph and Grid.');
+                        ui.item.sortable.cancel();
+                    }
 
-            //get the element who moves
-            var movedItem = ui.item.sortable.model;
-            if(flag){
-                // if move in, set parameter values
-                movedItem.parameters.forEach(function(parameter) {
-                    var splits = parameter.field.split('.');
-                    defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = parameter.value;
-                });
-            }else{
-                //if move out of area, parameter values set to reverse
-                console.log('move out');
-                movedItem.parameters.forEach(function(parameter) {
-                    var splits = parameter.field.split('.');
-                    defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = !parameter.value;
-                });
+                    console.log('move in');
+                }
+            }else{//received
+            
+                
             }
+        },
+        // stop: function(e, ui) {
+        //     console.log("stop");
 
-        }
+        //     //if drop into quick design area:
+        //     var flag = ui.item.sortable.droptargetModel == self.quickDesignBlock? true: false;
+        //     console.log(flag);
+
+
+        //     //get the element who moves
+        //     var movedItem = ui.item.sortable.model;
+        //     if(flag){
+        //         // if move in, set parameter values
+        //         movedItem.parameters.forEach(function(parameter) {
+        //             var splits = parameter.field.split('.');
+        //             defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = parameter.value;
+        //         });
+        //     }else{
+        //         //if move out of area, parameter values set to reverse
+        //         // console.log('move out');
+        //         // movedItem.parameters.forEach(function(parameter) {
+        //         //     var splits = parameter.field.split('.');
+        //         //     defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = !parameter.value;
+        //         // });
+        //     }
+
+        // }
     };
 }
 
@@ -234,7 +267,7 @@ function createDefaultSensorTag() {
     return defaultSensorTag;
 }
 
-function designController($scope, $rootScope, $http, auth, $state) {
+function designController($rootScope, $http, auth, $state, $uibModal) {
 
         var self = this;
 
@@ -247,40 +280,103 @@ function designController($scope, $rootScope, $http, auth, $state) {
             defaultSensorTag = createDefaultSensorTag();
         };
 
+        function popNewAlert(content) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'components/modal/modal.template.html',
+                controller: 'AlertModalInstanceCtrl',
+                controllerAs: '$ctrl',
+                size: 'sm',
+                resolve: {
+                    content: function () {
+                        return content;
+                    }
+                }
+            });
+    
+            modalInstance.result
+                .then(
+                    function closeDone() {
+                    },
+                    function dismissDone() {
+                        console.log('Modal dismissed at: ' + new Date());
+                    }
+                );
+        };
 
-        loadDraggableBlocks(self, defaultSensorTag);
+        function popTuneWindow(){
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'components/modal/tune-modal.template.html',
+                controller: 'TuneModalInstanceCtrl',
+                controllerAs: '$ctrl',
+                resolve: {
+                    // content: function () {
+                    //     return content;
+                    // }
+                }
+            });
 
-        $scope.expTitle = 'SensorTag Investigation';
-        $scope.sampleInterval = 1000;
-        $scope.sampleRateStr = 'select';
-        $scope.allowDataStorage = false;
-        $scope.allowVideo = false;
-        $scope.autoStartGraphs = false;
 
-        $scope.sensorTag = [];
-        $scope.sensorTag.push(defaultSensorTag);
-        $scope.setSampleRate = function(data, str){
-            $scope.sampleRateStr = str;
-            $scope.sampleInterval = 1000/data;
+            modalInstance.result
+            .then(
+                function closeDone() {
+                },
+                function dismissDone() {
+                    console.log('Modal dismissed at: ' + new Date());
+                }
+            );
         }
-        $scope.duplicate = function(data){
-            var newSensorTag = JSON.parse(JSON.stringify(data));
-            $scope.sensorTag.push(newSensorTag);
+
+        loadDraggableBlocks(self, defaultSensorTag, popNewAlert);
+
+        /*
+        * return block back to origin
+        */
+        self.returnBack = function(item) {
+            var indexInQuick = self.quickDesignBlock.indexOf(item);
+            self.quickDesignBlock.splice(indexInQuick,1);
+            var classification = item.class+'Block';
+            self[classification].push(item);
         }
-        $scope.store = function(){
+
+        self.tune = function(item) {
+
+            console.log(item);
+            popTuneWindow();
+        }
+
+        self.expTitle = 'SensorTag Investigation';
+        self.sampleInterval = 1000;
+        self.sampleRateStr = 'select';
+        self.allowDataStorage = false;
+        self.allowVideo = false;
+        self.autoStartGraphs = false;
+
+        self.sensorTag = [];
+        self.sensorTag.push(defaultSensorTag);
+        self.setSampleRate = function(data, str){
+            self.sampleRateStr = str;
+            self.sampleInterval = 1000/data;
+        }
+        self.store = function(){
             var expCfg = {};
-            expCfg.videoAllowed = $scope.allowVideo;
-            expCfg.videoPrefix = $scope.expTitle + 'Video';
-            expCfg.dataStorageAllowed = $scope.allowDataStorage;
-            expCfg.dataStoragePrefix = $scope.expTitle + 'Data';
-            expCfg.graphAutoStart = $scope.autoStartGraphs;
-            expCfg.labTitle = $scope.expTitle;
-            expCfg.sampleInterval = $scope.sampleInterval;
-            expCfg.description = $scope.expDesc;
-            expCfg.isPublished = $scope.isPublished || false;
+            expCfg.videoAllowed = self.allowVideo;
+            expCfg.videoPrefix = self.expTitle + 'Video';
+            expCfg.dataStorageAllowed = self.allowDataStorage;
+            expCfg.dataStoragePrefix = self.expTitle + 'Data';
+            expCfg.graphAutoStart = self.autoStartGraphs;
+            expCfg.labTitle = self.expTitle;
+            expCfg.sampleInterval = self.sampleInterval;
+            expCfg.description = self.expDesc;
+            expCfg.isPublished = self.isPublished || false;
             var sensorTagDict = {};
-            for(var i in $scope.sensorTag){
-                sensorTagDict[i] = $scope.sensorTag[i]
+            for(var i in self.sensorTag){
+                sensorTagDict[i] = self.sensorTag[i]
             }
             expCfg.sensorTags = sensorTagDict;
 

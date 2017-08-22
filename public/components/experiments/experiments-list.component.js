@@ -85,6 +85,45 @@ angular.module('snaplab.experiments')
             popNewAlert('copy target experiment to create my own function is under development!');
         };
 
+
+        self.popDetail = function(item){
+            $http.get('experiments/' + item._id)
+            .then(
+                function successCallBack(response){
+                    popDetailWindow(response);
+                },
+                function failCallback(response){
+                    popDetailWindow(response);
+                }
+            );
+        }
+
+        function popDetailWindow(content) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'components/modal/experiment-modal.template.html',
+                controller: 'AlertModalInstanceCtrl',
+                controllerAs: '$ctrl',
+                size: 'lg',
+                resolve: {
+                    content: function () {
+                        return content;
+                    }
+                }
+            });
+
+            modalInstance.result
+                .then(
+                    function closeDone() {
+                    },
+                    function dismissDone() {
+                        console.log('Modal dismissed at: ' + new Date());
+                    }
+                );
+        };
+
         function popNewAlert(content) {
             var modalInstance = $uibModal.open({
                 animation: true,
