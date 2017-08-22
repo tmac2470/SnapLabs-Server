@@ -16,39 +16,39 @@ function loadDraggableBlocks(self, defaultSensorTag, popNewAlert){
     ];
 
     self.HumidityBlock = [
-        { name:'Humidity Graph', url:'images/graphicon.png', parameters: [{field:'Humidity.graph.display', value:true}]},
-        { name:'Humidity Data Only', url:'images/dataicon.jpg', parameters: [{field:'Humidity.data.display', value:true}]},
-        { name:'4x4 Humidity Grid', url:'images/gridicon.png', parameters: [{field:'Humidity.grid.griddisplay', value:true}]}
+        { class:'Humidity', name:'Humidity Graph', url:'images/graphicon.png', parameters: [{field:'Humidity.graph.display', value:true}]},
+        { class:'Humidity', name:'Humidity Data Only', url:'images/dataicon.jpg', parameters: [{field:'Humidity.data.display', value:true}]},
+        { class:'Humidity', name:'4x4 Humidity Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Humidity.grid.griddisplay', value:true}]}
     ];
 
     self.BarometerBlock = [
-        { name:'Barometer Graph', url:'images/graphicon.png', parameters: [{field:'Barometer.graph.display', value:true}]},
-        { name:'Barometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Barometer.data.display', value:true}]},
-        { name:'4x4 Barometer Grid', url:'images/gridicon.png', parameters: [{field:'Barometer.grid.griddisplay', value:true}]}
+        { class:'Barometer', name:'Barometer Graph', url:'images/graphicon.png', parameters: [{field:'Barometer.graph.display', value:true}]},
+        { class:'Barometer', name:'Barometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Barometer.data.display', value:true}]},
+        { class:'Barometer', name:'4x4 Barometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Barometer.grid.griddisplay', value:true}]}
     ];
 
     self.AccelerometerBlock = [
-        { name:'Accelerometer Graph', url:'images/graphicon.png', parameters: [{field:'Accelerometer.graph.display', value:true}]},
-        { name:'Accelerometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Accelerometer.data.display', value:true}]},
-        { name:'4x4 Accelerometer Grid', url:'images/gridicon.png', parameters: [{field:'Accelerometer.grid.griddisplay', value:true}]}
+        { class:'Accelerometer', name:'Accelerometer Graph', url:'images/graphicon.png', parameters: [{field:'Accelerometer.graph.display', value:true}]},
+        { class:'Accelerometer', name:'Accelerometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Accelerometer.data.display', value:true}]},
+        { class:'Accelerometer', name:'4x4 Accelerometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Accelerometer.grid.griddisplay', value:true}]}
     ];
 
     self.GyroscopeBlock = [
-        { name:'Gyroscope Graph', url:'images/graphicon.png', parameters: [{field:'Gyroscope.graph.display', value:true}]},
-        { name:'Gyroscope Data Only', url:'images/dataicon.jpg', parameters: [{field:'Gyroscope.data.display', value:true}]},
-        { name:'4x4 Gyroscope Grid', url:'images/gridicon.png', parameters: [{field:'Gyroscope.grid.griddisplay', value:true}]}
+        { class:'Gyroscope', name:'Gyroscope Graph', url:'images/graphicon.png', parameters: [{field:'Gyroscope.graph.display', value:true}]},
+        { class:'Gyroscope', name:'Gyroscope Data Only', url:'images/dataicon.jpg', parameters: [{field:'Gyroscope.data.display', value:true}]},
+        { class:'Gyroscope', name:'4x4 Gyroscope Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Gyroscope.grid.griddisplay', value:true}]}
     ];
 
     self.MagnetometerBlock = [
-        { name:'Magnetometer Graph', url:'images/graphicon.png', parameters: [{field:'Magnetometer.graph.display', value:true}]},
-        { name:'Magnetometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Magnetometer.data.display', value:true}]},
-        { name:'4x4 Magnetometer Grid', url:'images/gridicon.png', parameters: [{field:'Magnetometer.grid.griddisplay', value:true}]}
+        { class:'Magnetometer', name:'Magnetometer Graph', url:'images/graphicon.png', parameters: [{field:'Magnetometer.graph.display', value:true}]},
+        { class:'Magnetometer', name:'Magnetometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Magnetometer.data.display', value:true}]},
+        { class:'Magnetometer', name:'4x4 Magnetometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Magnetometer.grid.griddisplay', value:true}]}
     ];
 
     self.LuxometerBlock = [
-        { name:'Luxometer Graph', url:'images/graphicon.png', parameters: [{field:'Luxometer.graph.display', value:true}]},
-        { name:'Luxometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Luxometer.data.display', value:true}]},
-        { name:'4x4 Luxometer Grid', url:'images/gridicon.png', parameters: [{field:'Luxometer.grid.griddisplay', value:true}]}
+        { class:'Luxometer', name:'Luxometer Graph', url:'images/graphicon.png', parameters: [{field:'Luxometer.graph.display', value:true}]},
+        { class:'Luxometer', name:'Luxometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Luxometer.data.display', value:true}]},
+        { class:'Luxometer', name:'4x4 Luxometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Luxometer.grid.griddisplay', value:true}]}
     ];
 
     self.sortableOptions = {
@@ -57,9 +57,6 @@ function loadDraggableBlocks(self, defaultSensorTag, popNewAlert){
         update: function(e, ui) {
             if(!ui.item.sortable.received){
                 if(ui.item.sortable.sourceModel == self.quickDesignBlock){
-
-                    console.log(ui.item.sortable.sourceModel);
-                    console.log(self.quickDesignBlock);
                     popNewAlert('moving out of quick panel is forbidden');
                     ui.item.sortable.cancel();
                 }
@@ -78,12 +75,10 @@ function loadDraggableBlocks(self, defaultSensorTag, popNewAlert){
                         popNewAlert('Only one can be selected from Graph and Grid.');
                         ui.item.sortable.cancel();
                     }
-
                     console.log('move in');
                 }
             }else{//received
             
-                
             }
         },
         // stop: function(e, ui) {
@@ -306,7 +301,7 @@ function designController($rootScope, $http, auth, $state, $uibModal) {
                 );
         };
 
-        function popTuneWindow(){
+        function popTuneWindow(item){
             var modalInstance = $uibModal.open({
                 animation: true,
                 ariaLabelledBy: 'modal-title',
@@ -315,16 +310,18 @@ function designController($rootScope, $http, auth, $state, $uibModal) {
                 controller: 'TuneModalInstanceCtrl',
                 controllerAs: '$ctrl',
                 resolve: {
-                    // content: function () {
-                    //     return content;
-                    // }
+                    item: function () {
+                        return item;
+                    }
                 }
             });
 
 
             modalInstance.result
             .then(
-                function closeDone() {
+                function closeDone(result) {
+                    console.log(result);
+
                 },
                 function dismissDone() {
                     console.log('Modal dismissed at: ' + new Date());
@@ -347,7 +344,7 @@ function designController($rootScope, $http, auth, $state, $uibModal) {
         self.tune = function(item) {
 
             console.log(item);
-            popTuneWindow();
+            popTuneWindow(item);
         }
 
         self.expTitle = 'SensorTag Investigation';
