@@ -17,7 +17,7 @@ var experimentSchema = new Schema({
     dataStoragePrefix: String,
     videoPrefix: String,
     graphAutoStart: Boolean,
-    createdBy: Schema.Types.ObjectId,
+    createdBy: { type:Schema.Types.ObjectId, ref: 'User' },
     lastUpdatedAt: Date,
     isPublished: Boolean
 });

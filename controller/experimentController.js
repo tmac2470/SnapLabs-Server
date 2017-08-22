@@ -69,12 +69,15 @@ exports.getExperiments = function(req, res){
     Experiment.find(queryOption, 'labTitle description createdBy lastUpdatedAt')
         .skip((page-1) * perPage)
         .limit(perPage)
+        // .populate('createdBy', 'name')
+        .populate({ path: 'createdBy', select: 'name email' })
         .sort(sortField)
         .exec(function(err, experiments) {
         if (err) {
             return next(err);
         }
         if(experiments){
+            debug(experiments);
             res.status(200).json(experiments);
         }else{
             res.status(200).json([]);
