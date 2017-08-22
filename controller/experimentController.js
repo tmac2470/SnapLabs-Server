@@ -145,7 +145,10 @@ exports.insertOneExperiment = function(req, res){
 
 exports.getUserExperiments = function(req, res){
     var userId = req.params.userId;
-    Experiment.find({ createdBy: userId }, function(err, experiments) {
+    Experiment
+    .find({ createdBy: userId })
+    .populate({ path: 'createdBy', select: 'name email' })
+    .exec(function(err, experiments) {
         if(err){
             return next(err);
         }else {
