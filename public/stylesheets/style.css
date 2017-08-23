@@ -11,17 +11,13 @@
 }
 
 .qd-block{
-  width: 260px;
+  width: 230px;
   height: 84px;
   background-color: cornflowerblue;
   border-style: solid;
   border-width: 2px;
   border-color: black;
   color: white;
-}
-
-.qd-block span{
-  padding-left: 20px;
 }
 
 .qd-widget {
