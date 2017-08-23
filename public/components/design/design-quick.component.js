@@ -12,43 +12,43 @@ function loadDraggableBlocks(self, defaultSensorTag, popNewAlert){
     self.TemperatureBlock = [
         { class:'Temperature', name:'Temperature Graph', url:'images/graphicon.png', parameters: [{field:'Temperature.graph.display', value:true}]},
         { class:'Temperature', name:'Temperature Data Only', url:'images/dataicon.jpg', parameters: [{field:'Temperature.data.display', value:true}]},
-        { class:'Temperature', name:'4x4 Temperature Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Temperature.grid.griddisplay', value:true}]}
+        { class:'Temperature', name:'4x4 Temperature Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Temperature.grid.columns', value:4}, {field:'Temperature.grid.rows', value:4}, {field:'Temperature.grid.display', value:true}]}
     ];
 
     self.HumidityBlock = [
         { class:'Humidity', name:'Humidity Graph', url:'images/graphicon.png', parameters: [{field:'Humidity.graph.display', value:true}]},
         { class:'Humidity', name:'Humidity Data Only', url:'images/dataicon.jpg', parameters: [{field:'Humidity.data.display', value:true}]},
-        { class:'Humidity', name:'4x4 Humidity Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Humidity.grid.griddisplay', value:true}]}
+        { class:'Humidity', name:'4x4 Humidity Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Humidity.grid.columns', value:4}, {field:'Humidity.grid.rows', value:4}, {field:'Humidity.grid.display', value:true}]}
     ];
 
     self.BarometerBlock = [
         { class:'Barometer', name:'Barometer Graph', url:'images/graphicon.png', parameters: [{field:'Barometer.graph.display', value:true}]},
         { class:'Barometer', name:'Barometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Barometer.data.display', value:true}]},
-        { class:'Barometer', name:'4x4 Barometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Barometer.grid.griddisplay', value:true}]}
+        { class:'Barometer', name:'4x4 Barometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Barometer.grid.columns', value:4}, {field:'Barometer.grid.rows', value:4}, {field:'Barometer.grid.display', value:true}]}
     ];
 
     self.AccelerometerBlock = [
         { class:'Accelerometer', name:'Accelerometer Graph', url:'images/graphicon.png', parameters: [{field:'Accelerometer.graph.display', value:true}]},
         { class:'Accelerometer', name:'Accelerometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Accelerometer.data.display', value:true}]},
-        { class:'Accelerometer', name:'4x4 Accelerometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Accelerometer.grid.griddisplay', value:true}]}
+        { class:'Accelerometer', name:'4x4 Accelerometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Accelerometer.grid.columns', value:4}, {field:'Accelerometer.grid.rows', value:4}, {field:'Accelerometer.grid.display', value:true}]}
     ];
 
     self.GyroscopeBlock = [
         { class:'Gyroscope', name:'Gyroscope Graph', url:'images/graphicon.png', parameters: [{field:'Gyroscope.graph.display', value:true}]},
         { class:'Gyroscope', name:'Gyroscope Data Only', url:'images/dataicon.jpg', parameters: [{field:'Gyroscope.data.display', value:true}]},
-        { class:'Gyroscope', name:'4x4 Gyroscope Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Gyroscope.grid.griddisplay', value:true}]}
+        { class:'Gyroscope', name:'4x4 Gyroscope Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Gyroscope.grid.columns', value:4}, {field:'Gyroscope.grid.rows', value:4}, {field:'Gyroscope.grid.display', value:true}]}
     ];
 
     self.MagnetometerBlock = [
         { class:'Magnetometer', name:'Magnetometer Graph', url:'images/graphicon.png', parameters: [{field:'Magnetometer.graph.display', value:true}]},
         { class:'Magnetometer', name:'Magnetometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Magnetometer.data.display', value:true}]},
-        { class:'Magnetometer', name:'4x4 Magnetometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Magnetometer.grid.griddisplay', value:true}]}
+        { class:'Magnetometer', name:'4x4 Magnetometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Magnetometer.grid.columns', value:4}, {field:'Magnetometer.grid.rows', value:4}, {field:'Magnetometer.grid.display', value:true}]}
     ];
 
     self.LuxometerBlock = [
         { class:'Luxometer', name:'Luxometer Graph', url:'images/graphicon.png', parameters: [{field:'Luxometer.graph.display', value:true}]},
         { class:'Luxometer', name:'Luxometer Data Only', url:'images/dataicon.jpg', parameters: [{field:'Luxometer.data.display', value:true}]},
-        { class:'Luxometer', name:'4x4 Luxometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Luxometer.grid.griddisplay', value:true}]}
+        { class:'Luxometer', name:'4x4 Luxometer Grid', url:'images/gridicon.png', tunable:true, parameters: [{field:'Luxometer.grid.columns', value:4}, {field:'Luxometer.grid.rows', value:4}, {field:'Luxometer.grid.display', value:true}]}
     ];
 
     self.sortableOptions = {
@@ -60,8 +60,6 @@ function loadDraggableBlocks(self, defaultSensorTag, popNewAlert){
                     popNewAlert('moving out of quick panel is forbidden');
                     ui.item.sortable.cancel();
                 }
-                // console.log(ui.item.sortable.droptargetModel);
-                // console.log(self.quickDesignBlock);
                 if(ui.item.sortable.droptargetModel == self.quickDesignBlock){
                     var sourceModel = ui.item.sortable.sourceModel;
                     var numOfGraphOrGrid = sourceModel.filter(function(item) {
@@ -80,33 +78,7 @@ function loadDraggableBlocks(self, defaultSensorTag, popNewAlert){
             }else{//received
             
             }
-        },
-        // stop: function(e, ui) {
-        //     console.log("stop");
-
-        //     //if drop into quick design area:
-        //     var flag = ui.item.sortable.droptargetModel == self.quickDesignBlock? true: false;
-        //     console.log(flag);
-
-
-        //     //get the element who moves
-        //     var movedItem = ui.item.sortable.model;
-        //     if(flag){
-        //         // if move in, set parameter values
-        //         movedItem.parameters.forEach(function(parameter) {
-        //             var splits = parameter.field.split('.');
-        //             defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = parameter.value;
-        //         });
-        //     }else{
-        //         //if move out of area, parameter values set to reverse
-        //         // console.log('move out');
-        //         // movedItem.parameters.forEach(function(parameter) {
-        //         //     var splits = parameter.field.split('.');
-        //         //     defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = !parameter.value;
-        //         // });
-        //     }
-
-        // }
+        }
     };
 }
 
@@ -117,7 +89,7 @@ function createDefaultSensorTag() {
         "sensors" : {
             "Gyroscope" : {
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 },
@@ -148,7 +120,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : true,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 },
@@ -171,7 +143,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 }
@@ -190,7 +162,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 }
@@ -209,7 +181,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 }
@@ -228,7 +200,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : true,
+                    "display" : true,
                     "columns" : "5",
                     "rows" : "5"
                 },
@@ -251,7 +223,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 }
@@ -319,9 +291,7 @@ function designController($rootScope, $http, auth, $state, $uibModal) {
 
             modalInstance.result
             .then(
-                function closeDone(result) {
-                    console.log(result);
-
+                function closeDone() {
                 },
                 function dismissDone() {
                     console.log('Modal dismissed at: ' + new Date());
@@ -376,12 +346,21 @@ function designController($rootScope, $http, auth, $state, $uibModal) {
                 sensorTagDict[i] = self.sensorTag[i]
             }
             expCfg.sensorTags = sensorTagDict;
-
+            self.quickDesignBlock.forEach(function(block) {
+                var parameters = block.parameters;
+                parameters.forEach(function(parameter){
+                    console.log('parameter: ', parameter);
+                    var splits = parameter.field.split('.');
+                    defaultSensorTag.sensors[splits[0]][splits[1]][splits[2]] = parameter.value;
+                });
+            });
             var user = auth.getLoginUser();
             expCfg.createdBy = user.id;
 
             var postCfg = {};
             postCfg.headers = auth.genHeader(auth.getToken());
+
+            console.log('expCfg', expCfg);
 
             if(expCfg.description && expCfg.labTitle){
                 $http.post('experiments/user/' + user.id, expCfg, postCfg)

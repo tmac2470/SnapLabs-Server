@@ -12,6 +12,16 @@ angular.module('snaplab.modal').controller('TuneModalInstanceCtrl', function ($u
         var cutPos = oldName.indexOf(" ");
         var newName = self.row + "x" + self.col + " " + oldName.substr(cutPos);
         item.name = newName;
+        item.parameters.forEach(function(parameter){
+            if(parameter.field.indexOf('row')>=0){
+                parameter.value = self.row;
+                console.log('set row');
+            }
+            if(parameter.field.indexOf('col')>=0){
+                parameter.value = self.col;
+                console.log('set col');
+            }
+        });
         $uibModalInstance.close();
     };
     self.cancel = function () {
