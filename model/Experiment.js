@@ -19,7 +19,8 @@ var experimentSchema = new Schema({
     graphAutoStart: Boolean,
     createdBy: { type:Schema.Types.ObjectId, ref: 'User' },
     lastUpdatedAt: Date,
-    isPublished: Boolean
+    isPublished: Boolean,
+    tags: []
 });
 
 experimentSchema.pre('save', function save(next) {
