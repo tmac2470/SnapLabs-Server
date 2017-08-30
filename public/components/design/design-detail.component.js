@@ -251,20 +251,20 @@ function designController($scope, $rootScope, $http, auth, $state) {
                     .then(
                         function successCallback(successResponse){
                             $state.go('welcome');
-                            $rootScope.addAlert({ type:'success', msg:'Add Experiment Success' });
+                            $rootScope.addAlert({ type:'success', msg: successResponse.data.message });
                         },
                         function failCallback(failResponse){
-                            $rootScope.addAlert({ type:'danger', msg:'Add Experiment Fail' })
+                            $rootScope.addAlert({ type:'danger', msg: successResponse.data.message })
                         });
                 }else if(saveOrUpdate == 'Update'){
                     $http.put('experiments/' + expId, expCfg, postCfg)
                     .then(
                         function successCallback(successResponse){
                             $state.go('welcome');
-                            $rootScope.addAlert({ type:'success', msg:'Update Experiment Success' });
+                            $rootScope.addAlert({ type:'success', msg: successResponse.data.message });
                         },
                         function failCallback(failResponse){
-                            $rootScope.addAlert({ type:'danger', msg:'Update Experiment Fail' })
+                            $rootScope.addAlert({ type:'danger', msg: successResponse.data.message })
                         });
                 }
             

@@ -7,7 +7,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var dotenv = require('dotenv');
-
+var Message = require('./utils').Message;
 
 dotenv.load({ path: '.env' });
 var passport = require('./config/passport');
@@ -21,7 +21,7 @@ var profiles = require('./routes/profiles');
  */
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI);
-mongoose.connection.on('error', function(){
+mongoose.connection.on('error', function () {
     console.log('MongoDB connection error. Please make sure MongoDB is running.');
     process.exit();
 });
@@ -29,7 +29,6 @@ mongoose.connection.on('error', function(){
 var app = express();
 
 
-// uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -43,24 +42,20 @@ app.use('/auth', auth);
 app.use('/profiles', profiles);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(function (req, res) {
+    res.status(404).json(new Message(false, {}, 'Not Found'));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
 
-    console.log(err);
-
-  // render the error page
-  res.status(err.status || 500);
+    // render the error page
+    res.status(err.status || 500);
     if (err.name === 'UnauthorizedError') {
         res.status(401);
-        res.json({"message" : err.name + ": " + err.message});
-    }else{
-        res.json('internal error');
+        res.json(new Message(false, {}, err.name + ": " + err.message));
+    } else {
+        res.json(new Message(false, {}, 'Internal Error'));
     }
 });
 

@@ -367,10 +367,10 @@ function designController($rootScope, $http, auth, $state, $uibModal) {
                     .then(
                         function successCallback(successResponse){
                             window.location.href = "/#!/";
-                            $rootScope.addAlert({ type:'success', msg:'Add Experiment Success' });
+                            $rootScope.addAlert({ type:'success', msg: successResponse.data.message});
                         },
                         function failCallback(failResponse){
-                            $rootScope.addAlert({ type:'danger', msg:'Add Experiment Fail' })
+                            $rootScope.addAlert({ type:'danger', msg: successResponse.data.message })
                         });
             }else{
                 $rootScope.addAlert({ type:'danger', msg:'Experiment Info Incomplete' });

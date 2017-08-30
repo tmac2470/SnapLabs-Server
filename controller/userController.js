@@ -17,12 +17,15 @@ exports.signIn = function(req, res, next){
         }
         if (user) {
             var token = user.generateJwt();
-            res.status(200).json({
-                "token" : token
-            });
+            res.status(200).json(
+                new Message(
+                    true, 
+                    { 'token' : token },
+                    'Sign In Successfully!'
+                ));
         } else {
             // If user is not found
-            res.status(401).json(info);
+            res.status(401).json(new Message(false, {}, info.msg));
         }
     })(req, res, next);
 }
@@ -40,7 +43,7 @@ exports.signUp = function(req, res, next){
     User.findOne({email: req.body.email}, function(err, existingUser){
         if (err) next(err);
         if (existingUser) {
-            return res.status(200).json(new Message('200', 'Email Exsistes'));
+            return res.status(400).json(new Message(false, {}, 'Email Exsistes!'));
         }
 
         user.save(function(err){
@@ -48,7 +51,7 @@ exports.signUp = function(req, res, next){
                 console.log('error');
                 return next(err);
             }
-            return res.status(200).json(new Message('200', 'Success'));
+            return res.status(200).json(new Message(true, {}, 'Sign Up Successfully!'));
         });
     });
 }
@@ -58,7 +61,7 @@ exports.forget = function(req, res, next){
     User.findOne({email: req.body.email}, function(err, existingUser){
         if (err) next(err);
         if (!existingUser) {
-            return res.status(400).json(new Message('400','email have not been registered'));
+            return res.status(400).json(new Message(false, {}, 'Email have not been registered!'));
         } else {
             async.waterfall([
                 function setRandomToken(done) {
@@ -101,7 +104,7 @@ exports.forget = function(req, res, next){
                 function (err, result){
                     if(err) return next(err);
                     else{
-                        res.status(200).json(new Message('200','success'));
+                        res.status(200).json(new Message(true, {}, 'Send reset email Successfully!'));
                     }
                 }
             );
@@ -122,7 +125,7 @@ exports.reset = function(req, res, next){
                         return next(err);
                     }
                     if (!user) {
-                        return res.status(400).json(new Message('400','Password reset token is invalid or has expired.'));
+                        return res.status(400).json(new Message(false, {}, 'Password reset token is invalid or has expired.'));
                     }
                     user.password = req.body.password;
                     user.passwordResetToken = undefined;
@@ -151,7 +154,7 @@ exports.reset = function(req, res, next){
             };
             transporter.sendMail(mailOptions, function (err) {
                 if(!err){
-                    res.status(200).json(new Message('200','Success! Your password has been changed.'));
+                    res.status(200).json(new Message(true, {},'Success! Your password has been changed.'));
                 }else{
                     console.log(err);
                 }
@@ -175,10 +178,10 @@ exports.updateProfile = function(req, res, next){
             if(err){
                 return next(err)
             }
-            res.status(200).json(new Message('200', 'Update Successfully'));
+            res.status(200).json(new Message(true, {}, 'Update Profile Successfully(re-login to view the change)!'));
         })
     }else{
-        res.status(400).json(new Message('400','Update Failed'));
+        res.status(400).json(new Message(true, {}, 'Fail to Update Profile!'));
     }
 }
 
@@ -195,11 +198,11 @@ exports.updatePassword = function(req, res, next){
                 user.password = nPassword;
                 user.save(function(err) {
                     if(!err){
-                        res.status(200).json(new Message('200', 'updating succeeded'));
+                        res.status(200).json(new Message(true, {}, 'Update Password Successfully!'));
                     }
                 })
             }else {
-                res.status(400).json(new Message('400', 'updating failed'));
+                res.status(400).json(new Message(false, {}, 'Update Password Unsuccessfully!'));
             }
         })
     })

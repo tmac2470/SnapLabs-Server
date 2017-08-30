@@ -12,14 +12,14 @@ angular.module('snaplab.auth')
                 $http.post('auth/signin', {email: self.email, password: self.password})
                     .then(
                         function successCallback(response) {
-                            auth.saveToken(response.data.token);
+                            auth.saveToken(response.data.data.token);
                             $rootScope.isLogin = true;
                             $rootScope.user = auth.getLoginUser();
-                            $rootScope.addAlert({ type:'success', msg:'Sign In Success' });
+                            $rootScope.addAlert({ type:'success', msg: response.data.message });
                             $state.go('welcome');
                         },
                         function failCallback(response) {
-                            $rootScope.addAlert({ type:'danger', msg:'Sign In Fail' });
+                            $rootScope.addAlert({ type:'danger', msg:response.data.message });
                         })
             }else{
                 $rootScope.addAlert({ type:'danger', msg:'Sign In Information Incomplete' });

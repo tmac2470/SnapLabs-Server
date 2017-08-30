@@ -14,10 +14,10 @@ angular.module('snaplab.auth')
                     .then(
                         function successCallback(response) {
                             $state.go('reset');
-                            $rootScope.addAlert({ type:'success', msg:'Fill in the token in your mail box' });
+                            $rootScope.addAlert({ type:'success', msg: response.data.message });
                         },
                         function failCallback(response) {
-                            $rootScope.addAlert({ type:'danger', msg:'Send Forget Request Fail' });
+                            $rootScope.addAlert({ type:'danger', msg: response.data.message });
                         });
             }else{
                 $rootScope.addAlert({ type:'danger', msg:'Send Forget Request Incomplete' });

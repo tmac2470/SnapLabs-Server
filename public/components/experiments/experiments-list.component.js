@@ -67,11 +67,11 @@ angular.module('snaplab.experiments')
             $http.delete('experiments/' + item._id, httpCfg)
                     .then(
                         function successCallback(successResponse){
-                            $rootScope.addAlert({ type:'success', msg:'Remove Experiment Success' });
+                            $rootScope.addAlert({ type:'success', msg: successResponse.data.message });
                             $state.reload();
                         },
                         function failCallback(failResponse){
-                            $rootScope.addAlert({ type:'danger', msg:'Remove Experiment Fail' })
+                            $rootScope.addAlert({ type:'danger', msg: successResponse.data.message })
                         });
         }
 

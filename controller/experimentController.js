@@ -3,7 +3,7 @@
 var Experiment = require('../model/Experiment');
 var User = require('../model/User');
 var debug = require('debug')('snaplab-server');
-var Message = require('../utils').JsonRes;
+var Message = require('../utils').Message;
 
 /**
  * search controller
@@ -124,20 +124,20 @@ exports.updateOneExperiment = function(req, res){
         result.save(function (err, result){
             if(err){
             }else{
-                res.status(200).json(new Message(true, {},'Success'));
+                res.status(200).json(new Message(true, {},'Experiment Update Successfully!'));
             }
         });
 
     });
 };
 
-exports.deleteOneExperiment = function(req, res){
+exports.deleteOneExperiment = function(req, res, next){
     debug(req.params.id);
     Experiment.findByIdAndRemove( req.params.id, function(err){
         if(err){
             return next(err);
         }else {
-            res.status(200).json(new Message(true, {}, 'Success'));
+            res.status(200).json(new Message(true, {}, 'Experiment Delete Successfully!'));
         }
     });
 };
@@ -173,7 +173,7 @@ exports.insertOneExperiment = function(req, res){
         if(err){
             next(err);
         }else{
-            res.status(200).json(new Message(true, {}, 'Success'));
+            res.status(200).json(new Message(true, {}, 'Experiment Add Successfully!'));
         }
     });
 };

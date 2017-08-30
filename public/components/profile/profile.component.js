@@ -49,10 +49,10 @@ angular.module('snaplab.profile')
             $http.post('profiles/' + user.id, {name: self.name}, postCfg)
                 .then(
                     function successCallback(successResponse){
-                        $rootScope.addAlert({ type:'success', msg:'Profile Updating Succeeded(re-login to view the change)' });
+                        $rootScope.addAlert({ type:'success', msg: successResponse.data.message });
                     },
                     function failCallback(failResponse){
-                        $rootScope.addAlert({ type:'danger', msg:'Profile Updating Failed' })
+                        $rootScope.addAlert({ type:'danger', msg: successResponse.data.message })
                     }
                 );
 
@@ -71,10 +71,10 @@ angular.module('snaplab.profile')
             $http.post('profiles/' + user.id + '/password', {cPassword: self.cPassword, nPassword: self.nPassword}, postCfg)
                 .then(
                     function successCallback(successResponse){
-                        $rootScope.addAlert({ type:'success', msg:'Password Updating Succeeded' });
+                        $rootScope.addAlert({ type:'success', msg: successResponse.data.message });
                     },
                     function failCallback(failResponse){
-                        $rootScope.addAlert({ type:'danger', msg:'Password Updating Failed' })
+                        $rootScope.addAlert({ type:'danger', msg: successResponse.data.message });
                     }
                 );
 

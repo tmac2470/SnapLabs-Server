@@ -12,10 +12,10 @@ angular.module('snaplab.auth')
                     .then(
                         function successCallback(response) {
                             $state.go('signin');
-                            $rootScope.addAlert({ type:'success', msg:'Sign Up Success' });
+                            $rootScope.addAlert({ type:'success', msg: response.data.message });
                         },
                         function failCallback(response) {
-                            $rootScope.addAlert({ type:'danger', msg:'Sign Up Fail' });
+                            $rootScope.addAlert({ type:'danger', msg: response.data.message });
                         }
                     )
             }else{
