@@ -28,17 +28,16 @@ angular.module('snaplab.experiments')
 
             var httpCfg = {
                 params: {
-                    after: dtStart,
-                    before: dtEnd,
+                    afterDate: dtStart,
+                    beforeDate: dtEnd,
                     sort: sortType,
-                    content: searchContent,
-                    field: type
+                    query: searchContent,
+                    fields: type
                 }
             };
             $http.get('experiments', httpCfg)
                 .then(function (response) {
-                    self.initData = response;
-                    console.log(self.initData);
+                    self.initData = response.data;
                 });
 
         };

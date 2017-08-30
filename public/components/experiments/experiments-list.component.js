@@ -43,7 +43,7 @@ angular.module('snaplab.experiments')
                 httpCfg.headers = auth.genHeader();
                 $http.get('experiments/user/' + user.id, httpCfg)
                     .then(function (response) {
-                        loadList(self, response);
+                        loadList(self, response.data);
                     });
             } else {
                 console.log("not isolated");
@@ -90,10 +90,10 @@ angular.module('snaplab.experiments')
             $http.get('experiments/' + item._id)
             .then(
                 function successCallBack(response){
-                    popDetailWindow(response);
+                    popDetailWindow(response.data);
                 },
                 function failCallback(response){
-                    popDetailWindow(response);
+                    
                 }
             );
         }
@@ -104,12 +104,12 @@ angular.module('snaplab.experiments')
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 templateUrl: 'components/modal/experiment-modal.template.html',
-                controller: 'AlertModalInstanceCtrl',
+                controller: 'ExperimentModalInstanceCtrl',
                 controllerAs: '$ctrl',
                 size: 'lg',
                 resolve: {
                     content: function () {
-                        return content;
+                        return content.data;
                     }
                 }
             });

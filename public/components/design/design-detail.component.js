@@ -13,7 +13,7 @@ function createDefaultSensorTag() {
         "sensors" : {
             "Gyroscope" : {
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 },
@@ -44,7 +44,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : true,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 },
@@ -67,7 +67,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 }
@@ -86,7 +86,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 }
@@ -105,7 +105,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 }
@@ -124,7 +124,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : true,
+                    "display" : true,
                     "columns" : "5",
                     "rows" : "5"
                 },
@@ -147,7 +147,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "griddisplay" : false,
+                    "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 }
@@ -190,21 +190,22 @@ function designController($scope, $rootScope, $http, auth, $state) {
             $http.get('experiments/' + expId)
                 .then(
                     function successCallBack(response){
-                        defaultSensorTag = response.data.sensorTags[0];
-                        console.log(response.data);
-                        for(var i in response.data.sensorTags){
-                            $scope.sensorTag[i] = response.data.sensorTags[i];
+                        var wrap = response.data;
+                        defaultSensorTag = wrap.data.sensorTags[0];
+                        console.log(wrap.data);
+                        for(var i in wrap.data.sensorTags){
+                            $scope.sensorTag[i] = wrap.data.sensorTags[i];
                         }
 
                         console.log($scope.sensorTag);
-                        $scope.expTitle = response.data.labTitle;
-                        $scope.expDesc = response.data.description;
-                        $scope.sampleInterval = parseInt(response.data.sampleInterval);
+                        $scope.expTitle = wrap.data.labTitle;
+                        $scope.expDesc = wrap.data.description;
+                        $scope.sampleInterval = parseInt(wrap.data.sampleInterval);
                         $scope.sampleRateStr = 'select';
-                        $scope.allowDataStorage = response.data.dataStorageAllowed;
-                        $scope.allowVideo = response.data.videoAllowed;
-                        $scope.autoStartGraphs = response.data.graphAutoStart;
-                        $scope.isPublished = response.data.isPublished;
+                        $scope.allowDataStorage = wrap.data.dataStorageAllowed;
+                        $scope.allowVideo = wrap.data.videoAllowed;
+                        $scope.autoStartGraphs = wrap.data.graphAutoStart;
+                        $scope.isPublished = wrap.data.isPublished;
                     },
                     function failCallback(response){
                         console.log(response);

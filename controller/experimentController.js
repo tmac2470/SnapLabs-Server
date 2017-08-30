@@ -3,29 +3,29 @@
 var Experiment = require('../model/Experiment');
 var User = require('../model/User');
 var debug = require('debug')('snaplab-server');
-var Message = require('../utils').Message;
+var Message = require('../utils').JsonRes;
 
 /**
  * search controller
  * query parameter: 
- *      after: date
- *      before: date
+ *      afterDate: YYYY-MM-DD
+ *      beforeDate: YYYY-MM-DD
  *      sort: lastUpdated, -lastUpdated, author, -author
- *      content:
- *      field: title, author, all
+ *      query:
+ *      fields: title, description, all
  *      page: number
  *      perPage: number
  */
 exports.getExperiments = function(req, res){
 
     var today = new Date();
-    var day20Before = new Date(today.setDate(today.getDate()-20));
+    var day20Before = new Date(today.getTime() - 20*24*60*60*1000);
 
-    var field = req.query.field || 'title';
-    var after = req.query.after || day20Before;
-    var before = req.query.before || today;
+    var fields = req.query.fields || 'title';
+    var after = req.query.afterDate || day20Before;
+    var before = req.query.beforeDate || today;
     var sort = req.query.sort || '-lastupdated';
-    var content = req.query.content;
+    var query = req.query.query;
 
     var page = parseInt(req.query.page) || 1;
     var perPage = parseInt(req.query.per_page) ||20;
@@ -37,17 +37,27 @@ exports.getExperiments = function(req, res){
         $lt: new Date(before)
     }
 
-    if(content){
-        var fields = field.split(';');
-        fields.forEach( function(entry) {
-            switch (entry){
-                case 'title':
-                    queryOption.labTitle = new RegExp(content, "i");
-                    break;
-                case 'author':
-                    break;
-            }
-        });
+    if(query){
+        var fieldArr = [];
+
+        if(fields == 'all'){
+            fieldArr.push({labTitle: new RegExp(query, "i")});
+            fieldArr.push({description: new RegExp(query, "i")});
+        }else{
+            var fieldList = fields.split(';');
+            fieldList.forEach( function(entry) {
+                switch (entry){
+                    case 'title':
+                        fieldArr.push({labTitle: new RegExp(query, "i")});
+                        break;
+                    case 'description':
+                        fieldArr.push({description: new RegExp(query, "i")});
+                        break;
+                }
+            });
+        }
+
+        queryOption['$or'] = fieldArr;
     }
 
     var sortField;
@@ -78,28 +88,29 @@ exports.getExperiments = function(req, res){
         }
         if(experiments){
             debug(experiments);
-            res.status(200).json(experiments);
+            res.status(200).json(new Message(true, experiments, ''));
         }else{
-            res.status(200).json([]);
+            
+            res.status(200).json(new Message(true, [], ''));
         }
     });
 };
 
 exports.getOneExperiment = function(req, res){
     var id = req.params.id;
-    console.log(id)
+    debug(id)
     Experiment.findOne({_id: id}).exec(function (err, experiments) {
         if (err) {
             return res.send(err);
         }
-        res.status(200).json(experiments);
+        res.status(200).json(new Message(true, experiments, ''));
     });
 };
 
 exports.updateOneExperiment = function(req, res){
     var content = req.body;
     var id = req.params.id;
-    console.log(content);
+    debug(content);
     Experiment.findById(id).exec(function(err, result){
         result.videoPrefix = content.videoPredix;
         result.dataStorageAllowed = content.dataStorageAllowed;
@@ -113,7 +124,7 @@ exports.updateOneExperiment = function(req, res){
         result.save(function (err, result){
             if(err){
             }else{
-                res.status(200).json(new Message('200', 'Success'));
+                res.status(200).json(new Message(true, {},'Success'));
             }
         });
 
@@ -121,24 +132,48 @@ exports.updateOneExperiment = function(req, res){
 };
 
 exports.deleteOneExperiment = function(req, res){
-    console.log(req.params.id);
+    debug(req.params.id);
     Experiment.findByIdAndRemove( req.params.id, function(err){
         if(err){
             return next(err);
         }else {
-            res.status(200).json(new Message('200', 'Success'));
+            res.status(200).json(new Message(true, {}, 'Success'));
         }
     });
 };
 
 exports.insertOneExperiment = function(req, res){
     var content = req.body;
+    debug(content);
+    var cursor = 0;
+
+    function scanTags(sensors){
+        for(var i in sensors){
+            // console.log(i, sensors[i]);
+            for(var j in sensors[i]){
+                debug(sensors[i][j]);
+                if(sensors[i][j].display){
+                    tagSet.add(i);
+                }
+            }
+        }
+    }
+
+    var tagSet = new Set();
+    while(content.sensorTags[cursor]){
+        // console.log(content.sensorTags[cursor]);
+        scanTags(content.sensorTags[cursor].sensors);
+        cursor++;
+    }
+    debug(tagSet);
+    var tags = Array.from(tagSet);
+    content.tags = tags;
     var newExp = new Experiment(content);
     newExp.save(function(err, result){
         if(err){
             next(err);
         }else{
-            res.status(200).json(new Message('200', 'Success'));
+            res.status(200).json(new Message(true, {}, 'Success'));
         }
     });
 };
@@ -152,7 +187,7 @@ exports.getUserExperiments = function(req, res){
         if(err){
             return next(err);
         }else {
-            res.status(200).json(experiments);
+            res.status(200).json(new Message(true, experiments, ''));
         }
     });
 };
