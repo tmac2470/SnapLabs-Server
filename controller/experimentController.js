@@ -2,7 +2,7 @@
 
 var Experiment = require('../model/Experiment');
 var User = require('../model/User');
-var debug = require('debug')('snaplab-server');
+var debug = require('debug')('snaplab-server:controller');
 var Message = require('../utils').Message;
 
 /**

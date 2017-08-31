@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "debug": "DEBUG=snaplab-server:* node ./bin/www",
     "test": "mocha"
   },
   "dependencies": {
