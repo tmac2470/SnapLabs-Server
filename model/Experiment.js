@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Counter = require('./Counter');
 
 var Schema = mongoose.Schema;
 
@@ -20,12 +21,22 @@ var experimentSchema = new Schema({
     createdBy: { type:Schema.Types.ObjectId, ref: 'User' },
     lastUpdatedAt: Date,
     isPublished: Boolean,
+    serialNumber: Number,
     tags: []
 });
 
 experimentSchema.pre('save', function save(next) {
-    this.lastUpdatedAt = new Date();
-    next();
+    var doc = this;
+    doc.lastUpdatedAt = new Date();
+    if(this.isNew){
+        Counter.findByIdAndUpdate({_id: 'serial-number'}, {$inc: {seq:1}}, function(error, counter) {
+            if(error) return next(error);
+            doc.serialNumber = counter.seq;
+            next();
+        });
+    }else{
+        next();
+    }
 });
 
 var Experiment = mongoose.model('Experiments', experimentSchema);

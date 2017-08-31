@@ -7,8 +7,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var dotenv = require('dotenv');
-var Message = require('./utils').Message;
-
+var Message = require('./utils/util').Message;
+var debug = require('debug')('snaplab-server:app');
 dotenv.load({ path: '.env' });
 var passport = require('./config/passport');
 var experiments = require('./routes/experiments');
@@ -55,6 +55,7 @@ app.use(function (err, req, res, next) {
         res.status(401);
         res.json(new Message(false, {}, err.name + ": " + err.message));
     } else {
+        debug(err);
         res.json(new Message(false, {}, 'Internal Error'));
     }
 });

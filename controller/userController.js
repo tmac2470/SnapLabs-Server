@@ -6,7 +6,7 @@ var async = require('async');
 var nodemailer = require('nodemailer');
 var debug = require('debug')('snaplab-server:controller');
 var aws = require('aws-sdk');
-var Message = require('../utils').Message;
+var Message = require('../utils/util').Message;
 var User = require('../model/User');
 
 

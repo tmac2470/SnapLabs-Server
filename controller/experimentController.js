@@ -3,7 +3,7 @@
 var Experiment = require('../model/Experiment');
 var User = require('../model/User');
 var debug = require('debug')('snaplab-server:controller');
-var Message = require('../utils').Message;
+var Message = require('../utils/util').Message;
 
 /**
  * search controller
@@ -12,7 +12,7 @@ var Message = require('../utils').Message;
  *      beforeDate: YYYY-MM-DD
  *      sort: lastUpdated, -lastUpdated, author, -author
  *      query:
- *      fields: title, description, all
+ *      fields: title, description,serial-number,all(title + description)
  *      page: number
  *      perPage: number
  */
@@ -21,6 +21,7 @@ exports.getExperiments = function(req, res){
     var today = new Date();
     var day20Before = new Date(today.getTime() - 20*24*60*60*1000);
 
+    debug(req.query);
     var fields = req.query.fields || 'title';
     var after = req.query.afterDate || day20Before;
     var before = req.query.beforeDate || today;
@@ -32,9 +33,11 @@ exports.getExperiments = function(req, res){
 
     var queryOption = {};
     queryOption.isPublished = true;
-    queryOption.lastUpdatedAt = {
-        $gte: new Date(after),
-        $lt: new Date(before)
+    if(fields!='serial-number'){
+        queryOption.lastUpdatedAt = {
+            $gte: new Date(after),
+            $lt: new Date(before)
+        }
     }
 
     if(query){
@@ -43,7 +46,11 @@ exports.getExperiments = function(req, res){
         if(fields == 'all'){
             fieldArr.push({labTitle: new RegExp(query, "i")});
             fieldArr.push({description: new RegExp(query, "i")});
-        }else{
+        }
+        else if(fields == 'serial-number'){
+            fieldArr.push({serialNumber: query});
+        }
+        else{
             var fieldList = fields.split(';');
             fieldList.forEach( function(entry) {
                 switch (entry){
@@ -107,7 +114,7 @@ exports.getOneExperiment = function(req, res){
     });
 };
 
-exports.updateOneExperiment = function(req, res){
+exports.updateOneExperiment = function(req, res, next){
     var content = req.body;
     var id = req.params.id;
     debug(content);
@@ -123,6 +130,7 @@ exports.updateOneExperiment = function(req, res){
         result.isPublished = content.isPublished;
         result.save(function (err, result){
             if(err){
+                next(err);
             }else{
                 res.status(200).json(new Message(true, {},'Experiment Update Successfully!'));
             }
