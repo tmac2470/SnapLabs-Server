@@ -15,7 +15,7 @@ var experiments = require('./routes/experiments');
 var auth = require('./routes/authentication');
 var profiles = require('./routes/profiles');
 var results = require('./routes/result');
-
+var cors = require('cors');
 
 /**
  * Connect to MongoDB
@@ -47,6 +47,13 @@ app.use('/results', results);
 app.use(function (req, res) {
     res.status(404).json(new Message(false, {}, 'Not Found'));
 });
+
+// Allow cors for localhost
+var corsOptions = {
+    origin: 'http://localhost:8100',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
 
 // error handler
 app.use(function (err, req, res, next) {
