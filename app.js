@@ -15,7 +15,7 @@ var experiments = require('./routes/experiments');
 var auth = require('./routes/authentication');
 var profiles = require('./routes/profiles');
 var results = require('./routes/result');
-
+var cors = require('cors');
 
 /**
  * Connect to MongoDB
@@ -29,6 +29,12 @@ mongoose.connection.on('error', function () {
 
 var app = express();
 
+// Allow cors for localhost
+var corsOptions = {
+    origin: 'http://localhost:8100',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(logger('dev'));
