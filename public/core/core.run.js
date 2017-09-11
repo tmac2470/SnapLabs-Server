@@ -30,7 +30,7 @@ angular.module('snaplab').run(['$rootScope', '$transitions', 'auth', '$uibModal'
     };
 
     // filter pre-login page transitions
-    $transitions.onStart({ to: 'experiments.**' }, function(trans) {
+    $transitions.onStart({ to: 'investigations.**' }, function(trans) {
         if (!$rootScope.isLogin) {
             popNewAlert('Sign In first');
             return trans.router.stateService.target('signin');

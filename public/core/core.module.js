@@ -5,7 +5,7 @@ angular.module('snaplab', [
     'ui.router',
     'ui.toggle',
     'ui.sortable',
-    'snaplab.experiments',
+    'snaplab.investigations',
     'snaplab.design',
     'snaplab.notification',
     'snaplab.navigation',

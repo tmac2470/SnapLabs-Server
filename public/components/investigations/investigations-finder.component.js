@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('snaplab.experiments')
-.component('experimentsFinder', {
-    templateUrl: 'components/experiments/experiments-finder.template.html',
+angular.module('snaplab.investigations')
+.component('investigationsFinder', {
+    templateUrl: 'components/investigations/investigations-finder.template.html',
     controller: ['$http', function($http){
         var self =this;
         self.dtEnd = new Date();

@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="page-header">
-        <h1>Experiments Exhibitions</h1>
+        <h1>Investigation Information</h1>
     </div>
     <div class="row">
         <div class="col-sm-9 col-sm-offset-3">
             <div class="input-group">
                 <input type="text" class="form-control" ng-model="$ctrl.searchContent">
                 <div class="input-group-btn" uib-dropdown>
-                    <button id="split-button" type="button" class="btn btn-success" ng-click="$ctrl.search('all')">Search Title + Description Fields</button>
+                    <button id="split-button" type="button" class="btn btn-success" ng-click="$ctrl.search('all')">Search Title & Description Fields</button>
                     <button type="button" class="btn btn-primary" uib-dropdown-toggle>
                         <span class="caret"></span>
                         <span class="sr-only">Split button!</span>
@@ -54,32 +54,32 @@
                     <div class="radio">
                         <label>
                             <input type="radio" name="optionsRadios"  ng-model="$ctrl.sortType" value="-lastupdated">
-                            Sort By Last Updated Date (Descend)
+                            Sort by Last Updated date (Descending)
                         </label>
                     </div>
                     <div class="radio">
                         <label>
                             <input type="radio" name="optionsRadios"  ng-model="$ctrl.sortType" value="lastupdated">
-                            Sort By Last Update Date (Ascend)
+                            Sort by Last Updated date (Ascending)
                         </label>
                     </div>
                     <div class="radio">
                         <label>
                             <input type="radio" name="optionsRadios" ng-model="$ctrl.sortType" value="author">
-                            Sort By Creator (Ascend)
+                            Sort by Creator (Ascending)
                         </label>
                     </div>
                     <div class="radio">
                         <label>
                             <input type="radio" name="optionsRadios"  ng-model="$ctrl.sortType" value="-author">
-                            Sort By Creator (Descend)
+                            Sort by Creator (Descending)
                         </label>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-sm-9">
-            <experiments-list init-data="$ctrl.initData"></experiments-list>
+            <investigations-list init-data="$ctrl.initData"></investigations-list>
         </div>
     </div>
 

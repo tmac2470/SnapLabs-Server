@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('snaplab.experiments')
-.component('experimentsList', {
-    templateUrl: 'components/experiments/experiments-list.template.html',
+angular.module('snaplab.investigations')
+.component('investigationsList', {
+    templateUrl: 'components/investigations/investigations-list.template.html',
     require: {
-        finderCtrl: '?^experimentsFinder'
+        finderCtrl: '?^investigationsFinder'
     },
     bindings:{
         initData:'<',
@@ -103,8 +103,8 @@ angular.module('snaplab.experiments')
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: 'components/modal/experiment-modal.template.html',
-                controller: 'ExperimentModalInstanceCtrl',
+                templateUrl: 'components/modal/investigation-modal.template.html',
+                controller: 'InvestigationModalInstanceCtrl',
                 controllerAs: '$ctrl',
                 size: 'lg',
                 resolve: {

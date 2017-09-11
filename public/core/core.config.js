@@ -8,9 +8,9 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'page/welcome.html'
         },
         {
-            name: 'experiments',
-            url: '/experiments',
-            component: 'experimentsFinder'
+            name: 'investigations',
+            url: '/investigations',
+            component: 'investigationsFinder'
         },
         {
             name: 'about',

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('snaplab.experiments', [
+angular.module('snaplab.investigations', [
     'snaplab.core.auth',
     'ui.router'
 ]);
