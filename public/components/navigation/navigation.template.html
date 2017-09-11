@@ -12,6 +12,7 @@
         <ul class="nav navbar-nav">
             <li><a ui-sref="welcome" ui-sref-active="active">Welcome</a></li>
             <li><a ui-sref="investigations" ui-sref-active="active">Browse Investigations</a></li>
+            <li><a ui-sref="myworks" ui-sref-active="active">My Investigations</a></li>
             <li><a ui-sref="design.quick({ id: 0 })" ui-sref-active="active">Design</a></li>
             <!-- <li><a ui-sref="about" ui-sref-active="active">About</a></li> -->
             <li><a ui-sref="download" ui-sref-active="active">Download</a></li>
@@ -25,7 +26,6 @@
                 <a href class="dropdown-toggle" uib-dropdown-toggle>{{$ctrl.user.name}} <span class="caret"></span></a>
                 <ul class="dropdown-menu" uib-dropdown-menu>
                     <li><a ui-sref="profile" ui-sref-active="active">Profile</a></li>
-                    <li><a ui-sref="myworks" ui-sref-active="active">My Creations</a></li>
                     <li><a ng-click="$ctrl.logout()">Log out</a></li>
                 </ul>
             </li>
