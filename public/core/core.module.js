@@ -13,7 +13,10 @@ angular.module('snaplab', [
     'snaplab.modal',
     'snaplab.auth',
     'snaplab.myworks',
-    'snaplab.profile'
+    'snaplab.profile',
+    'snaplab.about',
+    'snaplab.welcome',
+    'snaplab.download'
 ]);
 
 

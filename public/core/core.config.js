@@ -5,7 +5,7 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
         {
             name: 'welcome',
             url: '/welcome',
-            templateUrl: 'page/welcome.html'
+            component: 'welcome'
         },
         {
             name: 'investigations',
@@ -15,7 +15,7 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
         {
             name: 'about',
             url: '/about',
-            templateUrl: 'page/about.html'
+            component: 'about'
         },
         {
             name: 'design',
@@ -35,7 +35,7 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
         {
             name: 'download',
             url: '/download',
-            templateUrl: 'page/download.html'
+            component: 'download'
         },
         {
             name: 'signin',

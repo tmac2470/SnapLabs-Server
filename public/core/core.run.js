@@ -51,7 +51,7 @@ angular.module('snaplab').run(['$rootScope', '$transitions', 'auth', '$uibModal'
         }
     });
 
-    $transitions.onStart({ to: 'mywork.**' }, function(trans) {
+    $transitions.onStart({ to: 'myworks.**' }, function(trans) {
         if (!$rootScope.isLogin) {
             popNewAlert('Sign In first');
             return trans.router.stateService.target('signin');
