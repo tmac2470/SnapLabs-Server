@@ -1,7 +1,7 @@
 ## Prerequisites
-Install MongoDB v3.4 (we use this version for development)
+Install MongoDB
 
-Install [PM2](http://pm2.keymetrics.io/)
+Install PM2
 
     npm install pm2 -g
 
@@ -19,3 +19,10 @@ Install nginx
 
 ## Check application status
     pm2 status bin/www
+
+## API documentation
+check the [Wiki](https://github.com/tmac2470/SnapLabs-Server/wiki) page
+
+## Quick Start Script
+    ./deploy.sh
+this script help do the operations mentioned above in one command
