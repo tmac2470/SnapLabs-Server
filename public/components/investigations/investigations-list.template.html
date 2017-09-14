@@ -3,6 +3,7 @@
         <p>Description: {{item.description}}</p>
         <p>Created by: {{item.createdBy.email}}</p>
         <p>Last updated on: {{item.lastUpdatedAt | date:'mediumDate'}}</p>
+        <p>Created on: {{item.createdAt | date:'mediumDate'}}</p>
         
         <button type="button" class="pull-right btn btn-default btn-sm" ng-show="$ctrl.isolated" ng-click="$ctrl.remove(item)" aria-label="Left Align">
             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>

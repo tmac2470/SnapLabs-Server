@@ -19,6 +19,7 @@ var experimentSchema = new Schema({
     videoPrefix: String,
     graphAutoStart: Boolean,
     createdBy: { type:Schema.Types.ObjectId, ref: 'User' },
+    createdAt: Date,
     lastUpdatedAt: Date,
     isPublished: Boolean,
     serialNumber: Number,
@@ -34,6 +35,7 @@ experimentSchema.pre('save', function save(next) {
             doc.serialNumber = counter.seq;
             next();
         });
+        doc.createdAt = new Date();
     }else{
         next();
     }

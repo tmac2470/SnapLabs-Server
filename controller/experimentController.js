@@ -81,9 +81,15 @@ exports.getExperiments = function(req, res){
         case '-author':
             sortField = {createdBy: -1};
             break;
+        case '-createdate':
+        sortField = {createdAt: -1};
+        break;
+        case 'createdate':
+        sortField = {createdAt: 1};
+        break;
     }
 
-    Experiment.find(queryOption, 'labTitle description createdBy lastUpdatedAt')
+    Experiment.find(queryOption, 'labTitle description createdBy lastUpdatedAt createdAt')
         .skip((page-1) * perPage)
         .limit(perPage)
         // .populate('createdBy', 'name')
