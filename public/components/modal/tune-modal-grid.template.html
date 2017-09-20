@@ -19,13 +19,13 @@
             <div class="form-group" ng-class="{'has-error': grid.col.$invalid && grid.col.$touched}" ng-show="$ctrl.xyzShow">
                     <label class="col-sm-4 control-label">x-y-z values</label>
                     <div class="btn-group col-sm-8">
-                        <toggle ng-model="$ctrl.xyzValues" ></toggle>
+                        <toggle ng-model="$ctrl.xyzValue" ></toggle>
                     </div>
                 </div>
             <div class="form-group" ng-class="{'has-error': grid.col.$invalid && grid.col.$touched}" ng-show="$ctrl.xyzShow">
                 <label class="col-sm-4 control-label">Scalar values</label>
                 <div class="btn-group col-sm-8">
-                    <toggle ng-model="$ctrl.scalarValues" ></toggle>
+                    <toggle ng-model="$ctrl.scalarValue" ></toggle>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': grid.col.$invalid && grid.col.$touched}">
@@ -49,7 +49,7 @@
             <div class="form-group" ng-class="{'has-error': grid.col.$invalid && grid.col.$touched}">
                 <label class="col-sm-4 control-label">Capture on Click</label>
                 <div class="btn-group col-sm-8">
-                    <toggle ng-model="$ctrl.capture" ></toggle>
+                    <toggle ng-model="$ctrl.captureOnClick" ></toggle>
                 </div>
             </div>
           </div>

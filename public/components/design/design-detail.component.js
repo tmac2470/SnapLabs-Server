@@ -13,6 +13,7 @@ function createDefaultSensorTag() {
         "sensors" : {
             "Gyroscope" : {
                 "grid" : {
+                    "gridTitle" : "Gyroscope Grid",
                     "display" : false,
                     "columns" : "4",
                     "rows" : "4"
@@ -42,15 +43,16 @@ function createDefaultSensorTag() {
                     "graphXAxis" : "Time (s)",
                     "graphYAxis" : "Temperature"
                 },
-                "captureOnClick" : true,
+                "captureOnClick" : false,
                 "grid" : {
+                    "gridTitle" : "Temperature Grid",
                     "display" : false,
                     "columns" : "4",
                     "rows" : "4"
                 },
                 "parameters" : {
-                    "ambient" : true,
-                    "IR" : true
+                    "ambient" : false,
+                    "IR" : false
                 }
             },
             "Humidity" : {
@@ -67,6 +69,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
+                    "gridTitle" : "Humidity Grid",
                     "display" : false,
                     "columns" : "4",
                     "rows" : "4"
@@ -86,6 +89,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
+                    "gridTitle" : "Barometer Grid",
                     "display" : false,
                     "columns" : "4",
                     "rows" : "4"
@@ -105,14 +109,19 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
+                    "gridTitle" : "Accelerometer Grid",
                     "display" : false,
                     "columns" : "4",
                     "rows" : "4"
+                },
+                "parameters" : {
+                    "xyz" : false,
+                    "scalar" : false
                 }
             },
             "Magnetometer" : {
                 "data" : {
-                    "display" : true,
+                    "display" : false,
                     "label" : "Magnetometer"
                 },
                 "graph" : {
@@ -124,13 +133,14 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
-                    "display" : true,
-                    "columns" : "5",
-                    "rows" : "5"
+                    "gridTitle" : "Magnetometer Grid",
+                    "display" : false,
+                    "columns" : "4",
+                    "rows" : "4"
                 },
                 "parameters" : {
                     "xyz" : false,
-                    "scalar" : true
+                    "scalar" : false
                 }
             },
             "Luxometer" : {
@@ -147,6 +157,7 @@ function createDefaultSensorTag() {
                 },
                 "captureOnClick" : false,
                 "grid" : {
+                    "gridTitle" : "Luxometer Grid",
                     "display" : false,
                     "columns" : "4",
                     "rows" : "4"
