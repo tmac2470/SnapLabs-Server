@@ -4,6 +4,18 @@ angular.module('snaplab.modal').controller('TuneModalInstanceCtrl', function ($u
     var self = this;
     self.row = 4;
     self.col = 4;
+    self.aiShow = false;
+    self.zyxShow = false;
+
+    switch(item.class){
+        case 'Temperature': self.aiShow = true;break;
+        case 'Humidity':
+        case 'Barometer':
+        case 'Gyroscope':
+        case 'Luxometer': break;
+        case 'Accelerometer':
+        case 'Magnetometer': self.xyzShow = true;break;
+    }
 
     self.ok = function () {
         self.row = self.row || 4;
