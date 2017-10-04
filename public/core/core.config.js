@@ -66,6 +66,11 @@ angular.module('snaplab').config(function($stateProvider, $urlRouterProvider) {
             name: 'myworks',
             url: '/myworks',
             component: 'myworks'
+        },
+        {
+            name: 'edit',
+            url: '/edit/:id',
+            component: 'myworksEdit'
         }
     ];
 

@@ -77,7 +77,7 @@ angular.module('snaplab.investigations')
 
         self.edit = function(item) {
             console.log('edit');
-            $state.go('design.detail', {id: item._id});
+            $state.go('edit', {id: item._id});
             console.log(item);
         };
 

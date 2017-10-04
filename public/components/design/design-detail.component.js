@@ -3,7 +3,10 @@
 angular.module('snaplab.design')
     .component('designDetail', {
         templateUrl: 'components/design/design-detail.template.html',
-        controller: ['$scope', '$rootScope', '$http', 'auth', '$state', designController]
+        controller: ['$scope', '$rootScope', '$http', 'auth', '$state', designController],
+        bindings: {
+            noTitle: '@'
+        }
     });
 
 function createDefaultSensorTag() {
@@ -194,6 +197,16 @@ function designController($scope, $rootScope, $http, auth, $state) {
 
         var defaultSensorTag;
         var expId = $state.params.id;
+
+        self.$onInit = function() {
+            // console.log('out --');
+            // console.log(this.noTitle);
+            // if(this.noTitle == 'false'){
+            //     $scope.noTitle == false;
+            //     console.log('in --');
+            // }
+            console.log(this.noTitle);
+        }
 
         $scope.sensorTag = [];
         if(expId != '0'){
