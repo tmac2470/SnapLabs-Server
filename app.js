@@ -23,17 +23,17 @@ var cors = require('cors');
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on('error', function () {
-    console.log('MongoDB connection error. Please make sure MongoDB is running.');
-    process.exit();
+  debug('MongoDB connection error. Please make sure MongoDB is running.');
+  process.exit();
 });
 
 var app = express();
 
 // Allow cors for localhost
 var corsOptions = {
-    origin: 'http://localhost:8100',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+  origin: 'http://localhost:8100',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 app.use(cors(corsOptions));
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
@@ -51,21 +51,21 @@ app.use('/results', results);
 
 // catch 404 and forward to error handler
 app.use(function (req, res) {
-    res.status(404).json(new Message(false, {}, 'Not Found'));
+  res.status(404).json(new Message(false, {}, 'Not Found'));
 });
 
 // error handler
 app.use(function (err, req, res, next) {
 
-    // render the error page
-    res.status(err.status || 500);
-    if (err.name === 'UnauthorizedError') {
-        res.status(401);
-        res.json(new Message(false, {}, err.name + ": " + err.message));
-    } else {
-        debug(err);
-        res.json(new Message(false, {}, 'Internal Error'));
-    }
+  // render the error page
+  res.status(err.status || 500);
+  if (err.name === 'UnauthorizedError') {
+    res.status(401);
+    res.json(new Message(false, {}, err.name + ': ' + err.message));
+  } else {
+    debug(err);
+    res.json(new Message(false, {}, 'Internal Error'));
+  }
 });
 
 module.exports = app;
