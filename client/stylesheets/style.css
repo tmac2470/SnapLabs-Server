@@ -13,7 +13,7 @@
 .qd-block{
   width: 230px;
   height: 84px;
-  background-color: cornflowerblue;
+  background-color: #098DB7;
   border-style: solid;
   border-width: 2px;
   border-color: black;
@@ -22,7 +22,7 @@
 
 .qd-widget {
   float: right;
-  background-color: cornflowerblue;
+  background-color: #098DB7;
   border-color: black;
   border-style: solid;
   border-width: 2px;
@@ -33,6 +33,12 @@
 }
 
 .avatar{
-  width:250px;
-  height:250px;
+  width: 250px;
+  height: 250px;
+}
+
+.brand-icon{
+  width: 24px;
+  height: 30px;
+  padding-bottom: 6px;
 }
