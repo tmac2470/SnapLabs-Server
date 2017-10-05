@@ -389,7 +389,7 @@
         $http.post('experiments/user/' + user.id, expCfg, postCfg)
           .then(
             function successCallback(successResponse) {
-              window.location.href = '/#!/';
+              $state.go('myworks');
               $rootScope.addAlert({ type: 'success', msg: successResponse.data.message });
             },
             function failCallback(failResponse) {
