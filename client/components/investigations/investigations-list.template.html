@@ -1,0 +1,23 @@
+<uib-accordion close-others="true">
+    <div uib-accordion-group class="panel-default" template-url="components/investigations/investigations-panel.template.html" heading="{{item.labTitle}} - Created by {{item.createdBy.name}}" ng-repeat="item in $ctrl.currentList track by $index">
+        <p>Description: {{item.description}}</p>
+        <p>Created by: {{item.createdBy.email}}</p>
+        <p>Last updated on: {{item.lastUpdatedAt | date:'mediumDate'}}</p>
+        <p>Created on: {{item.createdAt | date:'mediumDate'}}</p>
+        
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="$ctrl.isolated" ng-click="$ctrl.remove(item)" aria-label="Left Align">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="true" ng-click="$ctrl.copy()" aria-label="Left Align">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="$ctrl.isolated" ng-click="$ctrl.edit(item)" aria-label="Left Align">
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-click="$ctrl.popDetail(item)" aria-label="Left Align">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <ul uib-pagination total-items="$ctrl.totalItems" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()" max-size="maxSize" class="pagination" boundary-link-numbers="true"></ul>
+</uib-accordion>
