@@ -7,9 +7,17 @@ Install PM2
 
 Install nginx
 
+Install gulp-cli
+    npm install gulp-cli -g
 
-## Deploy the application
+## Install the dependency
     npm install
+
+## Compile the frontend resource
+    gulp
+
+## Init the Mongo (Do it for the first time)
+    node script/db.init.js
 
 ## Run the application
     pm2 start bin/www
