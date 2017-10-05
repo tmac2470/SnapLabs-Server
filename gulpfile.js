@@ -8,7 +8,12 @@ var baseUrl = './client/';
 
 
 gulp.task('watch', () => {
-  gulp.watch(path.join(baseUrl, '*'), ['angularjs']);
+  gulp.watch([
+    path.join(baseUrl, 'components/**/*.template.html')], ['angular-asset']);
+  gulp.watch([
+    path.join(baseUrl, 'components/')], ['angularjs']);
+  gulp.watch([
+    path.join(baseUrl, 'stylesheets/*.css')], ['css-asset']);
 });
 
 gulp.task('angularjs', () => {
@@ -61,6 +66,16 @@ gulp.task('angularjs-asset', () => {
     .pipe(gulp.dest('./public/components'));
 });
 
+gulp.task('css-asset', () => {
+  gulp.src([
+    path.join(baseUrl, 'stylesheets/*.css')])
+    .pipe(concat('style.min.css'))
+    .pipe(gulp.dest('./public/stylesheets'))
+    .pipe(cssmin().on('error', (err) => {
+      console.log(err);
+    }));
+});
+
 gulp.task('css-lib', () => {
   gulp.src([
     path.join(baseUrl, 'vendor/bootswatch-yeti.css'),
@@ -88,4 +103,4 @@ gulp.task('js-lib', () => {
     .pipe(gulp.dest('./public/javascripts/'));
 });
 
-gulp.task('default', ['css-lib', 'js-lib', 'angularjs', 'watch']);
+gulp.task('default', ['css-lib', 'js-lib', 'angularjs', 'angularjs-asset', 'css-asset', 'watch']);

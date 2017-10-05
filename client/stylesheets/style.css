@@ -31,3 +31,8 @@
 .on-drag-enter{
   background-color : #aaaaaa;
 }
+
+.avatar{
+  width:250px;
+  height:250px;
+}
