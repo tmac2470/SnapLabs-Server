@@ -9,7 +9,7 @@ var baseUrl = './client/';
 
 gulp.task('watch', () => {
   gulp.watch([
-    path.join(baseUrl, 'components/**/*.template.html')], ['angular-asset']);
+    path.join(baseUrl, 'components/**/*.template.html')], ['angularjs-asset']);
   gulp.watch([
     path.join(baseUrl, 'components/')], ['angularjs']);
   gulp.watch([
