@@ -1,22 +1,23 @@
 'use strict';
 
-angular.module('snaplab.notification')
-.component('notification', {
+angular
+  .module('snaplab.notification')
+  .component('notification', {
     templateUrl: 'components/notification/notification.template.html',
     controller: ['$rootScope', function ($rootScope) {
-        var self = this;
+      var self = this;
 
-        self.alerts = [
-            { type: 'warning', msg: 'This website is for Test only' }
-        ];
+      self.alerts = [
+        { type: 'warning', msg: 'This website is for Test only' }
+      ];
 
-        $rootScope.addAlert = function(content) {
-            self.alerts.pop();
-            self.alerts.push(content);
-        };
+      $rootScope.addAlert = function (content) {
+        self.alerts.pop();
+        self.alerts.push(content);
+      };
 
-        self.closeAlert = function(index) {
-            self.alerts.splice(index, 1);
-        };
+      self.closeAlert = function (index) {
+        self.alerts.splice(index, 1);
+      };
     }]
-});
+  });

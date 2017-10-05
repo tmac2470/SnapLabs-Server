@@ -28,6 +28,7 @@
     "serve-favicon": "~2.3.2"
   },
   "devDependencies": {
+    "eslint": "^4.8.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-cssmin": "^0.2.0",

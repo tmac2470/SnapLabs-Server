@@ -1,5 +1,5 @@
 'use strict';
 
 angular.module('snaplab.myworks', [
-    'snaplab.core.auth'
+  'snaplab.core.auth'
 ]);

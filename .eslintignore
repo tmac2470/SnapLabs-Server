@@ -1,3 +1,4 @@
 /public/*
 /test/*
 /gulpfile.js
+/client/vendor/*

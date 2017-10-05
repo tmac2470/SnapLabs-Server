@@ -1,4 +1,3 @@
 'use strict';
 
-angular.module('snaplab.notification', [
-]);
+angular.module('snaplab.notification', []);

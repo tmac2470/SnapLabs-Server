@@ -63,44 +63,46 @@ exports.forget = function (req, res, next) {
     if (!existingUser) {
       return res.status(400).json(new Message(false, {}, 'Email have not been registered!'));
     } else {
-      async.waterfall([
-        function setRandomToken(done) {
-          crypto.randomBytes(16, function (err, buf) {
+      async.waterfall(
+        [
+          function setRandomToken(done) {
+            crypto.randomBytes(16, function (err, buf) {
 
-            var token = buf.toString('hex');
-            debug(`token: ${token}`);
-            existingUser.passwordResetToken = token;
-            existingUser.passwordResetExpires = Date.now() + 3600000;
-            existingUser.save(function (err) {
-              done(err, token, existingUser);
+              var token = buf.toString('hex');
+              debug(`token: ${token}`);
+              existingUser.passwordResetToken = token;
+              existingUser.passwordResetExpires = Date.now() + 3600000;
+              existingUser.save(function (err) {
+                done(err, token, existingUser);
+              });
             });
-          });
-        },
-        function sendForgotPasswordEmail(token, user, done) {
-          debug(user.email);
-          var transporter = nodemailer.createTransport({
-            SES: new aws.SES({
-              apiVersion: '2010-12-01',
-              region: 'us-west-2',
-              accessKeyId: process.env.AWS_SES_KEY,
-              secretAccessKey: process.env.AWS_SES_PASS,
-              sslEnabled: true,
-            })
-          });
+          },
+          function sendForgotPasswordEmail(token, user, done) {
+            debug(user.email);
+            var transporter = nodemailer.createTransport({
+              SES: new aws.SES({
+                apiVersion: '2010-12-01',
+                region: 'us-west-2',
+                accessKeyId: process.env.AWS_SES_KEY,
+                secretAccessKey: process.env.AWS_SES_PASS,
+                sslEnabled: true,
+              })
+            });
 
-          var mailOptions = {
-            to: user.email,
-            from: 'mushrchun@gmail.com',
-            subject: 'Reset your password on Snaplab',
-            text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
+            var mailOptions = {
+              to: user.email,
+              from: 'mushrchun@gmail.com',
+              subject: 'Reset your password on Snaplab',
+              text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
           Please the copy following string and paste it into the form to complete the process:\n\n
           ${token}\n\n
           If you did not request this, please ignore this email and your password will remain unchanged.\n`
-          };
-          transporter.sendMail(mailOptions, function (err) {
-            done(err);
-          });
-        }],
+            };
+            transporter.sendMail(mailOptions, function (err) {
+              done(err);
+            });
+          }
+        ],
         function (err) {
           if (err) return next(err);
           else {

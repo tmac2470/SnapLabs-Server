@@ -5,9 +5,10 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../model/User');
 
 
-passport.use(new LocalStrategy({
-  usernameField: 'email'
-},
+passport.use(
+  new LocalStrategy({
+    usernameField: 'email'
+  },
   function (email, password, done) {
     User.findOne({ email: email.toLowerCase() }, function (err, user) {
       if (err) {

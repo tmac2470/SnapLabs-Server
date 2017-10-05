@@ -1,68 +1,70 @@
 'use strict';
 
-angular.module('snaplab').run(['$rootScope', '$transitions', 'auth', '$uibModal', function($rootScope, $transitions, auth, $uibModal){
+angular
+  .module('snaplab')
+  .run(['$rootScope', '$transitions', 'auth', '$uibModal', function ($rootScope, $transitions, auth, $uibModal) {
     $rootScope.isLogin = auth.isLoggedIn();
 
     function popNewAlert(content) {
-        var modalInstance = $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'components/modal/modal.template.html',
-            controller: 'AlertModalInstanceCtrl',
-            controllerAs: '$ctrl',
-            size: 'sm',
-            resolve: {
-                content: function () {
-                    return content;
-                }
-            }
-        });
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'components/modal/modal.template.html',
+        controller: 'AlertModalInstanceCtrl',
+        controllerAs: '$ctrl',
+        size: 'sm',
+        resolve: {
+          content: function () {
+            return content;
+          }
+        }
+      });
 
-        modalInstance.result
-            .then(
-                function closeDone() {
-                },
-                function dismissDone() {
-                    console.log('Modal dismissed at: ' + new Date());
-                }
-            );
-    };
+      modalInstance.result
+        .then(
+          function closeDone() {
+          },
+          function dismissDone() {
+            console.log('Modal dismissed at: ' + new Date());
+          }
+        );
+    }
 
     // filter pre-login page transitions
-    $transitions.onStart({ to: 'investigations.**' }, function(trans) {
-        if (!$rootScope.isLogin) {
-            popNewAlert('Sign In first');
-            return trans.router.stateService.target('signin');
-        }
+    $transitions.onStart({ to: 'investigations.**' }, function (trans) {
+      if (!$rootScope.isLogin) {
+        popNewAlert('Sign In first');
+        return trans.router.stateService.target('signin');
+      }
     });
 
-    $transitions.onStart({ to: 'design.**' }, function(trans) {
-        if (!$rootScope.isLogin) {
-            popNewAlert('Sign In first');
-            return trans.router.stateService.target('signin');
-        }
+    $transitions.onStart({ to: 'design.**' }, function (trans) {
+      if (!$rootScope.isLogin) {
+        popNewAlert('Sign In first');
+        return trans.router.stateService.target('signin');
+      }
     });
 
-    $transitions.onStart({ to: 'profile.**' }, function(trans) {
-        if (!$rootScope.isLogin) {
-            popNewAlert('Sign In first');
-            return trans.router.stateService.target('signin');
-        }
+    $transitions.onStart({ to: 'profile.**' }, function (trans) {
+      if (!$rootScope.isLogin) {
+        popNewAlert('Sign In first');
+        return trans.router.stateService.target('signin');
+      }
     });
 
-    $transitions.onStart({ to: 'myworks.**' }, function(trans) {
-        if (!$rootScope.isLogin) {
-            popNewAlert('Sign In first');
-            return trans.router.stateService.target('signin');
-        }
+    $transitions.onStart({ to: 'myworks.**' }, function (trans) {
+      if (!$rootScope.isLogin) {
+        popNewAlert('Sign In first');
+        return trans.router.stateService.target('signin');
+      }
     });
 
-    $transitions.onStart({ to: 'signin.**' }, function(trans) {
-        if ($rootScope.isLogin) {
-            popNewAlert('Have Sign In');
-            return trans.router.stateService.target('welcome');
-        }
+    $transitions.onStart({ to: 'signin.**' }, function (trans) {
+      if ($rootScope.isLogin) {
+        popNewAlert('Have Sign In');
+        return trans.router.stateService.target('welcome');
+      }
     });
 
-}]);
+  }]);

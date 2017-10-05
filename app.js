@@ -1,3 +1,4 @@
+/*eslint no-unused-vars: [2, {"args": "none", "varsIgnorePattern": "next"}]*/
 'use strict';
 
 var express = require('express');

@@ -1,99 +1,102 @@
 <div class="container-fluid">
-    <div class="page-header">
-        <h1>Investigation Information</h1>
-    </div>
-    <div class="row">
-        <div class="col-sm-9 col-sm-offset-3">
-            <div class="input-group">
-                <input type="text" class="form-control" ng-model="$ctrl.searchContent">
-                <div class="input-group-btn" uib-dropdown>
-                    <button id="split-button" type="button" class="btn btn-success" ng-click="$ctrl.search('all')">Search Title & Description Fields</button>
-                    <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+  <div class="page-header">
+    <h1>Investigation Information</h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-9 col-sm-offset-3">
+      <div class="input-group">
+        <input type="text" class="form-control" ng-model="$ctrl.searchContent">
+        <div class="input-group-btn" uib-dropdown>
+          <button id="split-button" type="button" class="btn btn-success" ng-click="$ctrl.search('all')">Search Title & Description Fields</button>
+          <button type="button" class="btn btn-primary" uib-dropdown-toggle>
                         <span class="caret"></span>
                         <span class="sr-only">Split button!</span>
                     </button>
-                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
-                        <li role="menuitem"><a ng-click="$ctrl.search('title')">Search Title Field </a></li>
-                        <li role="menuitem"><a ng-click="$ctrl.search('description')">Search Description Field </a></li>
-                        <li role="menuitem"><a ng-click="$ctrl.search('serial-number')">Search Serial Number Field </a></li>
-                    </ul>
-                </div>
-            </div>
+          <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+            <li role="menuitem"><a ng-click="$ctrl.search('title')">Search Title Field </a></li>
+            <li role="menuitem"><a ng-click="$ctrl.search('description')">Search Description Field </a></li>
+            <li role="menuitem"><a ng-click="$ctrl.search('serial-number')">Search Serial Number Field </a></li>
+          </ul>
         </div>
+      </div>
     </div>
+  </div>
 
-    <br>
+  <br>
 
-    <div class="row">
-        <div class="col-sm-3">
-            <form class="well">
-                <div class="form-group">
-                    <label>Filter By Created Date (From To)</label>
-                    <div>
-                        <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="$ctrl.dtStart" is-open="$ctrl.dtStartStatus" datepicker-options="$ctrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                            <span class="input-group-btn">
+  <div class="row">
+    <div class="col-sm-3">
+      <form class="well">
+        <div class="form-group">
+          <label>Filter By Created Date (From To)</label>
+          <div>
+            <p class="input-group">
+              <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="$ctrl.dtStart" is-open="$ctrl.dtStartStatus"
+                datepicker-options="$ctrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats"
+              />
+              <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="$ctrl.openDatePicker('start')">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                         </span>
-                        </p>
-                        <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="$ctrl.dtEnd" is-open="$ctrl.dtEndStatus" datepicker-options="$ctrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                            <span class="input-group-btn">
+            </p>
+            <p class="input-group">
+              <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="$ctrl.dtEnd" is-open="$ctrl.dtEndStatus"
+                datepicker-options="$ctrl.dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats"
+              />
+              <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="$ctrl.openDatePicker('end')">
                                         <i class="glyphicon glyphicon-calendar"></i>
                                     </button>
                         </span>
-                        </p>
-                    </div>
-                </div>
+            </p>
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label>Sort By</label>
-                    <div class="radio">
-                        <label>
+        <div class="form-group">
+          <label>Sort By</label>
+          <div class="radio">
+            <label>
                             <input type="radio" name="optionsRadios"  ng-model="$ctrl.sortType" value="-lastupdated">
                             Sort by Last Updated date (Descending)
                         </label>
-                    </div>
-                    <div class="radio">
-                        <label>
+          </div>
+          <div class="radio">
+            <label>
                             <input type="radio" name="optionsRadios"  ng-model="$ctrl.sortType" value="lastupdated">
                             Sort by Last Updated date (Ascending)
                         </label>
-                    </div>
-                    <div class="radio">
-                        <label>
+          </div>
+          <div class="radio">
+            <label>
                             <input type="radio" name="optionsRadios" ng-model="$ctrl.sortType" value="author">
                             Sort by Creator (Ascending)
                         </label>
-                    </div>
-                    <div class="radio">
-                        <label>
+          </div>
+          <div class="radio">
+            <label>
                             <input type="radio" name="optionsRadios"  ng-model="$ctrl.sortType" value="-author">
                             Sort by Creator (Descending)
                         </label>
-                    </div>
-                    <div class="radio">
-                        <label>
+          </div>
+          <div class="radio">
+            <label>
                             <input type="radio" name="optionsRadios"  ng-model="$ctrl.sortType" value="-createdate">
                             Sort by Created date (Descending)
                         </label>
-                    </div>
-                    <div class="radio">
-                        <label>
+          </div>
+          <div class="radio">
+            <label>
                             <input type="radio" name="optionsRadios"  ng-model="$ctrl.sortType" value="createdate">
                             Sort by Created date (Ascending)
                         </label>
-                    </div>
-                </div>
-            </form>
+          </div>
         </div>
-        <div class="col-sm-9">
-            <investigations-list init-data="$ctrl.initData"></investigations-list>
-        </div>
+      </form>
     </div>
+    <div class="col-sm-9">
+      <investigations-list init-data="$ctrl.initData"></investigations-list>
+    </div>
+  </div>
 
 </div>
-
