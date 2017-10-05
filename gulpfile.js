@@ -103,4 +103,7 @@ gulp.task('js-lib', () => {
     .pipe(gulp.dest('./public/javascripts/'));
 });
 
-gulp.task('default', ['css-lib', 'js-lib', 'angularjs', 'angularjs-asset', 'css-asset', 'watch']);
+gulp.task('default', ['css-lib', 'js-lib', 'angularjs', 'angularjs-asset', 'css-asset']);
+
+
+gulp.task('dev', ['css-lib', 'js-lib', 'angularjs', 'angularjs-asset', 'css-asset', 'watch']);
