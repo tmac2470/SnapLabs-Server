@@ -14,7 +14,10 @@ angular
     controller: ['$rootScope', '$http', 'auth', '$state', '$uibModal', function ($rootScope, $http, auth, $state, $uibModal) {
 
       var self = this;
-      var user = auth.getLoginUser();
+
+      if (self.isolated == 'true') {
+        var user = auth.getLoginUser();
+      }
 
       function loadList(self, data) {
         self.list = data.data;
