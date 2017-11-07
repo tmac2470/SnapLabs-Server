@@ -88,7 +88,7 @@ exports.getExperiments = function (req, res, next) {
       break;
   }
 
-  Experiment.find(queryOption, 'labTitle description createdBy lastUpdatedAt createdAt')
+  Experiment.find(queryOption, 'labTitle description createdBy lastUpdatedAt createdAt serialNumber')
     .skip((page - 1) * perPage)
     .limit(perPage)
     // .populate('createdBy', 'name')
