@@ -15,10 +15,6 @@ angular
 
       var self = this;
 
-      if (self.isolated == 'true') {
-        var user = auth.getLoginUser();
-      }
-
       function loadList(self, data) {
         self.list = data.data;
         self.totalItems = data.data.length;
@@ -42,6 +38,7 @@ angular
       };
 
       self.$onInit = function () {
+        var user = auth.getLoginUser();
         if (self.isolated == 'true') {
           var httpCfg = {};
           httpCfg.headers = auth.genHeader();
