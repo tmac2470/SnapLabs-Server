@@ -30,12 +30,13 @@ mongoose.connection.on('error', function () {
 
 var app = express();
 
-// Allow cors for localhost
-var corsOptions = {
-  origin: 'http://localhost:8100',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-app.use(cors(corsOptions));
+// // Allow cors for localhost
+// var corsOptions = {
+//   origin: 'http://localhost:8100',
+//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
+// Allow all cors
+app.use(cors());
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(logger('dev'));
