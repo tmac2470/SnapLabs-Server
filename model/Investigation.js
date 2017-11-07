@@ -1,12 +1,12 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var Counter = require('./Counter');
+const mongoose = require('mongoose');
+const Counter = require('./Counter');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 
-var experimentSchema = new Schema({
+const investigationSchema = new Schema({
   labTitle: String,
   description: String,
   sampleInterval: String,
@@ -26,20 +26,22 @@ var experimentSchema = new Schema({
   tags: []
 });
 
-experimentSchema.pre('save', function save(next) {
-  var doc = this;
+investigationSchema.pre('save', function save(next) {
+  const doc = this;
   doc.lastUpdatedAt = new Date();
   if (this.isNew) {
-    Counter.findByIdAndUpdate({ _id: 'serial-number' }, { $inc: { seq: 1 } }, function (error, counter) {
-      if (error) return next(error);
-      doc.serialNumber = counter.seq;
-      next();
-    });
+    Counter.findByIdAndUpdate(
+      { _id: 'serial-number' },
+      { $inc: { seq: 1 } }, function (error, counter) {
+        if (error) return next(error);
+        doc.serialNumber = counter.seq;
+        next();
+      });
     doc.createdAt = new Date();
   } else {
     next();
   }
 });
 
-var Experiment = mongoose.model('Experiments', experimentSchema);
-module.exports = Experiment;
+const Investigation = mongoose.model('Investigation', investigationSchema);
+module.exports = Investigation;

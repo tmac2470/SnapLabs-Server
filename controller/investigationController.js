@@ -1,6 +1,6 @@
 'use strict';
 
-var Experiment = require('../model/Experiment');
+var Investigation = require('../model/Investigation');
 var debug = require('debug')('snaplab-server:controller');
 var Message = require('../utils/util').Message;
 
@@ -15,7 +15,7 @@ var Message = require('../utils/util').Message;
  *      page: number
  *      perPage: number
  */
-exports.getExperiments = function (req, res, next) {
+exports.getInvestigations = function (req, res, next) {
 
   var today = new Date();
   var day20Before = new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000);
@@ -88,19 +88,19 @@ exports.getExperiments = function (req, res, next) {
       break;
   }
 
-  Experiment.find(queryOption, 'labTitle description createdBy lastUpdatedAt createdAt serialNumber')
+  Investigation.find(queryOption, 'labTitle description createdBy lastUpdatedAt createdAt serialNumber')
     .skip((page - 1) * perPage)
     .limit(perPage)
     // .populate('createdBy', 'name')
     .populate({ path: 'createdBy', select: 'name email' })
     .sort(sortField)
-    .exec(function (err, experiments) {
+    .exec(function (err, investigations) {
       if (err) {
         return next(err);
       }
-      if (experiments) {
-        debug(experiments);
-        res.status(200).json(new Message(true, experiments, ''));
+      if (investigations) {
+        debug(investigations);
+        res.status(200).json(new Message(true, investigations, ''));
       } else {
 
         res.status(200).json(new Message(true, [], ''));
@@ -108,22 +108,22 @@ exports.getExperiments = function (req, res, next) {
     });
 };
 
-exports.getOneExperiment = function (req, res) {
+exports.getOneInvestigation = function (req, res) {
   var id = req.params.id;
   debug(id);
-  Experiment.findOne({ _id: id }).exec(function (err, experiments) {
+  Investigation.findOne({ _id: id }).exec(function (err, investigations) {
     if (err) {
       return res.send(err);
     }
-    res.status(200).json(new Message(true, experiments, ''));
+    res.status(200).json(new Message(true, investigations, ''));
   });
 };
 
-exports.updateOneExperiment = function (req, res, next) {
+exports.updateOneInvestigation = function (req, res, next) {
   var content = req.body;
   var id = req.params.id;
   debug(content);
-  Experiment.findById(id).exec(function (err, result) {
+  Investigation.findById(id).exec(function (err, result) {
     result.videoPrefix = content.videoPredix;
     result.dataStorageAllowed = content.dataStorageAllowed;
     result.dataStoragePrefix = content.dataStoragePrefix;
@@ -137,25 +137,25 @@ exports.updateOneExperiment = function (req, res, next) {
       if (err) {
         next(err);
       } else {
-        res.status(200).json(new Message(true, {}, 'Experiment Update Successfully!'));
+        res.status(200).json(new Message(true, {}, 'Investigation Update Successfully!'));
       }
     });
 
   });
 };
 
-exports.deleteOneExperiment = function (req, res, next) {
+exports.deleteOneInvestigation = function (req, res, next) {
   debug(req.params.id);
-  Experiment.findByIdAndRemove(req.params.id, function (err) {
+  Investigation.findByIdAndRemove(req.params.id, function (err) {
     if (err) {
       return next(err);
     } else {
-      res.status(200).json(new Message(true, {}, 'Experiment Delete Successfully!'));
+      res.status(200).json(new Message(true, {}, 'Investigation Delete Successfully!'));
     }
   });
 };
 
-exports.insertOneExperiment = function (req, res, next) {
+exports.insertOneInvestigation = function (req, res, next) {
   var content = req.body;
   debug(content);
   var cursor = 0;
@@ -181,26 +181,26 @@ exports.insertOneExperiment = function (req, res, next) {
   debug(tagSet);
   var tags = Array.from(tagSet);
   content.tags = tags;
-  var newExp = new Experiment(content);
+  var newExp = new Investigation(content);
   newExp.save(function (err) {
     if (err) {
       next(err);
     } else {
-      res.status(200).json(new Message(true, {}, 'Experiment Add Successfully!'));
+      res.status(200).json(new Message(true, {}, 'Investigation Add Successfully!'));
     }
   });
 };
 
-exports.getUserExperiments = function (req, res, next) {
+exports.getUserInvestigations = function (req, res, next) {
   var userId = req.params.userId;
-  Experiment
+  Investigation
     .find({ createdBy: userId })
     .populate({ path: 'createdBy', select: 'name email' })
-    .exec(function (err, experiments) {
+    .exec(function (err, investigations) {
       if (err) {
         return next(err);
       } else {
-        res.status(200).json(new Message(true, experiments, ''));
+        res.status(200).json(new Message(true, investigations, ''));
       }
     });
 };

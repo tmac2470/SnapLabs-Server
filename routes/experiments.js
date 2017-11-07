@@ -2,7 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
-var controller = require('../controller/experimentController');
+var controller = require('../controller/investigationController');
 var jwt = require('express-jwt');
 
 var auth = jwt({
@@ -10,17 +10,17 @@ var auth = jwt({
   userProperty: 'payload'
 });
 
-/* retrive all experiments based on conditional query. */
-router.get('/', controller.getExperiments);
+/* retrive all investigation based on conditional query. */
+router.get('/', controller.getInvestigations);
 
-/* retrive and add experiment to specific user */
-router.get('/user/:userId', auth, controller.getUserExperiments);
-router.post('/user/:userId', auth, controller.insertOneExperiment);
+/* retrive and add investigation to specific user */
+router.get('/user/:userId', auth, controller.getUserInvestigations);
+router.post('/user/:userId', auth, controller.insertOneInvestigation);
 
 
-/* retrive, update and delete specific experiment */
-router.get('/:id', controller.getOneExperiment);
-router.put('/:id', auth, controller.updateOneExperiment);
-router.delete('/:id', auth, controller.deleteOneExperiment);
+/* retrive, update and delete specific investigation */
+router.get('/:id', controller.getOneInvestigation);
+router.put('/:id', auth, controller.updateOneInvestigation);
+router.delete('/:id', auth, controller.deleteOneInvestigation);
 
 module.exports = router;
