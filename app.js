@@ -1,5 +1,4 @@
 /*eslint no-unused-consts: [2, {"args": "none", "constsIgnorePattern": "next"}]*/
-'use strict';
 
 const express = require('express');
 const path = require('path');
@@ -12,7 +11,7 @@ const Message = require('./utils/util').Message;
 const debug = require('debug')('snaplab-server:app');
 dotenv.load({ path: '.env' });
 const passport = require('./config/passport');
-const experiments = require('./routes/experiments');
+const investigations = require('./routes/investigations');
 const auth = require('./routes/authentication');
 const profiles = require('./routes/profiles');
 const results = require('./routes/result');
@@ -22,7 +21,7 @@ const cors = require('cors');
  * Connect to MongoDB
  */
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 mongoose.connection.on('error', function () {
   debug('MongoDB connection error. Please make sure MongoDB is running.');
   process.exit();
@@ -45,18 +44,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 
-app.use('/experiments', experiments);
+app.use('/experiments', investigations);
 app.use('/auth', auth);
 app.use('/profiles', profiles);
 app.use('/results', results);
 
 // catch 404 and forward to error handler
-app.use(function (req, res) {
+app.use((req, res) => {
   res.status(404).json(new Message(false, {}, 'Not Found'));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);

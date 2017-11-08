@@ -28,9 +28,9 @@ investigationSchema.pre('save', function save(next) {
   const doc = this;
   doc.lastUpdatedAt = new Date();
   if (this.isNew) {
-    Counter.findByIdAndUpdate(
-      { _id: 'serial-number' },
-      { $inc: { seq: 1 } }, function (error, counter) {
+    Counter
+      .findByIdAndUpdate({ _id: 'serial-number' }, { $inc: { seq: 1 } })
+      .exec((error, counter) => {
         if (error) return next(error);
         doc.serialNumber = counter.seq;
         next();
