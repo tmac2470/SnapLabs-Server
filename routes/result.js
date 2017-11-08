@@ -1,11 +1,11 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
-var resultController = require('../controller/resultController');
-var jwt = require('express-jwt');
+const express = require('express');
+const router = express.Router();
+const resultController = require('../controller/resultController');
+const jwt = require('express-jwt');
 
-var auth = jwt({
+const auth = jwt({
   secret: process.env.JWT_SECRET,
   userProperty: 'payload'
 });

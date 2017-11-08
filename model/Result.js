@@ -1,15 +1,15 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var resultSchema = new Schema({
+const resultSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User' },
   experimentId: { type: Schema.Types.ObjectId, ref: 'Experiment' },
   data: Schema.Types.Mixed
 });
 
 
-var Result = mongoose.model('Result', resultSchema);
+const Result = mongoose.model('Result', resultSchema);
 module.exports = Result;

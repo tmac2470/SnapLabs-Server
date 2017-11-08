@@ -1,13 +1,13 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var counterSchema = new Schema({
+const counterSchema = new Schema({
   _id: { type: String, required: true },
   seq: { type: Number, default: 0 }
 });
 
-var Counter = mongoose.model('Counters', counterSchema);
+const Counter = mongoose.model('Counters', counterSchema);
 module.exports = Counter;

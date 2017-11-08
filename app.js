@@ -1,22 +1,22 @@
-/*eslint no-unused-vars: [2, {"args": "none", "varsIgnorePattern": "next"}]*/
+/*eslint no-unused-consts: [2, {"args": "none", "constsIgnorePattern": "next"}]*/
 'use strict';
 
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var dotenv = require('dotenv');
-var Message = require('./utils/util').Message;
-var debug = require('debug')('snaplab-server:app');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const Message = require('./utils/util').Message;
+const debug = require('debug')('snaplab-server:app');
 dotenv.load({ path: '.env' });
-var passport = require('./config/passport');
-var experiments = require('./routes/experiments');
-var auth = require('./routes/authentication');
-var profiles = require('./routes/profiles');
-var results = require('./routes/result');
-var cors = require('cors');
+const passport = require('./config/passport');
+const experiments = require('./routes/experiments');
+const auth = require('./routes/authentication');
+const profiles = require('./routes/profiles');
+const results = require('./routes/result');
+const cors = require('cors');
 
 /**
  * Connect to MongoDB
@@ -28,12 +28,12 @@ mongoose.connection.on('error', function () {
   process.exit();
 });
 
-var app = express();
+const app = express();
 
 // Allow cors for localhost
-var corsOptions = {
+const corsOptions = {
   origin: 'http://localhost:8100',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, constious SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
 

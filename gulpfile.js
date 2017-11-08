@@ -1,10 +1,10 @@
-var gulp = require('gulp');
-var cssmin = require('gulp-cssmin');
-var rename = require('gulp-rename');
-var concat = require('gulp-concat');
-var path = require('path');
+const gulp = require('gulp');
+const cssmin = require('gulp-cssmin');
+const rename = require('gulp-rename');
+const concat = require('gulp-concat');
+const path = require('path');
 
-var baseUrl = './client/';
+const baseUrl = './client/';
 
 
 gulp.task('watch', () => {

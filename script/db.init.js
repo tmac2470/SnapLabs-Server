@@ -1,7 +1,7 @@
-var dotenv = require('dotenv');
-var mongoose = require('mongoose');
-var Counter = require('../model/Counter');
-var debug = require('debug')('snaplab-server:server');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const Counter = require('../model/Counter');
+const debug = require('debug')('snaplab-server:server');
 
 dotenv.load({ path: '.env' });
 mongoose.connect(process.env.MONGODB_URI);
@@ -10,7 +10,7 @@ mongoose.connection.on('error', function () {
   process.exit();
 });
 
-var serialNumber = new Counter({ _id: 'serial-number', seq: 0 });
+const serialNumber = new Counter({ _id: 'serial-number', seq: 0 });
 serialNumber.save(function (err) {
   if (err) {
     debug(err);

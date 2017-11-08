@@ -1,8 +1,8 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
-var userController = require('../controller/userController');
+const express = require('express');
+const router = express.Router();
+const userController = require('../controller/userController');
 
 router.post('/signin', userController.signIn);
 

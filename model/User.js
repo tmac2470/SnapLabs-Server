@@ -1,13 +1,13 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
-var jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
+const jwt = require('jsonwebtoken');
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 
-var userSchema = new Schema({
+const userSchema = new Schema({
   name: String,
   email: String,
   password: String,
@@ -19,7 +19,7 @@ var userSchema = new Schema({
  * Password hash middleware.
  */
 userSchema.pre('save', function save(next) {
-  var user = this;
+  const user = this;
   if (!user.isModified('password')) { return next(); }
   bcrypt.genSalt(10, function (err, salt) {
     if (err) { return next(err); }
@@ -38,7 +38,7 @@ userSchema.methods.comparePassword = function comparePassword(candidatePassword,
 };
 
 userSchema.methods.generateJwt = function () {
-  var expiry = new Date();
+  const expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
 
   return jwt.sign({
@@ -49,5 +49,5 @@ userSchema.methods.generateJwt = function () {
   }, process.env.JWT_SECRET);
 };
 
-var User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 module.exports = User;
