@@ -194,6 +194,7 @@ exports.getUserInvestigations = (req, res, next) => {
   Investigation
     .find({ createdBy: userId })
     .populate({ path: 'createdBy', select: 'name email' })
+    .sort({ lastUpdatedAt: -1})
     .exec((err, investigations) => {
       if (err) {
         return next(err);
