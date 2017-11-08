@@ -1,8 +1,6 @@
-'use strict';
-
-var Investigation = require('../model/Investigation');
-var debug = require('debug')('snaplab-server:controller');
-var Message = require('../utils/util').Message;
+const Investigation = require('../model/Investigation');
+const debug = require('debug')('snaplab-server:controller');
+const Message = require('../utils/util').Message;
 
 /**
  * search controller
@@ -15,22 +13,22 @@ var Message = require('../utils/util').Message;
  *      page: number
  *      perPage: number
  */
-exports.getInvestigations = function (req, res, next) {
+exports.getInvestigations = (req, res, next) => {
 
-  var today = new Date();
-  var day20Before = new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000);
+  const today = new Date();
+  const day20Before = new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000);
 
   debug(req.query);
-  var fields = req.query.fields || 'title';
-  var after = req.query.afterDate || day20Before;
-  var before = req.query.beforeDate || today;
-  var sort = req.query.sort || '-lastupdated';
-  var query = req.query.query;
+  const fields = req.query.fields || 'title';
+  const after = req.query.afterDate || day20Before;
+  const before = req.query.beforeDate || today;
+  const sort = req.query.sort || '-lastupdated';
+  const query = req.query.query;
 
-  var page = parseInt(req.query.page) || 1;
-  var perPage = parseInt(req.query.per_page) || 20;
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.per_page) || 20;
 
-  var queryOption = {};
+  const queryOption = {};
   queryOption.isPublished = true;
   if (fields != 'serial-number') {
     queryOption.lastUpdatedAt = {
@@ -40,7 +38,7 @@ exports.getInvestigations = function (req, res, next) {
   }
 
   if (query) {
-    var fieldArr = [];
+    const fieldArr = [];
 
     if (fields == 'all') {
       fieldArr.push({ labTitle: new RegExp(query, 'i') });
@@ -50,8 +48,8 @@ exports.getInvestigations = function (req, res, next) {
       fieldArr.push({ serialNumber: query });
     }
     else {
-      var fieldList = fields.split(';');
-      fieldList.forEach(function (entry) {
+      const fieldList = fields.split(';');
+      fieldList.forEach((entry) => {
         switch (entry) {
           case 'title':
             fieldArr.push({ labTitle: new RegExp(query, 'i') });
@@ -66,7 +64,7 @@ exports.getInvestigations = function (req, res, next) {
     queryOption['$or'] = fieldArr;
   }
 
-  var sortField;
+  let sortField;
   switch (sort) {
     case '-lastupdated':
       sortField = { lastUpdatedAt: -1 };
@@ -94,7 +92,7 @@ exports.getInvestigations = function (req, res, next) {
     // .populate('createdBy', 'name')
     .populate({ path: 'createdBy', select: 'name email' })
     .sort(sortField)
-    .exec(function (err, investigations) {
+    .exec((err, investigations) => {
       if (err) {
         return next(err);
       }
@@ -108,10 +106,10 @@ exports.getInvestigations = function (req, res, next) {
     });
 };
 
-exports.getOneInvestigation = function (req, res) {
-  var id = req.params.id;
+exports.getOneInvestigation = (req, res) => {
+  const id = req.params.id;
   debug(id);
-  Investigation.findOne({ _id: id }).exec(function (err, investigations) {
+  Investigation.findOne({ _id: id }).exec((err, investigations) => {
     if (err) {
       return res.send(err);
     }
@@ -119,11 +117,11 @@ exports.getOneInvestigation = function (req, res) {
   });
 };
 
-exports.updateOneInvestigation = function (req, res, next) {
-  var content = req.body;
-  var id = req.params.id;
+exports.updateOneInvestigation = (req, res, next) => {
+  const content = req.body;
+  const id = req.params.id;
   debug(content);
-  Investigation.findById(id).exec(function (err, result) {
+  Investigation.findById(id).exec((err, result) => {
     result.videoPrefix = content.videoPredix;
     result.dataStorageAllowed = content.dataStorageAllowed;
     result.dataStoragePrefix = content.dataStoragePrefix;
@@ -133,7 +131,7 @@ exports.updateOneInvestigation = function (req, res, next) {
     result.description = content.description;
     result.sensorTags = content.sensorTags;
     result.isPublished = content.isPublished;
-    result.save(function (err) {
+    result.save ((err) =>{
       if (err) {
         next(err);
       } else {
@@ -144,9 +142,9 @@ exports.updateOneInvestigation = function (req, res, next) {
   });
 };
 
-exports.deleteOneInvestigation = function (req, res, next) {
+exports.deleteOneInvestigation = (req, res, next) => {
   debug(req.params.id);
-  Investigation.findByIdAndRemove(req.params.id, function (err) {
+  Investigation.findByIdAndRemove(req.params.id).exec((err) => {
     if (err) {
       return next(err);
     } else {
@@ -155,15 +153,15 @@ exports.deleteOneInvestigation = function (req, res, next) {
   });
 };
 
-exports.insertOneInvestigation = function (req, res, next) {
-  var content = req.body;
+exports.insertOneInvestigation = (req, res, next) => {
+  const content = req.body;
   debug(content);
-  var cursor = 0;
+  let cursor = 0;
 
-  function scanTags(sensors) {
-    for (var i in sensors) {
+  const scanTags = (sensors) => {
+    for (const i in sensors) {
       // console.log(i, sensors[i]);
-      for (var j in sensors[i]) {
+      for (const j in sensors[i]) {
         debug(sensors[i][j]);
         if (sensors[i][j].display) {
           tagSet.add(i);
@@ -172,17 +170,17 @@ exports.insertOneInvestigation = function (req, res, next) {
     }
   }
 
-  var tagSet = new Set();
+  const tagSet = new Set();
   while (content.sensorTags[cursor]) {
     // console.log(content.sensorTags[cursor]);
     scanTags(content.sensorTags[cursor].sensors);
     cursor++;
   }
   debug(tagSet);
-  var tags = Array.from(tagSet);
+  const tags = Array.from(tagSet);
   content.tags = tags;
-  var newExp = new Investigation(content);
-  newExp.save(function (err) {
+  const newExp = new Investigation(content);
+  newExp.save((err) => {
     if (err) {
       next(err);
     } else {
@@ -191,12 +189,12 @@ exports.insertOneInvestigation = function (req, res, next) {
   });
 };
 
-exports.getUserInvestigations = function (req, res, next) {
-  var userId = req.params.userId;
+exports.getUserInvestigations = (req, res, next) => {
+  const userId = req.params.userId;
   Investigation
     .find({ createdBy: userId })
     .populate({ path: 'createdBy', select: 'name email' })
-    .exec(function (err, investigations) {
+    .exec((err, investigations) => {
       if (err) {
         return next(err);
       } else {

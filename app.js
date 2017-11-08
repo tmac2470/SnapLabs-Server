@@ -20,9 +20,9 @@ const cors = require('cors');
 /**
  * Connect to MongoDB
  */
-mongoose.Promise = global.Promise;
+mongoose.Promise = require('bluebird');
 mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
-mongoose.connection.on('error', function () {
+mongoose.connection.on('error', () => {
   debug('MongoDB connection error. Please make sure MongoDB is running.');
   process.exit();
 });
