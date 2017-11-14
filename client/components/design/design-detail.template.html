@@ -24,17 +24,9 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 control-label">Sampling Rate</label>
-      <div class="btn-group col-sm-8" uib-dropdown>
-        <button type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-                        {{sampleRateStr}} <span class="caret"></span>
-                    </button>
-        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-          <li ng-click="setSampleRate(1, '1 sample per second')" role="menuitem"><a>1 sample per second</a></li>
-          <li ng-click="setSampleRate(2, '2 samples per second')" role="menuitem"><a>2 samples per second</a></li>
-          <li ng-click="setSampleRate(3, '3 samples per second')" role="menuitem"><a>3 samples per second</a></li>
-          <li ng-click="setSampleRate(4, '4 samples per second')" role="menuitem"><a>4 samples per second</a></li>
-        </ul>
+      <label class="col-sm-4 control-label">Sampling Interval(ms)</label>
+      <div class="btn-group col-sm-2" uib-dropdown>
+        <input name="sampling_rate" type="text" ng-model="sampleInterval"  class="form-control" required>
       </div>
     </div>
     <div class="form-group">
