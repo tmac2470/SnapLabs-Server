@@ -12,45 +12,161 @@
     self.quickDesignBlock = [];
 
     self.TemperatureBlock = [
-      { class: 'Temperature', type: 'Graph', name: 'Temperature Graph &nbsp;', url: 'images/graphicon.png', tunable: true, parameters: [{ field: 'Temperature.graph.display', value: true }] },
-      { class: 'Temperature', type: 'Data', name: 'Temperature Data &nbsp;', url: 'images/dataicon.jpg', tunable: true, parameters: [{ field: 'Temperature.data.display', value: true }] },
-      { class: 'Temperature', type: 'Grid', name: '4x4 Temperature Grid', url: 'images/gridicon.png', tunable: true, parameters: [{ field: 'Temperature.grid.columns', value: 4 }, { field: 'Temperature.grid.rows', value: 4 }, { field: 'Temperature.grid.display', value: true }] }
+      {
+        class: 'Temperature', type: 'Graph', name: 'Temperature Graph &nbsp;',
+        url: 'images/graphicon.png', tunable: true,
+        parameters: [
+          { field: 'Temperature.graph.display', value: true },
+          { field: 'Temperature.parameters.ambient', value: true },
+          { field: 'Temperature.parameters.IR', value: true }
+        ]
+      },
+      {
+        class: 'Temperature', type: 'Data', name: 'Temperature Data &nbsp;',
+        url: 'images/dataicon.jpg', tunable: true, parameters: [
+          { field: 'Temperature.data.display', value: true },
+          { field: 'Temperature.parameters.ambient', value: true },
+          { field: 'Temperature.parameters.IR', value: true }]
+      },
+      {
+        class: 'Temperature', type: 'Grid', name: '4x4 Temperature Grid',
+        url: 'images/gridicon.png', tunable: true, parameters: [
+          { field: 'Temperature.grid.columns', value: 4 },
+          { field: 'Temperature.grid.rows', value: 4 },
+          { field: 'Temperature.grid.display', value: true },
+          { field: 'Temperature.parameters.ambient', value: true },
+          { field: 'Temperature.parameters.IR', value: true }]
+      }
     ];
 
     self.HumidityBlock = [
-      { class: 'Humidity', type: 'Graph', name: 'Humidity Graph &nbsp;', url: 'images/graphicon.png', tunable: true, parameters: [{ field: 'Humidity.graph.display', value: true }] },
+      {
+        class: 'Humidity', type: 'Graph', name: 'Humidity Graph &nbsp;',
+        url: 'images/graphicon.png', tunable: true, parameters: [
+          { field: 'Humidity.graph.display', value: true }]
+      },
       { class: 'Humidity', type: 'Data', name: 'Humidity Data Only', url: 'images/dataicon.jpg', parameters: [{ field: 'Humidity.data.display', value: true }] },
       { class: 'Humidity', type: 'Grid', name: '4x4 Humidity Grid &nbsp;', url: 'images/gridicon.png', tunable: true, parameters: [{ field: 'Humidity.grid.columns', value: 4 }, { field: 'Humidity.grid.rows', value: 4 }, { field: 'Humidity.grid.display', value: true }] }
     ];
 
     self.BarometerBlock = [
-      { class: 'Barometer', type: 'Graph', name: 'Barometer Graph &nbsp;', url: 'images/graphicon.png', tunable: true, parameters: [{ field: 'Barometer.graph.display', value: true }] },
-      { class: 'Barometer', type: 'Data', name: 'Barometer Data &nbsp;', url: 'images/dataicon.jpg', parameters: [{ field: 'Barometer.data.display', value: true }] },
-      { class: 'Barometer', type: 'Grid', name: '4x4 Barometer Grid', url: 'images/gridicon.png', tunable: true, parameters: [{ field: 'Barometer.grid.columns', value: 4 }, { field: 'Barometer.grid.rows', value: 4 }, { field: 'Barometer.grid.display', value: true }] }
+      {
+        class: 'Barometer', type: 'Graph', name: 'Barometer Graph &nbsp;',
+        url: 'images/graphicon.png', tunable: true, parameters: [
+          { field: 'Barometer.graph.display', value: true }]
+      },
+      {
+        class: 'Barometer', type: 'Data', name: 'Barometer Data &nbsp;',
+        url: 'images/dataicon.jpg', parameters: [
+          { field: 'Barometer.data.display', value: true }]
+      },
+      {
+        class: 'Barometer', type: 'Grid', name: '4x4 Barometer Grid',
+        url: 'images/gridicon.png', tunable: true, parameters: [
+          { field: 'Barometer.grid.columns', value: 4 },
+          { field: 'Barometer.grid.rows', value: 4 },
+          { field: 'Barometer.grid.display', value: true }]
+      }
     ];
 
     self.AccelerometerBlock = [
-      { class: 'Accelerometer', type: 'Graph', name: 'Accelerometer Graph', url: 'images/graphicon.png', tunable: true, parameters: [{ field: 'Accelerometer.graph.display', value: true }] },
-      { class: 'Accelerometer', type: 'Data', name: 'Accelerometer Data Only', url: 'images/dataicon.jpg', tunable: true, parameters: [{ field: 'Accelerometer.data.display', value: true }] },
-      { class: 'Accelerometer', type: 'Grid', name: '4x4 Accelerometer Grid', url: 'images/gridicon.png', tunable: true, parameters: [{ field: 'Accelerometer.grid.columns', value: 4 }, { field: 'Accelerometer.grid.rows', value: 4 }, { field: 'Accelerometer.grid.display', value: true }] }
+      {
+        class: 'Accelerometer', type: 'Graph', name: 'Accelerometer Graph',
+        url: 'images/graphicon.png', tunable: true,
+        parameters: [
+          { field: 'Accelerometer.graph.display', value: true },
+          { field: 'Magnetometer.graph.display', value: true },
+          { field: 'Accelerometer.parameters.xyz', value: true },
+          { field: 'Accelerometer.parameters.scalar', value: true }]
+      },
+      {
+        class: 'Accelerometer', type: 'Data', name: 'Accelerometer Data Only',
+        url: 'images/dataicon.jpg', tunable: true,
+        parameters: [
+          { field: 'Accelerometer.data.display', value: true },
+          { field: 'Magnetometer.graph.display', value: true },
+          { field: 'Accelerometer.parameters.xyz', value: true },
+          { field: 'Accelerometer.parameters.scalar', value: true }]
+      },
+      {
+        class: 'Accelerometer', type: 'Grid', name: '4x4 Accelerometer Grid', url: 'images/gridicon.png', tunable: true,
+        parameters: [
+          { field: 'Accelerometer.grid.columns', value: 4 },
+          { field: 'Accelerometer.grid.rows', value: 4 },
+          { field: 'Accelerometer.grid.display', value: true },
+          { field: 'Magnetometer.graph.display', value: true },
+          { field: 'Accelerometer.parameters.xyz', value: true },
+          { field: 'Accelerometer.parameters.scalar', value: true }]
+      }
     ];
 
     self.GyroscopeBlock = [
-      { class: 'Gyroscope', type: 'Graph', name: 'Gyroscope Graph &nbsp;', url: 'images/graphicon.png', tunable: true, parameters: [{ field: 'Gyroscope.graph.display', value: true }] },
-      { class: 'Gyroscope', type: 'Data', name: 'Gyroscope Data &nbsp;', url: 'images/dataicon.jpg', parameters: [{ field: 'Gyroscope.data.display', value: true }] },
-      { class: 'Gyroscope', type: 'Grid', name: '4x4 Gyroscope Grid', url: 'images/gridicon.png', tunable: true, parameters: [{ field: 'Gyroscope.grid.columns', value: 4 }, { field: 'Gyroscope.grid.rows', value: 4 }, { field: 'Gyroscope.grid.display', value: true }] }
+      {
+        class: 'Gyroscope', type: 'Graph', name: 'Gyroscope Graph &nbsp;',
+        url: 'images/graphicon.png', tunable: true,
+        parameters: [{ field: 'Gyroscope.graph.display', value: true }]
+      },
+      {
+        class: 'Gyroscope', type: 'Data', name: 'Gyroscope Data &nbsp;',
+        url: 'images/dataicon.jpg', parameters: [
+          { field: 'Gyroscope.data.display', value: true }]
+      },
+      {
+        class: 'Gyroscope', type: 'Grid', name: '4x4 Gyroscope Grid',
+        url: 'images/gridicon.png', tunable: true, parameters: [
+          { field: 'Gyroscope.grid.columns', value: 4 },
+          { field: 'Gyroscope.grid.rows', value: 4 },
+          { field: 'Gyroscope.grid.display', value: true }]
+      }
     ];
 
     self.MagnetometerBlock = [
-      { class: 'Magnetometer', type: 'Graph', name: 'Magnetometer Graph', url: 'images/graphicon.png', tunable: true, parameters: [{ field: 'Magnetometer.graph.display', value: true }] },
-      { class: 'Magnetometer', type: 'Data', name: 'Magnetometer Data', url: 'images/dataicon.jpg', tunable: true, parameters: [{ field: 'Magnetometer.data.display', value: true }] },
-      { class: 'Magnetometer', type: 'Grid', name: '4x4 Magnetometer Grid', url: 'images/gridicon.png', tunable: true, parameters: [{ field: 'Magnetometer.grid.columns', value: 4 }, { field: 'Magnetometer.grid.rows', value: 4 }, { field: 'Magnetometer.grid.display', value: true }] }
+      {
+        class: 'Magnetometer', type: 'Graph', name: 'Magnetometer Graph',
+        url: 'images/graphicon.png', tunable: true,
+        parameters: [
+          { field: 'Magnetometer.graph.display', value: true },
+          { field: 'Magnetometer.parameters.xyz', value: true },
+          { field: 'Magnetometer.parameters.scalar', value: true }]
+      },
+      {
+        class: 'Magnetometer', type: 'Data', name: 'Magnetometer Data',
+        url: 'images/dataicon.jpg', tunable: true,
+        parameters: [
+          { field: 'Magnetometer.data.display', value: true },
+          { field: 'Magnetometer.parameters.xyz', value: true },
+          { field: 'Magnetometer.parameters.scalar', value: true }]
+      },
+      {
+        class: 'Magnetometer', type: 'Grid', name: '4x4 Magnetometer Grid',
+        url: 'images/gridicon.png', tunable: true,
+        parameters: [
+          { field: 'Magnetometer.grid.columns', value: 4 },
+          { field: 'Magnetometer.grid.rows', value: 4 },
+          { field: 'Magnetometer.grid.display', value: true },
+          { field: 'Magnetometer.parameters.xyz', value: true },
+          { field: 'Magnetometer.parameters.scalar', value: true }]
+      }
     ];
 
     self.LuxometerBlock = [
-      { class: 'Luxometer', type: 'Graph', name: 'Luxometer Graph &nbsp;', url: 'images/graphicon.png', tunable: true, parameters: [{ field: 'Luxometer.graph.display', value: true }] },
-      { class: 'Luxometer', type: 'Data', name: 'Luxometer Data &nbsp;', url: 'images/dataicon.jpg', parameters: [{ field: 'Luxometer.data.display', value: true }] },
-      { class: 'Luxometer', type: 'Grid', name: '4x4 Luxometer Grid', url: 'images/gridicon.png', tunable: true, parameters: [{ field: 'Luxometer.grid.columns', value: 4 }, { field: 'Luxometer.grid.rows', value: 4 }, { field: 'Luxometer.grid.display', value: true }] }
+      {
+        class: 'Luxometer', type: 'Graph', name: 'Luxometer Graph &nbsp;',
+        url: 'images/graphicon.png', tunable: true, parameters: [
+          { field: 'Luxometer.graph.display', value: true }]
+      },
+      {
+        class: 'Luxometer', type: 'Data', name: 'Luxometer Data &nbsp;',
+        url: 'images/dataicon.jpg', parameters: [
+          { field: 'Luxometer.data.display', value: true }]
+      },
+      {
+        class: 'Luxometer', type: 'Grid', name: '4x4 Luxometer Grid',
+        url: 'images/gridicon.png', tunable: true, parameters: [
+          { field: 'Luxometer.grid.columns', value: 4 },
+          { field: 'Luxometer.grid.rows', value: 4 },
+          { field: 'Luxometer.grid.display', value: true }]
+      }
     ];
 
     self.sortableOptions = {
@@ -129,8 +245,8 @@
             'rows': '4'
           },
           'parameters': {
-            'ambient': false,
-            'IR': false
+            'ambient': true,
+            'IR': true
           }
         },
         'Humidity': {
@@ -217,8 +333,8 @@
             'rows': '4'
           },
           'parameters': {
-            'xyz': false,
-            'scalar': false
+            'xyz': true,
+            'scalar': true
           }
         },
         'Luxometer': {
