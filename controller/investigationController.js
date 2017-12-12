@@ -168,7 +168,7 @@ exports.insertOneInvestigation = (req, res, next) => {
         }
       }
     }
-  }
+  };
 
   const tagSet = new Set();
   while (content.sensorTags[cursor]) {

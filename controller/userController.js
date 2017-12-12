@@ -70,13 +70,18 @@ exports.forget = (req, res, next) => {
           return res.status(400).json(new Message(false, {}, 'Email have not been registered!'));
         } else {
           debug(`token: ${token}`);
+          const now = Date.now();
+          if(existingUser.passwordResetExpires - now > 3540000) {
+            res.status(400).json(new Message(false, {}, 'Too frequently to get the reset token! Wait for 1 min please'));
+            return;
+          }
           existingUser.passwordResetToken = token;
-          existingUser.passwordResetExpires = Date.now() + 3600000;
+          existingUser.passwordResetExpires = now + 3600000;
           existingUser = existingUser.save();
         }
         return existingUser;
       });
-  }
+  };
 
   const sendForgtoPasswordEmail = (user) => {
     if (!user) { return; }
@@ -105,7 +110,7 @@ exports.forget = (req, res, next) => {
       .then(() => {
         res.status(200).json(new Message(true, {}, 'Send reset email Successfully!'));
       });
-  }
+  };
 
   createRandomToken
     .then(setRandomToken)
@@ -129,7 +134,7 @@ exports.reset = (req, res, next) => {
         user.passwordResetExpires = undefined;
         return user.save();
       });
-  }
+  };
 
   const sendResetPasswordEmail = (user) => {
     if(!user) return;
@@ -153,11 +158,11 @@ exports.reset = (req, res, next) => {
       .then(() => {
         res.status(200).json(new Message(true, {}, 'Success! Your password has been changed.'));
       });
-  }
+  };
 
   resetPassword()
-  .then(sendResetPasswordEmail)
-  .catch(err => next(err));
+    .then(sendResetPasswordEmail)
+    .catch(err => next(err));
 
 };
 
