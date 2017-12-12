@@ -1,6 +1,6 @@
 const Investigation = require('../model/Investigation');
 const debug = require('debug')('snaplab-server:controller');
-const Message = require('../utils/util').Message;
+const Message = require('../bean/message');
 
 /**
  * search controller

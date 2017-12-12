@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const resultController = require('../controller/resultController');
-const jwt = require('express-jwt');
-
-const auth = jwt({
-  secret: process.env.JWT_SECRET,
-  userProperty: 'payload'
-});
+const auth = require('../middleware/jwtMiddleware');
 
 router.get('/user/:userId', resultController.getUserResults);
 

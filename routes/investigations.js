@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/investigationController');
-const jwt = require('express-jwt');
-
-const auth = jwt({
-  secret: process.env.JWT_SECRET,
-  userProperty: 'payload'
-});
+const auth = require('../middleware/jwtMiddleware');
 
 /* retrive all investigation based on conditional query. */
 router.get('/', controller.getInvestigations);

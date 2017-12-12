@@ -7,7 +7,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const Message = require('./utils/util').Message;
+const Message = require('./bean/message');
 const debug = require('debug')('snaplab-server:app');
 dotenv.load({ path: '.env' });
 const passport = require('./config/passport');

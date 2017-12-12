@@ -1,6 +1,6 @@
 const Result = require('../model/Result');
 const debug = require('debug')('snaplab-server:controller');
-const Message = require('../utils/util').Message;
+const Message = require('../bean/message');
 
 exports.getUserResults = (req, res, next) => {
   Result.find(

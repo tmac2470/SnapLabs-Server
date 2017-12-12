@@ -4,7 +4,7 @@ const crypto = bluebird.promisifyAll(require('crypto'));
 const nodemailer = require('nodemailer');
 const debug = require('debug')('snaplab-server:controller');
 const aws = require('aws-sdk');
-const Message = require('../utils/util').Message;
+const Message = require('../bean/message');
 const User = require('../model/User');
 
 
