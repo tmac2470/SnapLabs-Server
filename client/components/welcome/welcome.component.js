@@ -8,12 +8,9 @@
       controller: controller
     });
 
-  function controller(notification) {
-    this.test = function(){
-      notification.addAlert({ type: 'warning', msg: 'This website is for Test only' });
-    };
+  function controller() {
   }
 
-  controller.$inject = ['notification'];
+  controller.$inject = [];
 })();
 
