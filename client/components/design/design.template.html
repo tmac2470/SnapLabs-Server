@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <ul class="nav nav-tabs nav-justified">
-    <li role="presentation" ng-class="{active: navPoint}"><a ui-sref-active="active" ui-sref="design.quick({id:0})">Quick Design</a></li>
-    <li role="presentation" ng-class="{active: !navPoint}"><a ui-sref-active="active" ui-sref="design.detail({id:0})">Detailed Design</a></li>
+    <li role="presentation" ng-class="{active: $ctrl.navPoint}"><a ui-sref-active="active" ui-sref="design.quick({id:0})">Quick Design</a></li>
+    <li role="presentation" ng-class="{active: !$ctrl.navPoint}"><a ui-sref-active="active" ui-sref="design.detail({id:0})">Detailed Design</a></li>
   </ul>
 </div>
 <ui-view></ui-view>

@@ -3,9 +3,9 @@
 
   angular
     .module('snaplab.notification')
-    .factory('notification', notification);
+    .factory('notification', factory);
 
-  function notification(){
+  function factory(){
 
     var alerts = [
       { type: 'warning', msg: 'This website is for Test only' }

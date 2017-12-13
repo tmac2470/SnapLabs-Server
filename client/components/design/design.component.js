@@ -7,14 +7,16 @@
     });
 
   function controller($scope, $state) {
-    $scope.navPoint = true;
+    var self = this;
+
+    self.navPoint = true;
     $scope.$watch(function () {
       return $state.$current.name;
     }, function (newVal) {
       if (newVal == 'design.quick') {
-        $scope.navPoint = true;
+        self.navPoint = true;
       } else if (newVal == 'design.detail') {
-        $scope.navPoint = false;
+        self.navPoint = false;
       }
     });
   }

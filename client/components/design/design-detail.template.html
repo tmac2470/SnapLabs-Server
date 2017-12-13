@@ -8,50 +8,50 @@
     <div class="form-group" ng-class="{'has-error': design.title.$invalid}">
       <label class="col-sm-4 control-label">Provide an Experiment Title</label>
       <div class="btn-group col-sm-8">
-        <input name="title" type="text" ng-model="expTitle" placeholder="SensorTag Investigation" class="form-control" required>
+        <input name="title" type="text" ng-model="$ctrl.expTitle" placeholder="SensorTag Investigation" class="form-control" required>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 control-label" ng-class="{'has-error': design.desc.$invalid}">Description</label>
       <div class="btn-group col-sm-8">
-        <textarea name="desc" class="form-control" ng-model="expDesc" rows="3" required></textarea>
+        <textarea name="desc" class="form-control" ng-model="$ctrl.expDesc" rows="3" required></textarea>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 control-label">Publish Investigation (public)</label>
       <div class="btn-group col-sm-8">
-        <toggle ng-model="isPublished"></toggle>
+        <toggle ng-model="$ctrl.isPublished"></toggle>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 control-label">Sampling Interval(ms)</label>
       <div class="btn-group col-sm-2" uib-dropdown>
-        <input name="sampling_rate" type="text" ng-model="sampleInterval"  class="form-control" required>
+        <input name="sampling_rate" type="text" ng-model="$ctrl.sampleInterval"  class="form-control" required>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 control-label">Allow Data Storage</label>
       <div class="btn-group col-sm-8">
-        <toggle ng-model="allowDataStorage"></toggle>
+        <toggle ng-model="$ctrl.allowDataStorage"></toggle>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 control-label">Allow Video</label>
       <div class="btn-group col-sm-8">
-        <toggle ng-model="allowVideo"></toggle>
+        <toggle ng-model="$ctrl.allowVideo"></toggle>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 control-label">Autostart Graphs</label>
       <div class="btn-group col-sm-8">
-        <toggle ng-model="autoStartGraphs"></toggle>
+        <toggle ng-model="$ctrl.autoStartGraphs"></toggle>
       </div>
     </div>
   </div>
 
 
   <uib-accordion close-others="true">
-    <div uib-accordion-group class="panel-default" heading="{{item.title}}" ng-repeat="item in sensorTag track by $index">
+    <div uib-accordion-group class="panel-default" heading="{{item.title}}" ng-repeat="item in $ctrl.sensorTag track by $index">
       <div class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-4 control-label">Display SensorTag</label>
@@ -710,11 +710,11 @@
         </div>
 
       </div>
-      <button type="button" class="btn btn-default btn-sm" ng-click="duplicate(item)" aria-label="Left Align"><span class="glyphicon glyphicon-magnet" aria-hidden="true"></span></button>
+      <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.duplicate(item)" aria-label="Left Align"><span class="glyphicon glyphicon-magnet" aria-hidden="true"></span></button>
     </div>
   </uib-accordion>
 
-  <button type="button" class="btn btn-primary" ng-click="store(saveOrUpdate)">{{saveOrUpdate}}</button>
+  <button type="button" class="btn btn-primary" ng-click="$ctrl.store()">{{$ctrl.saveOrUpdate}}</button>
   </form>
 
 </div>

@@ -33,6 +33,7 @@ gulp.task('angularjs', () => {
     path.join(baseUrl, 'components/carousel/carousel.module.js'),
     path.join(baseUrl, 'components/carousel/carousel.component.js'),
     path.join(baseUrl, 'components/design/design.module.js'),
+    path.join(baseUrl, 'components/design/design.factory.js'),
     path.join(baseUrl, 'components/design/design.component.js'),
     path.join(baseUrl, 'components/design/design-quick.component.js'),
     path.join(baseUrl, 'components/design/design-detail.component.js'),

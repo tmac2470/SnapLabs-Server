@@ -3,9 +3,9 @@
 
   angular
     .module('snaplab.auth')
-    .factory('auth', auth);
+    .factory('auth', factory);
 
-  function auth($http, $window, notification) {
+  function factory($http, $window, notification) {
 
     var payload;
     var token;
@@ -79,7 +79,7 @@
     };
   }
 
-  auth.$inject = ['$http', '$window', 'notification'];
+  factory.$inject = ['$http', '$window', 'notification'];
 })();
 
 
