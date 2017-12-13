@@ -19,14 +19,13 @@ gulp.task('watch', () => {
 
 gulp.task('angularjs', () => {
   gulp.src([
-    path.join(baseUrl, 'core/core.module.js'),
-    path.join(baseUrl, 'core/core.config.js'),
-    path.join(baseUrl, 'core/core.run.js'),
-    path.join(baseUrl, 'core/auth/auth.module.js'),
-    path.join(baseUrl, 'core/auth/auth.factory.js'),
+    path.join(baseUrl, 'app/app.module.js'),
+    path.join(baseUrl, 'app/app.config.js'),
+    path.join(baseUrl, 'app/app.run.js'),
     path.join(baseUrl, 'components/about/about.module.js'),
     path.join(baseUrl, 'components/about/about.component.js'),
     path.join(baseUrl, 'components/auth/auth.module.js'),
+    path.join(baseUrl, 'components/auth/auth.factory.js'),
     path.join(baseUrl, 'components/auth/auth-signup.component.js'),
     path.join(baseUrl, 'components/auth/auth-signin.component.js'),
     path.join(baseUrl, 'components/auth/auth-reset.component.js'),

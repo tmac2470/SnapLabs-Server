@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('snaplab.design', [
-    'snaplab.core.auth',
+    'snaplab.auth',
     'ui.router',
     'ui.toggle',
     'ui.sortable',

@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('snaplab.investigations', [
-    'snaplab.core.auth',
+    'snaplab.auth',
     'snaplab.modal',
     'ui.router'
   ]);

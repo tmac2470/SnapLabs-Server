@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('snaplab.core.auth')
+    .module('snaplab.auth')
     .factory('auth', auth);
 
   function auth($http, $window, notification) {

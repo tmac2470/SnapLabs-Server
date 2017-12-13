@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('snaplab.navigation', [
-    'snaplab.core.auth',
+    'snaplab.auth',
     'ui.router'
   ]);
 })();
