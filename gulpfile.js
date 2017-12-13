@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const cssmin = require('gulp-cssmin');
 const rename = require('gulp-rename');
 const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
 const path = require('path');
 
 const baseUrl = './client/';
@@ -57,6 +58,7 @@ gulp.task('angularjs', () => {
     path.join(baseUrl, 'components/welcome/welcome.module.js'),
     path.join(baseUrl, 'components/welcome/welcome.component.js')])
     .pipe(concat('angularjs.min.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('./public/javascripts/'));
 });
 
@@ -100,6 +102,7 @@ gulp.task('js-lib', () => {
     path.join(baseUrl, 'vendor/ui-bootstrap-tpls.js'),
     path.join(baseUrl, 'vendor/sortable.js')])
     .pipe(concat('js-lib.min.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('./public/javascripts/'));
 });
 
