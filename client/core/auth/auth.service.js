@@ -1,8 +1,11 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular
-  .module('snaplab.core.auth')
-  .service('auth', ['$http', '$window', '$rootScope', function ($http, $window, $rootScope) {
+  angular
+    .module('snaplab.core.auth')
+    .service('auth', auth);
+
+  function auth($http, $window, $rootScope) {
 
     var payload;
     var token;
@@ -66,6 +69,11 @@ angular
       getLoginUser: getLoginUser,
       genHeader: genHeader
     };
-  }]);
+  }
+
+  auth.$inject = ['$http', '$window', '$rootScope'];
+})();
+
+
 
 

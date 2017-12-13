@@ -1,3 +1,5 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('snaplab.notification', []);
+  angular.module('snaplab.notification', []);
+})();

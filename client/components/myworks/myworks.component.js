@@ -1,7 +1,10 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular
-  .module('snaplab.myworks')
-  .component('myworks', {
-    templateUrl: 'components/myworks/myworks.template.html'
-  });
+  angular
+    .module('snaplab.myworks')
+    .component('myworks', {
+      templateUrl: 'components/myworks/myworks.template.html'
+    });
+})();
+

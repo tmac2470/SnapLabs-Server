@@ -1,3 +1,6 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('snaplab.about', []);
+  angular
+    .module('snaplab.about', []);
+})();

@@ -1,11 +1,11 @@
-(function (window, angular) {
+(function () {
   'use strict';
 
   angular
     .module('snaplab.design')
     .component('designQuick', {
       templateUrl: 'components/design/design-quick.template.html',
-      controller: ['$rootScope', '$http', 'auth', '$state', '$uibModal', designController]
+      controller: controller
     });
 
   function loadDraggableBlocks(self, defaultSensorTag, popNewAlert) {
@@ -363,7 +363,7 @@
     return defaultSensorTag;
   }
 
-  function designController($rootScope, $http, auth, $state, $uibModal) {
+  function controller($rootScope, $http, auth, $state, $uibModal) {
 
     var self = this;
 
@@ -516,4 +516,6 @@
       }
     };
   }
-})(window, angular);
+
+  controller.$inject = ['$rootScope', '$http', 'auth', '$state', '$uibModal'];
+})();

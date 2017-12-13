@@ -1,3 +1,7 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('snaplab.modal', ['snaplab.core.auth']);
+  angular.module('snaplab.modal', [
+    'snaplab.core.auth'
+  ]);
+})();

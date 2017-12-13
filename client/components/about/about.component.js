@@ -1,7 +1,10 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular
-  .module('snaplab.about')
-  .component('about', {
-    templateUrl: 'components/about/about.template.html',
-  });
+  angular
+    .module('snaplab.about')
+    .component('about', {
+      templateUrl: 'components/about/about.template.html',
+    });
+})();
+

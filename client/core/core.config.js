@@ -1,8 +1,11 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular
-  .module('snaplab')
-  .config(function ($stateProvider, $urlRouterProvider) {
+  angular
+    .module('snaplab')
+    .config(config);
+
+  function config($stateProvider, $urlRouterProvider) {
     var states = [
       {
         name: 'welcome',
@@ -81,4 +84,7 @@ angular
     });
 
     $urlRouterProvider.otherwise('/welcome');
-  });
+  }
+
+  config.$inject = ['$stateProvider', '$urlRouterProvider'];
+})();

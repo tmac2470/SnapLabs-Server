@@ -1,8 +1,12 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular
-  .module('snaplab')
-  .run(['$rootScope', '$transitions', 'auth', '$uibModal', function ($rootScope, $transitions, auth, $uibModal) {
+  angular
+    .module('snaplab')
+    .run(run);
+
+
+  function run($rootScope, $transitions, auth, $uibModal) {
     $rootScope.isLogin = auth.isLoggedIn();
 
     function popNewAlert(content) {
@@ -59,5 +63,9 @@ angular
         return trans.router.stateService.target('welcome');
       }
     });
+  }
 
-  }]);
+
+  run.$inject = ['$rootScope', '$transitions', 'auth', '$uibModal'];
+})();
+

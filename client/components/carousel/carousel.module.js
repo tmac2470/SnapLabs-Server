@@ -1,3 +1,5 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('snaplab.carousel', []);
+  angular.module('snaplab.carousel', []);
+})();

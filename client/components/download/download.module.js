@@ -1,3 +1,5 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('snaplab.download', []);
+  angular.module('snaplab.download', []);
+})();

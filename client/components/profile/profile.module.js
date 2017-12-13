@@ -1,5 +1,7 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('snaplab.profile', [
-  'snaplab.core.auth'
-]);
+  angular.module('snaplab.profile', [
+    'snaplab.core.auth'
+  ]);
+})();

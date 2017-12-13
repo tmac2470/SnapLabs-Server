@@ -1,6 +1,8 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular.module('snaplab.design', [
-  'snaplab.core.auth',
-  'ui.router'
-]);
+  angular.module('snaplab.design', [
+    'snaplab.core.auth',
+    'ui.router'
+  ]);
+})();

@@ -1,7 +1,10 @@
-'use strict';
+(function () {
+  'use strict';
 
-angular
-  .module('snaplab.download')
-  .component('download', {
-    templateUrl: 'components/download/download.template.html'
-  });
+  angular
+    .module('snaplab.download')
+    .component('download', {
+      templateUrl: 'components/download/download.template.html'
+    });
+})();
+

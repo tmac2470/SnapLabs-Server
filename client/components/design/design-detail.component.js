@@ -1,10 +1,10 @@
-(function (window, angular) {
+(function () {
   'use strict';
 
   angular.module('snaplab.design')
     .component('designDetail', {
       templateUrl: 'components/design/design-detail.template.html',
-      controller: ['$scope', '$rootScope', '$http', 'auth', '$state', designController],
+      controller: controller,
       bindings: {
         noTitle: '@'
       }
@@ -192,7 +192,7 @@
     return expCfg;
   }
 
-  function designController($scope, $rootScope, $http, auth, $state) {
+  function controller($scope, $rootScope, $http, auth, $state) {
 
     var self = this;
 
@@ -300,4 +300,6 @@
       }
     };
   }
-})(window, angular);
+
+  controller.$inject = ['$scope', '$rootScope', '$http', 'auth', '$state'];
+})();
