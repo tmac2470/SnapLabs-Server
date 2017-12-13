@@ -18,13 +18,13 @@
       <!-- <li><a ui-sref="about" ui-sref-active="active">About</a></li> -->
       <li><a ui-sref="download" ui-sref-active="active">Download</a></li>
     </ul>
-    <form class="navbar-form navbar-right" ng-show="!$ctrl.isLogin">
+    <form class="navbar-form navbar-right" ng-show="!$ctrl.auth.isLogin">
       <button class="btn btn-default" ui-sref="signup" ui-sref-active="active">Sign up</button>
       <button class="btn btn-default" ui-sref="signin" ui-sref-active="active">Sign in</button>
     </form>
-    <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.isLogin">
+    <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.auth.isLogin">
       <li class="dropdown" uib-dropdown>
-        <a href class="dropdown-toggle" uib-dropdown-toggle>{{$ctrl.user.name}} <span class="caret"></span></a>
+        <a href class="dropdown-toggle" uib-dropdown-toggle>{{$ctrl.auth.user.name}} <span class="caret"></span></a>
         <ul class="dropdown-menu" uib-dropdown-menu>
           <li><a ui-sref="profile" ui-sref-active="active"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile</a></li>
           <li><a ng-click="$ctrl.logout()"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log out</a></li>

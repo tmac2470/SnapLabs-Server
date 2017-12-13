@@ -3,9 +3,10 @@
 
   angular
     .module('snaplab.modal')
-    .controller('InvestigationModalInstanceCtrl', controller);
+    .controller('AlertModalInstanceCtrl', controller);
 
   function controller($uibModalInstance, content) {
+
     var $ctrl = this;
     $ctrl.content = content;
     $ctrl.ok = ok;

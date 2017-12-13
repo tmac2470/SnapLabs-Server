@@ -6,53 +6,60 @@
     .controller('TuneModalInstanceCtrl', controller);
 
   function controller($uibModalInstance, item) {
+
     var self = this;
 
-    item.parameters.forEach(function (parameter) {
-      if (parameter.field.indexOf('row') >= 0) {
-        self.row = parameter.value;
-      }
-      if (parameter.field.indexOf('col') >= 0) {
-        self.col = parameter.value;
-      }
-      if (parameter.field.indexOf('ambient') >= 0) {
-        self.ambientTemperature = parameter.value;
-      }
-      if (parameter.field.indexOf('IR') >= 0) {
-        self.irTemperature = parameter.value;
-      }
-      if (parameter.field.indexOf('captureOnClick') >= 0) {
-        self.captureOnClick = parameter.value;
-      }
-      if (parameter.field.indexOf('gridTitle') >= 0) {
-        self.gridTitle = parameter.value;
-      }
-      if (parameter.field.indexOf('graphTitle') >= 0) {
-        self.graphTitle = parameter.value;
-      }
-      if (parameter.field.indexOf('xyz') >= 0) {
-        self.xyzValue = parameter.value;
-      }
-      if (parameter.field.indexOf('scalar') >= 0) {
-        self.scalarValue = parameter.value;
-      }
-    });
+    setValue();
 
-    self.aiShow = false;
-    self.zyxShow = false;
+    self.ok = ok;
+    self.cancel = cancel;
 
-    switch (item.class) {
-      case 'Temperature': self.aiShow = true; break;
-      case 'Humidity':
-      case 'Barometer':
-      case 'Gyroscope':
-      case 'Luxometer': break;
-      case 'Accelerometer':
-      case 'Magnetometer': self.xyzShow = true; break;
+    function setValue() {
+      item.parameters.forEach(function (parameter) {
+        if (parameter.field.indexOf('row') >= 0) {
+          self.row = parameter.value;
+        }
+        if (parameter.field.indexOf('col') >= 0) {
+          self.col = parameter.value;
+        }
+        if (parameter.field.indexOf('ambient') >= 0) {
+          self.ambientTemperature = parameter.value;
+        }
+        if (parameter.field.indexOf('IR') >= 0) {
+          self.irTemperature = parameter.value;
+        }
+        if (parameter.field.indexOf('captureOnClick') >= 0) {
+          self.captureOnClick = parameter.value;
+        }
+        if (parameter.field.indexOf('gridTitle') >= 0) {
+          self.gridTitle = parameter.value;
+        }
+        if (parameter.field.indexOf('graphTitle') >= 0) {
+          self.graphTitle = parameter.value;
+        }
+        if (parameter.field.indexOf('xyz') >= 0) {
+          self.xyzValue = parameter.value;
+        }
+        if (parameter.field.indexOf('scalar') >= 0) {
+          self.scalarValue = parameter.value;
+        }
+      });
+
+      self.aiShow = false;
+      self.zyxShow = false;
+
+      switch (item.class) {
+        case 'Temperature': self.aiShow = true; break;
+        case 'Humidity':
+        case 'Barometer':
+        case 'Gyroscope':
+        case 'Luxometer': break;
+        case 'Accelerometer':
+        case 'Magnetometer': self.xyzShow = true; break;
+      }
     }
 
-    self.ok = function () {
-
+    function ok() {
       if (item.type == 'Grid') {
         self.row = self.row || 4;
         self.col = self.col || 4;
@@ -63,11 +70,9 @@
         item.parameters.forEach(function (parameter) {
           if (parameter.field.indexOf('row') >= 0) {
             parameter.value = self.row;
-            console.log('set row');
           }
           if (parameter.field.indexOf('col') >= 0) {
             parameter.value = self.col;
-            console.log('set col');
           }
         });
       }
@@ -128,10 +133,12 @@
       }
 
       $uibModalInstance.close();
-    };
-    self.cancel = function () {
+    }
+
+    function cancel() {
       $uibModalInstance.dismiss();
-    };
+    }
   }
 
+  controller.$inject = ['$uibModalInstance', 'item'];
 })();

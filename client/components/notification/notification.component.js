@@ -8,23 +8,17 @@
       controller: controller
     });
 
-  function controller($rootScope) {
+  function controller(notification) {
+
     var self = this;
+    self.alerts = notification.alerts;
+    self.closeAlert = closeAlert;
 
-    self.alerts = [
-      { type: 'warning', msg: 'This website is for Test only' }
-    ];
-
-    $rootScope.addAlert = function (content) {
-      self.alerts.pop();
-      self.alerts.push(content);
-    };
-
-    self.closeAlert = function (index) {
-      self.alerts.splice(index, 1);
-    };
+    function closeAlert(index) {
+      notification.closeAlert(index);
+    }
   }
 
-  controller.$inject = ['$rootScope'];
+  controller.$inject = ['notification'];
 })();
 

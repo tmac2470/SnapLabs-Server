@@ -4,20 +4,16 @@
   angular.module('snaplab', [
     'ui.bootstrap',
     'ui.router',
-    'ui.toggle',
-    'ui.sortable',
-    'snaplab.investigations',
-    'snaplab.design',
+    'snaplab.auth',
     'snaplab.notification',
     'snaplab.navigation',
-    'snaplab.carousel',
     'snaplab.modal',
-    'snaplab.auth',
-    'snaplab.myworks',
-    'snaplab.profile',
-    'snaplab.about',
     'snaplab.welcome',
-    'snaplab.download'
+    'snaplab.investigations',
+    'snaplab.myworks',
+    'snaplab.design',
+    'snaplab.download',
+    'snaplab.profile'
   ]);
 })();
 

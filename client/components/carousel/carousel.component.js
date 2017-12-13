@@ -9,8 +9,8 @@
     });
 
   function controller() {
-    var self = this;
 
+    var self = this;
     self.myInterval = 5000;
     self.noWrapSlides = false;
     self.active = 0;
@@ -26,5 +26,7 @@
         id: 1
       }
     ];
+
   }
+
 })();

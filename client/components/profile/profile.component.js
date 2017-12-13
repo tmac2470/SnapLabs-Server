@@ -8,10 +8,10 @@
       controller: controller
     });
 
-  function controller($rootScope, $http, $uibModal, auth) {
+  function controller(notification, $http, $uibModal, auth) {
     var self = this;
 
-    var user = auth.getLoginUser();
+    var user = auth.store.user;
     self.email = user.email;
     self.name = user.name;
 
@@ -32,13 +32,9 @@
       });
 
       modalInstance.result
-        .then(
-          function closeDone() {
-          },
-          function dismissDone() {
-            console.log('Modal dismissed at: ' + new Date());
-          }
-        );
+        .then(function closeDone() {
+        }, function dismissDone() {
+        });
     }
 
     self.updateProfile = function () {
@@ -52,14 +48,11 @@
       postCfg.headers = auth.genHeader();
 
       $http.post('profiles/' + user.id, { name: self.name }, postCfg)
-        .then(
-          function successCallback(successResponse) {
-            $rootScope.addAlert({ type: 'success', msg: successResponse.data.message });
-          },
-          function failCallback(failResponse) {
-            $rootScope.addAlert({ type: 'danger', msg: failResponse.data.message });
-          }
-        );
+        .then(function successCallback(successResponse) {
+          notification.addAlert({ type: 'success', msg: successResponse.data.message });
+        }, function failCallback(failResponse) {
+          notification.addAlert({ type: 'danger', msg: failResponse.data.message });
+        });
 
     };
 
@@ -74,16 +67,13 @@
       }
 
       $http.post('profiles/' + user.id + '/password', { cPassword: self.cPassword, nPassword: self.nPassword }, postCfg)
-        .then(
-          function successCallback(successResponse) {
-            $rootScope.addAlert({ type: 'success', msg: successResponse.data.message });
-          },
-          function failCallback(failResponse) {
-            $rootScope.addAlert({ type: 'danger', msg: failResponse.data.message });
-          }
-        );
+        .then(function successCallback(successResponse) {
+          notification.addAlert({ type: 'success', msg: successResponse.data.message });
+        }, function failCallback(failResponse) {
+          notification.addAlert({ type: 'danger', msg: failResponse.data.message });
+        });
     };
   }
 
-  controller.$inject = ['$rootScope', '$http', '$uibModal', 'auth'];
+  controller.$inject = ['notification', '$http', '$uibModal', 'auth'];
 })();

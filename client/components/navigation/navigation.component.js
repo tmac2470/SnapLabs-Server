@@ -8,41 +8,26 @@
       controller: controller
     });
 
-  function controller($rootScope, auth, $scope, $state) {
+  function controller(auth, $state) {
+
     var self = this;
 
-    if ($rootScope.isLogin) {
-      self.isLogin = true;
-      $rootScope.user = auth.getLoginUser();
-      self.user = $rootScope.user;
-    } else {
-      self.isLogin = false;
-    }
-    $scope.$watch('$root.isLogin', function () {
-      if ($rootScope.isLogin) {
-        self.isLogin = true;
-        $rootScope.user = auth.getLoginUser();
-        self.user = $rootScope.user;
-      } else {
-        self.isLogin = false;
-      }
-    });
-
-
+    self.auth = auth.store;
     self.isNavCollapsed = true;
 
     self.navCollapsedTrigger = function () {
       self.isNavCollapsed = !self.isNavCollapsed;
     };
 
+    self.logout = logout;
 
-    self.logout = function () {
+    function logout() {
       auth.logout();
-      $rootScope.isLogin = false;
       $state.go('welcome');
-    };
+    }
+
   }
 
-  controller.$inject = ['$rootScope', 'auth', '$scope', '$state'];
+  controller.$inject = ['auth', '$state'];
 
 })();

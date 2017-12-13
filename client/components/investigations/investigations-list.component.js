@@ -15,9 +15,36 @@
       controller: controller
     });
 
-  function controller($rootScope, $http, auth, $state, $uibModal) {
+  function controller(notification, $http, auth, $state, $uibModal) {
 
     var self = this;
+    self.$onChanges = onChanges;
+    self.$onInit = onInit;
+    self.pageChanged = onPageChanged;
+    self.remove = remove;
+    self.edit = edit;
+    self.copy = copy;
+    self.popDetail = popDetail;
+
+    function onChanges(changesObj) {
+      // filter change of data from search result
+      if (!angular.isUndefined(changesObj.initData) && !angular.isUndefined(self.initData)) {
+        var response = self.initData;
+        loadList(self, response);
+      }
+    }
+
+    function onInit() {
+      var user = auth.store.user;
+      if (self.isolated == 'true') {
+        var httpCfg = {};
+        httpCfg.headers = auth.genHeader();
+        $http.get('experiments/user/' + user.id, httpCfg)
+          .then(function (response) {
+            loadList(self, response.data);
+          });
+      }
+    }
 
     function loadList(self, data) {
       self.list = data.data;
@@ -31,77 +58,40 @@
       }
     }
 
-    self.$onChanges = function (changesObj) {
-
-      console.log(changesObj);
-      // filter change of data from search result
-      if (!angular.isUndefined(changesObj.initData) && !angular.isUndefined(self.initData)) {
-        var response = self.initData;
-        loadList(self, response);
-      }
-    };
-
-    self.$onInit = function () {
-      var user = auth.getLoginUser();
-      if (self.isolated == 'true') {
-        var httpCfg = {};
-        httpCfg.headers = auth.genHeader();
-        $http.get('experiments/user/' + user.id, httpCfg)
-          .then(function (response) {
-            loadList(self, response.data);
-          });
-      } else {
-        console.log('not isolated');
-      }
-    };
-
-
-    self.pageChanged = function () {
+    function onPageChanged() {
       self.currentList = [];
       for (var i = (self.currentPage - 1) * 10; i < self.currentPage * 10 && i < self.totalItems; i++) {
         self.currentList.push(self.list[i]);
       }
-    };
+    }
 
-    self.remove = function (item) {
-      console.log('remove');
-
+    function remove(item) {
       var httpCfg = {};
       httpCfg.headers = auth.genHeader();
 
       $http.delete('experiments/' + item._id, httpCfg)
-        .then(
-          function successCallback(successResponse) {
-            $rootScope.addAlert({ type: 'success', msg: successResponse.data.message });
-            $state.reload();
-          },
-          function failCallback(failResponse) {
-            $rootScope.addAlert({ type: 'danger', msg: failResponse.data.message });
-          });
-    };
+        .then(function successCallback(successResponse) {
+          notification.addAlert({ type: 'success', msg: successResponse.data.message });
+          $state.reload();
+        }, function failCallback(failResponse) {
+          notification.addAlert({ type: 'danger', msg: failResponse.data.message });
+        });
+    }
 
-    self.edit = function (item) {
-      console.log('edit');
+    function edit(item) {
       $state.go('edit', { id: item._id });
-      console.log(item);
-    };
+    }
 
-    self.copy = function () {
+    function copy() {
       popNewAlert('copy target experiment to create my own function is under development!');
-    };
+    }
 
-
-    self.popDetail = function (item) {
+    function popDetail(item) {
       $http.get('experiments/' + item._id)
-        .then(
-          function successCallBack(response) {
-            popDetailWindow(response.data);
-          },
-          function failCallback(response) {
-            console.log(response);
-          }
-        );
-    };
+        .then(function successCallBack(response) {
+          popDetailWindow(response.data);
+        });
+    }
 
     function popDetailWindow(content) {
       var modalInstance = $uibModal.open({
@@ -120,13 +110,8 @@
       });
 
       modalInstance.result
-        .then(
-          function closeDone() {
-          },
-          function dismissDone() {
-            console.log('Modal dismissed at: ' + new Date());
-          }
-        );
+        .then(function closeDone() {
+        }, function dismissDone() {});
     }
 
     function popNewAlert(content) {
@@ -146,15 +131,11 @@
       });
 
       modalInstance.result
-        .then(
-          function closeDone() {
-          },
-          function dismissDone() {
-            console.log('Modal dismissed at: ' + new Date());
-          }
-        );
+        .then(function closeDone() {
+        }, function dismissDone() {});
     }
   }
 
-  controller.$inject = ['$rootScope', '$http', 'auth', '$state', '$uibModal'];
+  controller.$inject = ['notification', '$http', 'auth', '$state', '$uibModal'];
+
 })();

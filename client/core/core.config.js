@@ -18,11 +18,6 @@
         component: 'investigationsFinder'
       },
       {
-        name: 'about',
-        url: '/about',
-        component: 'about'
-      },
-      {
         name: 'design',
         url: '/design',
         component: 'design'

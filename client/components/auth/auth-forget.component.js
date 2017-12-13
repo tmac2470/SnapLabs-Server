@@ -8,26 +8,28 @@
       controller: controller
     });
 
-  function controller($rootScope, $http, auth, $state) {
+  function controller(notification, $http, auth, $state) {
+
     var self = this;
+    self.forgetpw = forgetpw;
 
-    self.forgetpw = function () {
-
+    function forgetpw() {
       var validJudgement = angular.isDefined(self.email);
       if (validJudgement) {
-        $http.post('auth/forget', { email: self.email })
-          .then(
-            function successCallback(response) {
-              $state.go('reset');
-              $rootScope.addAlert({ type: 'success', msg: response.data.message });
-            },
-            function failCallback(response) {
-              $rootScope.addAlert({ type: 'danger', msg: response.data.message });
-            });
+        $http
+          .post('auth/forget', { email: self.email })
+          .then(function successCallback(response) {
+            $state.go('reset');
+            notification.addAlert({ type: 'success', msg: response.data.message });
+          }, function failCallback(response) {
+            notification.addAlert({ type: 'danger', msg: response.data.message });
+          });
       } else {
-        $rootScope.addAlert({ type: 'danger', msg: 'Send Forget Request Incomplete' });
+        notification.addAlert({ type: 'danger', msg: 'Send Forget Request Incomplete' });
       }
-    };
+    }
+
   }
-  controller.$inject = ['$rootScope', '$http', 'auth', '$state'];
+
+  controller.$inject = ['notification', '$http', 'auth', '$state'];
 })();
