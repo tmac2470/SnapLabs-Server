@@ -6,8 +6,7 @@
     .run(run);
 
 
-  function run($transitions, auth, $uibModal, $trace) {
-    $trace.enable('TRANSITION');
+  function run($transitions, auth, $uibModal) {
 
     auth.checkLogin();
 
@@ -63,7 +62,7 @@
     });
   }
 
-  run.$inject = ['$transitions', 'auth', '$uibModal', '$trace'];
+  run.$inject = ['$transitions', 'auth', '$uibModal'];
 
 })();
 
