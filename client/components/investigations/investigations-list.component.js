@@ -83,6 +83,11 @@
     }
 
     function copy(item) {
+      var user = auth.store.user;
+      if(user.id == item.createdBy._id ) {
+        popNewAlert('This is your own Investigation!');
+        return;
+      }
       $state.go('edit', { id: item._id });
     }
 
