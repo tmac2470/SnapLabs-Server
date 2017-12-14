@@ -17,20 +17,15 @@
 
     function checkLogin() {
 
-      if(store.isLogin === true){
-        return;
-      }
-
-      if (!token) {
-        getToken();
-      }
+      getToken();
 
       if (token) {
         payload = token.split('.')[1];
         payload = $window.atob(payload);
         payload = JSON.parse(payload);
-        store.isLogin = payload.exp > Date.now() / 1000;
         parseLoginUser();
+
+        store.isLogin = payload.exp > Date.now() / 1000;
       } else {
         store.isLogin = false;
       }
