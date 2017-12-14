@@ -3,7 +3,9 @@
 </div>
 <div class="modal-body" id="modal-body">
 
-  <h4><strong>General Info</strong></h4>
+  <h4>
+    <strong>General Info</strong>
+  </h4>
 
   <form class="form-horizontal">
     <div class="form-group">
@@ -43,7 +45,9 @@
       </div>
     </div>
 
-    <h4><strong>General Parameters</strong></h4>
+    <h4>
+      <strong>General Parameters</strong>
+    </h4>
 
     <div class="form-group">
       <label for="" class="col-sm-4 control-label">Sample Interval</label>
@@ -73,7 +77,640 @@
       </div>
     </div>
 
-    <h4><strong>Revision Info</strong></h4>
+    <h4>
+      <strong>SensorTag Detail</strong>
+    </h4>
+    <uib-accordion close-others="true">
+      <div uib-accordion-group class="panel-default" heading="{{item.title}}" ng-repeat="item in $ctrl.content.sensorTags track by $index">
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Display SensorTag</label>
+            <div class="col-sm-8">
+              <p class="form-control-static">{{item.connect}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">Name of SensorTag</label>
+            <div class="col-sm-4">
+              <p class="form-control-static">{{item.title}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="well">
+          <p class="lead">Temperature</p>
+
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Infrared or object temperature</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Temperature.parameters.IR}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Ambient temperature</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Temperature.parameters.ambient}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Data</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Temperature.data.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Temperature.data.display" class="form-group">
+              <label class="col-sm-4 control-label">Temperature Data Label</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Temperature.data.label}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Graph</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Temperature.graph.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Temperature.graph.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Graph Type</label>
+                <div class="col-sm-8">
+                  <p class="form-control-static">{{item.sensors.Temperature.graph.graphType}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Temperature Graph Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Temperature.graph.graphTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Temperature X Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Temperature.graph.graphXAxis}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Temperature Y Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Temperature.graph.graphYAxis}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Grid</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Temperature.grid.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Temperature.grid.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Temperature.grid.gridTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Columns</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Temperature.grid.columns}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Rows</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Temperature.grid.rows}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Capture on Click</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Temperature.captureOnClick}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="well">
+          <p class="lead">Humidity</p>
+
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Data</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Humidity.data.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Humidity.data.display" class="form-group">
+              <label class="col-sm-4 control-label">Humidity Data Label</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Humidity.data.label}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Graph</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Humidity.graph.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Humidity.graph.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Graph Type</label>
+                <div class="col-sm-3">
+                  <p class="form-control-static">{{item.sensors.Humidity.graph.graphType}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Humidity Graph Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Humidity.graph.graphTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Humidity X Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Humidity.graph.graphXAxis}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Humidity Y Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Humidity.graph.graphYAxis}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Grid</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Humidity.grid.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Humidity.grid.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Humidity.grid.gridTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Columns</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Humidity.grid.columns}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Rows</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Humidity.grid.rows}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Capture on Click</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Humidity.captureOnClick}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="well">
+          <p class="lead">Barometer</p>
+
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Data</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Barometer.data.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Barometer.data.display" class="form-group">
+              <label class="col-sm-4 control-label">Barometer Data Label</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Barometer.data.label}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Graph</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Barometer.graph.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Barometer.graph.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Graph Type</label>
+                <div class="col-sm-3">
+                  <p class="form-control-static">{{item.sensors.Barometer.graph.graphType}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Barometer Graph Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Barometer.graph.graphTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Barometer X Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Barometer.graph.graphXAxis}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Barometer Y Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Barometer.graph.graphYAxis}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Grid</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Barometer.grid.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Barometer.grid.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Barometer.grid.gridTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Columns</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Barometer.grid.columns}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Rows</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Barometer.grid.rows}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Capture on Click</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Barometer.captureOnClick}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="well">
+          <p class="lead">Accelerometer</p>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">x-y-z axis values</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Accelerometer.parameters.xyz}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Scalar</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Accelerometer.parameters.scalar}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Data</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Accelerometer.data.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Accelerometer.data.display" class="form-group">
+              <label class="col-sm-4 control-label">Accelerometer Data Label</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Accelerometer.data.label}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Graph</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Accelerometer.graph.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Accelerometer.graph.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Graph Type</label>
+                <div class="col-sm-3">
+                  <p class="form-control-static">{{item.sensors.Accelerometer.graph.graphType}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Accelerometer Graph Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Accelerometer.graph.graphTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Accelerometer X Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Accelerometer.graph.graphXAxis}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Accelerometer Y Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Accelerometer.graph.graphYAxis}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Grid</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Accelerometer.grid.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Accelerometer.grid.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Accelerometer.grid.gridTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Columns</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Accelerometer.grid.columns}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Rows</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Accelerometer.grid.rows}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Capture on Click</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Accelerometer.captureOnClick}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="well">
+          <p class="lead">Gyroscope</p>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Data</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Gyroscope.data.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Gyroscope.data.display" class="form-group">
+              <label class="col-sm-4 control-label">Barometer Data Label</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Gyroscope.data.label}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Graph</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Gyroscope.graph.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Gyroscope.graph.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Graph Type</label>
+                <div class="col-sm-3">
+                  <p class="form-control-static">{{item.sensors.Gyroscope.graph.graphType}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Gyroscope Graph Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Gyroscope.graph.graphTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Gyroscope X Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Gyroscope.graph.graphXAxis}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Gyroscope Y Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Gyroscope.graph.graphYAxis}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Grid</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Gyroscope.grid.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Gyroscope.grid.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Gyroscope.grid.gridTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Columns</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Gyroscope.grid.columns}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Rows</label>
+                <div class="btn-group col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Gyroscope.grid.rows}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Capture on Click</label>
+              <div class="btn-group col-sm-4">
+                <p class="form-control-static">{{item.sensors.Gyroscope.captureOnClick}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="well">
+          <p class="lead">Magnetometer</p>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">x-y-z axis values</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Magnetometer.parameters.xyz}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Scalar</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Magnetometer.parameters.scalar}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Data</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Magnetometer.data.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Magnetometer.data.display" class="form-group">
+              <label class="col-sm-4 control-label">Magnetometer Data Label</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Magnetometer.data.label}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Graph</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Magnetometer.graph.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Magnetometer.graph.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Graph Type</label>
+                <div class="col-sm-3">
+                  <p class="form-control-static">{{item.sensors.Magnetometer.graph.graphType}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Magnetometer Graph Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Magnetometer.graph.graphTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Magnetometer X Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Magnetometer.graph.graphXAxis}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Magnetometer Y Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Magnetometer.graph.graphYAxis}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Grid</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Magnetometer.grid.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Magnetometer.grid.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Magnetometer.grid.gridTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Columns</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Magnetometer.grid.columns}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Rows</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Magnetometer.grid.rows}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Capture on Click</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Magnetometer.captureOnClick}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="well">
+          <p class="lead">Luxometer</p>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Data</label>
+              <div class="col-sm-8">
+                <p class="form-control-static">{{item.sensors.Luxometer.data.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Luxometer.data.display" class="form-group">
+              <label class="col-sm-4 control-label">Luxometer Data Label</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Luxometer.data.label}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Graph</label>
+              <div class="btn-group col-sm-8">
+                <p class="form-control-static">{{item.sensors.Luxometer.graph.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Luxometer.graph.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Graph Type</label>
+                <div class="col-sm-3">
+                  <p class="form-control-static">{{item.sensors.Luxometer.graph.graphType}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Luxometer Graph Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Luxometer.graph.graphTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Luxometer X Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Luxometer.graph.graphXAxis}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Luxometer Y Axis Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Luxometer.graph.graphYAxis}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Grid</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Luxometer.grid.display}}</p>
+              </div>
+            </div>
+            <div ng-show="item.sensors.Luxometer.grid.display">
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Title</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Luxometer.grid.gridTitle}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Columns</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Luxometer.grid.columns}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Grid Rows</label>
+                <div class="col-sm-4">
+                  <p class="form-control-static">{{item.sensors.Luxometer.grid.rows}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Capture on Click</label>
+              <div class="col-sm-4">
+                <p class="form-control-static">{{item.sensors.Luxometer.captureOnClick}}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </uib-accordion>
+
+    <h4>
+      <strong>Revision Info</strong>
+    </h4>
     <div class="form-group">
       <label for="" class="col-sm-4 control-label">Created on</label>
       <div class="col-sm-8">
