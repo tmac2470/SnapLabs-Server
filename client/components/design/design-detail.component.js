@@ -39,6 +39,14 @@
             self.allowVideo = wrap.data.videoAllowed;
             self.autoStartGraphs = wrap.data.graphAutoStart;
             self.isPublished = wrap.data.isPublished;
+
+            /*
+            * check if it is copied from others
+            */
+            var user = auth.store.user;
+            if (wrap.data.createdBy != user.id) {
+              self.saveOrUpdate = 'Copy';
+            }
           });
       }
       else {
@@ -99,6 +107,14 @@
             });
         } else if (self.saveOrUpdate == 'Update') {
           $http.put('experiments/' + expId, expCfg, postCfg)
+            .then(function successCallback(successResponse) {
+              $state.go('myworks');
+              notification.addAlert({ type: 'success', msg: successResponse.data.message });
+            }, function failCallback(failResponse) {
+              notification.addAlert({ type: 'danger', msg: failResponse.data.message });
+            });
+        } else if (self.saveOrUpdate == 'Copy') {
+          $http.post('experiments/user/' + user.id, expCfg, postCfg)
             .then(function successCallback(successResponse) {
               $state.go('myworks');
               notification.addAlert({ type: 'success', msg: successResponse.data.message });

@@ -82,8 +82,8 @@
       $state.go('edit', { id: item._id });
     }
 
-    function copy() {
-      popNewAlert('copy target experiment to create my own function is under development!');
+    function copy(item) {
+      $state.go('edit', { id: item._id });
     }
 
     function popDetail(item) {
@@ -111,7 +111,7 @@
 
       modalInstance.result
         .then(function closeDone() {
-        }, function dismissDone() {});
+        }, function dismissDone() { });
     }
 
     function popNewAlert(content) {
@@ -132,7 +132,7 @@
 
       modalInstance.result
         .then(function closeDone() {
-        }, function dismissDone() {});
+        }, function dismissDone() { });
     }
   }
 
