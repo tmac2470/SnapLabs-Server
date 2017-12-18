@@ -98,7 +98,7 @@ exports.forget = (req, res, next) => {
 
     const mailOptions = {
       to: user.email,
-      from: 'mushrchun@gmail.com',
+      from: 'admin@snaplabs.online',
       subject: 'Reset your password on Snaplab',
       text:
       `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
@@ -149,7 +149,7 @@ exports.reset = (req, res, next) => {
     });
     const mailOptions = {
       to: user.email,
-      from: 'mushrchun@gmail.com',
+      from: 'admin@snaplabs.online',
       subject: 'Your Explorer password has been changed',
       text:
         `Hello,\n\nThis is a confirmation that the password for your account ${user.email} has just been changed.\n`
