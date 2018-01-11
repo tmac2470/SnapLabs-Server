@@ -47,3 +47,17 @@
   width: 300px;
   height: 100px;
 }
+
+.endorse-logo{
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  right: 50px;
+}
+
+.green{
+  /* color: #e93187 */
+  /* color: #0ea800 */
+  color: #43ac6a
+}
+

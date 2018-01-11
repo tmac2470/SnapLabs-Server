@@ -44,6 +44,8 @@
             loadList(self, response.data);
           });
       }
+
+      self.isRatable = auth.store.isLogin;
     }
 
     function loadList(self, data) {

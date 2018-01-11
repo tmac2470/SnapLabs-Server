@@ -1,38 +1,60 @@
-<uib-accordion close-others="true">
+<uib-accordion close-others="false">
   <div uib-accordion-group class="panel-default" template-url="components/investigations/investigations-panel.template.html"
-    heading="#{{item.serialNumber}} {{item.labTitle}} - by {{item.createdBy.name}}" author="123" ng-repeat="item in $ctrl.currentList track by $index">
-
+    heading="#{{item.serialNumber}} {{item.labTitle}} - by {{item.createdBy.name}}" is-open="true" ng-repeat="item in $ctrl.currentList track by $index">
+    <img class="endorse-logo" src="/images/endorse.png">
     <div>
-      Description<br>
-      <strong>&nbsp;&nbsp;&nbsp;&nbsp;{{item.description}}</strong>
+      <strong>Description</strong>
+      <br>
+      <span class="green">&nbsp;&nbsp;&nbsp;&nbsp;{{item.description}}</span>
     </div>
     <br/>
     <div class="row">
       <div class="col-sm-4">
-          <div>Created by<br><strong>{{item.createdBy.email}}</strong></div>
+        <div>
+          <strong>Created by</strong>
+          <br>
+          <span class="green">{{item.createdBy.email}}</span>
+        </div>
       </div>
       <div class="col-sm-4">
-          <div>Last updated<br><strong>{{item.lastUpdatedAt | date:'medium'}}</strong></div>
+        <div>
+          <strong>Last updated</strong>
+          <br>
+          <span class="green">{{item.lastUpdatedAt | date:'medium'}}</span>
+        </div>
       </div>
       <div class="col-sm-4">
-          <div>Created on<br><strong>{{item.createdAt | date:'medium'}}</strong></div>
+        <div>
+          <strong>Created on</strong>
+          <br>
+          <span class="green">{{item.createdAt | date:'medium'}}</span>
+        </div>
       </div>
     </div>
-
-    <button type="button" class="pull-right btn btn-default btn-sm" ng-show="$ctrl.isolated" ng-click="$ctrl.remove(item)" aria-label="Left Align">
-      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-    </button>
-    <button type="button" class="pull-right btn btn-default btn-sm" ng-show="true" ng-click="$ctrl.copy(item)" aria-label="Left Align">
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </button>
-    <button type="button" class="pull-right btn btn-default btn-sm" ng-show="$ctrl.isolated" ng-click="$ctrl.edit(item)" aria-label="Left Align">
-      <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-    </button>
-    <button type="button" class="pull-right btn btn-default btn-sm" ng-click="$ctrl.popDetail(item)" aria-label="Left Align">
-      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-    </button>
+    <div class="row">
+      <div class="col-sm-8">
+        <strong>Reviews</strong>
+        <p><span class="green" uib-rating ng-model="item.rate" max="5" read-only="!$ctrl.isRatable" titles="['1 star', '2 stars', '3 stars', '4 stars', '5 stars']"></span>
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="$ctrl.isolated" ng-click="$ctrl.remove(item)" aria-label="Left Align">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="true" ng-click="$ctrl.copy(item)" aria-label="Left Align">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-show="$ctrl.isolated" ng-click="$ctrl.edit(item)" aria-label="Left Align">
+          <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="pull-right btn btn-default btn-sm" ng-click="$ctrl.popDetail(item)" aria-label="Left Align">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <ul uib-pagination total-items="$ctrl.totalItems" ng-model="$ctrl.currentPage" ng-change="$ctrl.pageChanged()" max-size="maxSize"
     class="pagination" boundary-link-numbers="true"></ul>
 </uib-accordion>
+
