@@ -12,7 +12,7 @@ gulp.task('watch', () => {
   gulp.watch([
     path.join(baseUrl, 'components/**/*.template.html')], ['angularjs-asset']);
   gulp.watch([
-    path.join(baseUrl, 'components/')], ['angularjs']);
+    path.join(baseUrl, 'components/**/*.js')], ['angularjs']);
   gulp.watch([
     path.join(baseUrl, 'stylesheets/*.css')], ['css-asset']);
 });
