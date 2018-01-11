@@ -56,8 +56,17 @@
 }
 
 .green{
-  /* color: #e93187 */
-  /* color: #0ea800 */
   color: #43ac6a
 }
 
+.orange{
+  color: #e99002
+}
+
+.red {
+  color: #f04124
+}
+
+.cyan{
+  color: #5bc0de
+}

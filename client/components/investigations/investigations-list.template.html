@@ -5,7 +5,7 @@
     <div>
       <strong>Description</strong>
       <br>
-      <span class="green">&nbsp;&nbsp;&nbsp;&nbsp;{{item.description}}</span>
+      <span class="green">{{item.description}}</span>
     </div>
     <br/>
     <div class="row">
@@ -13,28 +13,28 @@
         <div>
           <strong>Created by</strong>
           <br>
-          <span class="green">{{item.createdBy.email}}</span>
+          <span class="red">{{item.createdBy.email}}</span>
         </div>
       </div>
       <div class="col-sm-4">
         <div>
           <strong>Last updated</strong>
           <br>
-          <span class="green">{{item.lastUpdatedAt | date:'medium'}}</span>
+          <span class="cyan">{{item.lastUpdatedAt | date:'medium'}}</span>
         </div>
       </div>
       <div class="col-sm-4">
         <div>
           <strong>Created on</strong>
           <br>
-          <span class="green">{{item.createdAt | date:'medium'}}</span>
+          <span class="cyan">{{item.createdAt | date:'medium'}}</span>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-8">
         <strong>Reviews</strong>
-        <p><span class="green" uib-rating ng-model="item.rate" max="5" read-only="!$ctrl.isRatable" titles="['1 star', '2 stars', '3 stars', '4 stars', '5 stars']"></span>
+        <p><span class="orange" uib-rating ng-model="item.rate" max="5" read-only="!$ctrl.isRatable" titles="['1 star', '2 stars', '3 stars', '4 stars', '5 stars']"></span>
         </p>
       </div>
       <div class="col-sm-4">
