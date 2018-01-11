@@ -26,6 +26,12 @@
 
     self.openDatePicker = openDatePicker;
 
+    self.$onInit = onInit;
+
+    function onInit() {
+      search('title');
+    }
+
     function openDatePicker(picker) {
       if (picker == 'start') {
         self.dtStartStatus = true;
