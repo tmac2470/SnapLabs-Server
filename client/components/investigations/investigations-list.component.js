@@ -25,6 +25,7 @@
     self.edit = edit;
     self.copy = copy;
     self.popDetail = popDetail;
+    self.rate = rate;
 
     function onChanges(changesObj) {
       // filter change of data from search result
@@ -56,8 +57,31 @@
 
       self.currentList = [];
       for (var i = 0; i < 10 && i < self.totalItems; i++) {
-        self.currentList.push(self.list[i]);
+        var item = self.list[i];
+        calculateRating(item);
+        self.currentList.push(item);
       }
+    }
+
+    function calculateRating(item) {
+      item.avgRating = Math.round(parseFloat(item.ratingValue) / parseFloat(item.ratingCount));
+    }
+
+    function rate(item) {
+      var httpCfg = {};
+      httpCfg.headers = auth.genHeader();
+
+      var user = auth.store.user;
+
+      $http.post('ratings/user/' + user.id + '/investigation/' + item._id, { ratingValue: item.avgRating }, httpCfg)
+        .then(function successCallback(successResponse) {
+          notification.addAlert({ type: 'success', msg: successResponse.data.message });
+          item.avgRating = Math.round(parseFloat(item.ratingValue + item.avgRating) / parseFloat(item.ratingCount + 1));
+          item.ratingCount = item.ratingCount + 1;
+        }, function failCallback(failResponse) {
+          notification.addAlert({ type: 'danger', msg: failResponse.data.message });
+          calculateRating(item);
+        });
     }
 
     function onPageChanged() {
@@ -86,7 +110,7 @@
 
     function copy(item) {
       var user = auth.store.user;
-      if(user.id == item.createdBy._id ) {
+      if (user.id == item.createdBy._id) {
         popNewAlert('This is your own Investigation!');
         return;
       }

@@ -34,7 +34,8 @@
     <div class="row">
       <div class="col-sm-8">
         <strong>Reviews</strong>
-        <p><span class="orange" uib-rating ng-model="item.rate" max="5" read-only="!$ctrl.isRatable" titles="['1 star', '2 stars', '3 stars', '4 stars', '5 stars']"></span>
+        <p><span class="orange" enable-reset="false" uib-rating ng-model="item.avgRating" max="5" read-only="!$ctrl.isRatable" titles="['1 star', '2 stars', '3 stars', '4 stars', '5 stars']" ng-click="$ctrl.rate(item)"></span>
+        <span>({{item.ratingCount}})</span>
         </p>
       </div>
       <div class="col-sm-4">
