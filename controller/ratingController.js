@@ -3,9 +3,16 @@ const Investigation = require('../model/Investigation');
 const debug = require('debug')('snaplab-server:controller');
 const Message = require('../bean/message');
 
-exports.insertOneRating = (req, res) => {
+exports.insertOneRating = (req, res, next) => {
 
-  const createRating = () => {
+  const checkIfRated = () => {
+    return Rating.findOne({userId : req.params.userId, investigationId : req.params.investigationId});
+  };
+
+  const createRating = (rating) => {
+    if(rating){
+      throw new Error('ExistingRating');
+    }
     debug('in createRating');
     debug(req.params.userId);
     debug(req.params.investigationId);
@@ -26,13 +33,18 @@ exports.insertOneRating = (req, res) => {
       .update({ _id: req.params.investigationId }, { $inc: { 'ratingCount': 1, 'ratingValue': req.body.ratingValue } });
   };
 
-  createRating()
+  checkIfRated()
+    .then(createRating)
     .then(propegate2investigation)
     .then(() => {
       res.status(200).json(new Message(true, {}, 'Add Rating Successfully!'));
     })
     .catch(err => {
-      debug(err);
+      if(err.message == 'ExistingRating'){
+        res.status(200).json(new Message(true, {}, 'You have rated it!'));
+      }else{
+        next(err);
+      }
     });
 };
 
