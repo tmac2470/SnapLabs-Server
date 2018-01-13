@@ -15,6 +15,7 @@ const investigations = require('./routes/investigations');
 const auth = require('./routes/authentication');
 const profiles = require('./routes/profiles');
 const results = require('./routes/result');
+const ratings = require('./routes/rating');
 const cors = require('cors');
 
 /**
@@ -49,6 +50,7 @@ app.use('/experiments', investigations);
 app.use('/auth', auth);
 app.use('/profiles', profiles);
 app.use('/results', results);
+app.use('/ratings', ratings);
 
 // catch 404 and forward to error handler
 app.use((req, res) => {

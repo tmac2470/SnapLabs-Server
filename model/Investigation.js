@@ -21,6 +21,8 @@ const investigationSchema = new Schema({
   lastUpdatedAt: Date,
   isPublished: Boolean,
   serialNumber: Number,
+  ratingValue: { type: Number, default: 0 },
+  ratingCount: { type: Number, default: 0 },
   tags: []
 });
 
