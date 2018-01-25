@@ -86,7 +86,7 @@ exports.getInvestigations = (req, res, next) => {
       break;
   }
 
-  Investigation.find(queryOption, 'labTitle description createdBy lastUpdatedAt createdAt serialNumber ratingValue ratingCount')
+  Investigation.find(queryOption, 'labTitle description createdBy lastUpdatedAt createdAt serialNumber ratingValue ratingCount endorsed')
     .skip((page - 1) * perPage)
     .limit(perPage)
     // .populate('createdBy', 'name')

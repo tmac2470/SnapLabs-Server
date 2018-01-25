@@ -1,7 +1,7 @@
 <uib-accordion close-others="false">
   <div uib-accordion-group class="panel-default" template-url="components/investigations/investigations-panel.template.html"
     heading="#{{item.serialNumber}} {{item.labTitle}} - by {{item.createdBy.name}}" is-open="true" ng-repeat="item in $ctrl.currentList track by $index">
-    <img class="endorse-logo" src="/images/endorse.png">
+    <img class="endorse-logo" ng-show="item.endorsed" src="/images/endorse.png">
     <div>
       <strong>Description</strong>
       <br>
