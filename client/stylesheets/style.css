@@ -58,15 +58,53 @@
 .green{
   color: #43ac6a
 }
-
+.green-bg{
+  background-color: #43ac6a
+}
 .orange{
   color: #e99002
+}
+
+.orange-bg{
+  background-color: #e99002
 }
 
 .red {
   color: #f04124
 }
 
+.red-bg {
+  background-color: #f04124
+}
+
 .cyan{
   color: #5bc0de
+}
+
+.cyan-bg{
+  background-color: #5bc0de
+}
+
+footer{
+  margin-top: 16px;
+  margin-left: 16px;
+  margin-right: 16px;
+  border-top: solid 2px;
+  font-family: Helvetica,Arial,sans-serif;
+}
+
+footer a{
+  color: grey
+}
+
+footer p{
+  margin: 0px;
+}
+
+.icon-reference{
+  font-size: 10px;
+}
+
+.empty{
+  height: 240px;
 }

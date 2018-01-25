@@ -85,7 +85,7 @@
       <div uib-accordion-group class="panel-default" heading="Temperature">
         <ul class="row qd" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.TemperatureBlock">
           <li class="col-sm-4 col-lg-3" ng-repeat="item in $ctrl.TemperatureBlock track by $index">
-            <div class="qd-block">
+            <div class="qd-block orange-bg">
               <img ng-src="{{item.url}}" width="80px" height="80px">
               <span>{{item.name}}</span>
             </div>
@@ -95,7 +95,7 @@
       <div uib-accordion-group class="panel-default" heading="Humidity">
         <ul class="row qd" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.HumidityBlock">
           <li class="col-sm-4" ng-repeat="item in $ctrl.HumidityBlock track by $index">
-            <div class="qd-block">
+            <div class="qd-block orange-bg">
               <img ng-src="{{item.url}}" width="80px" height="80px">
               <span>{{item.name}}</span>
             </div>
@@ -105,7 +105,7 @@
       <div uib-accordion-group class="panel-default" heading="Barometer">
         <ul class="row qd" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.BarometerBlock">
           <li class="col-sm-4" ng-repeat="item in $ctrl.BarometerBlock track by $index">
-            <div class="qd-block">
+            <div class="qd-block orange-bg">
               <img ng-src="{{item.url}}" width="80px" height="80px">
               <span>{{item.name}}</span>
             </div>
@@ -115,7 +115,7 @@
       <div uib-accordion-group class="panel-default" heading="Accelerometer">
         <ul class="row qd" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.AccelerometerBlock">
           <li class="col-sm-4" ng-repeat="item in $ctrl.AccelerometerBlock track by $index">
-            <div class="qd-block">
+            <div class="qd-block green-bg">
               <img ng-src="{{item.url}}" width="80px" height="80px">
               <span>{{item.name}}</span>
             </div>
@@ -125,7 +125,7 @@
       <div uib-accordion-group class="panel-default" heading="Gyroscope">
         <ul class="row qd" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.GyroscopeBlock">
           <li class="col-sm-4" ng-repeat="item in $ctrl.GyroscopeBlock track by $index">
-            <div class="qd-block">
+            <div class="qd-block green-bg">
               <img ng-src="{{item.url}}" width="80px" height="80px">
               <span>{{item.name}}</span>
             </div>
@@ -135,7 +135,7 @@
       <div uib-accordion-group class="panel-default" heading="Magnetometer">
         <ul class="row qd" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.MagnetometerBlock">
           <li class="col-sm-4" ng-repeat="item in $ctrl.MagnetometerBlock track by $index">
-            <div class="qd-block">
+            <div class="qd-block cyan-bg">
               <img ng-src="{{item.url}}" width="80px" height="80px">
               <span>{{item.name}}</span>
             </div>
@@ -145,7 +145,7 @@
       <div uib-accordion-group class="panel-default" heading="Luxometer">
         <ul class="row qd" ui-sortable="$ctrl.sortableOptions" ng-model="$ctrl.LuxometerBlock">
           <li class="col-sm-4" ng-repeat="item in $ctrl.LuxometerBlock track by $index">
-            <div class="qd-block">
+            <div class="qd-block red-bg">
               <img ng-src="{{item.url}}" width="80px" height="80px">
               <span>{{item.name}}</span>
             </div>
