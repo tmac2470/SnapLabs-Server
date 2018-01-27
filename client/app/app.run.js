@@ -6,9 +6,11 @@
     .run(run);
 
 
-  function run($transitions, auth, $uibModal) {
+  function run($transitions, auth, $uibModal, $location, $window) {
 
     auth.checkLogin();
+
+    $window.ga('create', 'UA-113157192-1', 'auto');
 
     function popNewAlert(content) {
       var modalInstance = $uibModal.open({
@@ -60,9 +62,13 @@
         return trans.router.stateService.target('welcome');
       }
     });
+
+    $transitions.onSuccess({}, function() {
+      $window.ga('send', 'pageview', $location.path());
+    });
   }
 
-  run.$inject = ['$transitions', 'auth', '$uibModal'];
+  run.$inject = ['$transitions', 'auth', '$uibModal', '$location', '$window'];
 
 })();
 
