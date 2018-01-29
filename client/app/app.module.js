@@ -13,7 +13,8 @@
     'snaplab.myworks',
     'snaplab.design',
     'snaplab.download',
-    'snaplab.profile'
+    'snaplab.profile',
+    'snaplab.myreviews'
   ]);
 })();
 

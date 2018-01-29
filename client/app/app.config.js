@@ -68,6 +68,11 @@
         component: 'myworks'
       },
       {
+        name: 'myreviews',
+        url: '/reviews',
+        component: 'myreviews'
+      },
+      {
         name: 'edit',
         url: '/edit/:id',
         component: 'myworksEdit'

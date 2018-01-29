@@ -6,11 +6,11 @@ const Message = require('../bean/message');
 exports.insertOneRating = (req, res, next) => {
 
   const checkIfRated = () => {
-    return Rating.findOne({userId : req.params.userId, investigationId : req.params.investigationId});
+    return Rating.findOne({ userId: req.params.userId, investigationId: req.params.investigationId });
   };
 
   const createRating = (rating) => {
-    if(rating){
+    if (rating) {
       throw new Error('ExistingRating');
     }
     debug('in createRating');
@@ -20,7 +20,7 @@ exports.insertOneRating = (req, res, next) => {
     const newRating = new Rating(
       {
         userId: req.params.userId,
-        investigationId:  req.params.investigationId,
+        investigationId: req.params.investigationId,
         value: req.body.ratingValue
       }
     );
@@ -40,21 +40,22 @@ exports.insertOneRating = (req, res, next) => {
       res.status(200).json(new Message(true, {}, 'Add Rating Successfully!'));
     })
     .catch(err => {
-      if(err.message == 'ExistingRating'){
+      if (err.message == 'ExistingRating') {
         res.status(200).json(new Message(true, {}, 'You have rated it!'));
-      }else{
+      } else {
         next(err);
       }
     });
 };
 
 exports.getRatings = (req, res, next) => {
-  Rating.find(
-    { userId: req.params.userId }
-  ).exec((err, rating) => {
-    if (err) return next(err);
-    res.status(200).json(new Message(true, rating, ''));
-  });
+  Rating
+    .find({ userId: req.params.userId }, 'createdAt lastUpdatedAt value investigationId')
+    .populate({path:'investigationId', select:'labTitle serialNumber'})
+    .exec((err, rating) => {
+      if (err) return next(err);
+      res.status(200).json(new Message(true, rating, ''));
+    });
 };
 
 exports.getOneRating = (req, res, next) => {
@@ -66,9 +67,24 @@ exports.getOneRating = (req, res, next) => {
 };
 
 exports.deleteOneRating = (req, res, next) => {
-  Rating.findOneAndRemove(req.params.id)
-    .exec((err) => {
-      if (err) return next(err);
+
+  const deleteInRating = () => {
+    debug('in delete phase 1');
+    return Rating.findByIdAndRemove(req.params.id);
+  };
+  const deleteInInvestigation = (item) => {
+    debug('in delete phase 2');
+    debug(item);
+    return Investigation
+      .update({ _id: item.investigationId }, { $inc: { 'ratingCount': -1, 'ratingValue': -item.value } });
+  };
+
+  deleteInRating()
+    .then(deleteInInvestigation)
+    .then(() => {
       res.status(200).json(new Message(true, {}, 'Delete Rating Successfully!'));
+    })
+    .catch((err) => {
+      return next(err);
     });
 };
