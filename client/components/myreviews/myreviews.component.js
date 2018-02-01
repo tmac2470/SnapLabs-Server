@@ -33,7 +33,7 @@
       var postCfg = {};
       postCfg.headers = auth.genHeader();
 
-      $http.delete('ratings/' + item._id, {}, postCfg)
+      $http.delete('ratings/' + item._id, postCfg)
         .then(function successCallback(successResponse) {
           notification.addAlert({ type: 'success', msg: successResponse.data.message });
           $state.reload();
