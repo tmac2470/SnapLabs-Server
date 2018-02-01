@@ -14,6 +14,7 @@ exports.signIn = (req, res, next) => {
       return next(err);
     }
     if (user) {
+      debug(user);
       const token = user.generateJwt();
       res.status(200).json(
         new Message(

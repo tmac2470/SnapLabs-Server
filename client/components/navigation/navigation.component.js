@@ -14,6 +14,8 @@
 
     self.auth = auth.store;
     self.isNavCollapsed = true;
+    self.isAdmin = auth.store.user.role == 'admin';
+
 
     self.navCollapsedTrigger = function () {
       self.isNavCollapsed = !self.isNavCollapsed;

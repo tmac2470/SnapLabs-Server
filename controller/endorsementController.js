@@ -13,7 +13,7 @@ exports.doEndorsement = (req, res, next) => {
 
 exports.getEndorsedInvestigations = (req, res, next) => {
   Investigation
-    .find({ endorsed: true }, 'labTitle serialNumber endorsed')
+    .find({ endorsed: true }, 'labTitle serialNumber endorsed endorsedAt')
     .exec((err, item) => {
       if (err) return next(err);
       res.status(200).json(new Message(true, item, ''));

@@ -10,7 +10,8 @@ const userSchema = new Schema({
   email: String,
   password: String,
   passwordResetToken: String,
-  passwordResetExpires: String
+  passwordResetExpires: String,
+  role: String //admin, user
 });
 
 /**
@@ -43,6 +44,7 @@ userSchema.methods.generateJwt = function () {
     _id: this._id,
     email: this.email,
     name: this.name,
+    role: this.role,
     exp: parseInt(expiry.getTime() / 1000)
   }, process.env.JWT_SECRET);
 };

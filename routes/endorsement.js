@@ -5,7 +5,7 @@ const auth = require('../middleware/jwtMiddleware');
 
 router.get('/', endorsementController.getEndorsedInvestigations);
 
-router.post('/:id', auth, endorsementController.doEndorsement);
+router.put('/:id', auth, endorsementController.doEndorsement);
 
 router.delete('/:id', auth, endorsementController.revokeEndorsement);
 

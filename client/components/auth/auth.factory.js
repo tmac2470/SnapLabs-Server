@@ -34,6 +34,7 @@
     function parseLoginUser() {
       store.user.email = payload.email;
       store.user.name = payload.name;
+      store.user.role = payload.role;
       store.user.id = payload._id;
     }
 

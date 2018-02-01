@@ -28,7 +28,7 @@
         <ul class="dropdown-menu" uib-dropdown-menu>
           <li><a ui-sref="profile" ui-sref-active="active">Profile</a></li>
           <li><a ui-sref="myreviews" ui-sref-active="active">Reviews</a></li>
-          <li><a ui-sref="endorse" ui-sref-active="active">Endorse</a></li>
+          <li><a ui-sref="endorse" ng-show="$ctrl.isAdmin" ui-sref-active="active">Endorse</a></li>
           <li><a ng-click="$ctrl.logout()">Log out</a></li>
         </ul>
       </li>

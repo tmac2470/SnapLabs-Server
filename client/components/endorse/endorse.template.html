@@ -18,7 +18,7 @@
         <td class="review-item">{{item.serialNumber}}</td>
         <td class="review-item">{{item.labTitle}}</td>
         <td class="review-item">{{item.endorsed}}</td>
-        <td class="review-item">...</td>
+        <td class="review-item">{{item.endorsedAt | date:'medium'}}</td>
         <td>
           <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.remove(item)" aria-label="Left Align">
             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
