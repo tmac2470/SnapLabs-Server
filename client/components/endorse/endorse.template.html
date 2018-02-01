@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <h1>
+      <img src="images/quality.png" alt=""> Endorse</h1>
+  </div>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>SerialNumber</th>
+        <th>Investigation Title</th>
+        <th>Endorse</th>
+        <th>Endorse Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in $ctrl.endorsedInvestigations track by $index">
+        <td class="review-item">{{item.serialNumber}}</td>
+        <td class="review-item">{{item.labTitle}}</td>
+        <td class="review-item">{{item.endorsed}}</td>
+        <td class="review-item">...</td>
+        <td>
+          <button type="button" class="btn btn-default btn-sm" ng-click="$ctrl.remove(item)" aria-label="Left Align">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="height:100px"></div>
+</div>

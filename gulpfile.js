@@ -51,6 +51,8 @@ gulp.task('angularjs', () => {
     path.join(baseUrl, 'components/myworks/myworks-edit.component.js'),
     path.join(baseUrl, 'components/myreviews/myreviews.module.js'),
     path.join(baseUrl, 'components/myreviews/myreviews.component.js'),
+    path.join(baseUrl, 'components/endorse/endorse.module.js'),
+    path.join(baseUrl, 'components/endorse/endorse.component.js'),
     path.join(baseUrl, 'components/navigation/navigation.module.js'),
     path.join(baseUrl, 'components/navigation/navigation.component.js'),
     path.join(baseUrl, 'components/notification/notification.module.js'),

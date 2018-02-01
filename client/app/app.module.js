@@ -14,7 +14,8 @@
     'snaplab.design',
     'snaplab.download',
     'snaplab.profile',
-    'snaplab.myreviews'
+    'snaplab.myreviews',
+    'snaplab.endorse'
   ]);
 })();
 

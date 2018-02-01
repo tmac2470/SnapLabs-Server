@@ -76,6 +76,11 @@
         name: 'edit',
         url: '/edit/:id',
         component: 'myworksEdit'
+      },
+      {
+        name: 'endorse',
+        url: '/endorse',
+        component: 'endorse'
       }
     ];
 

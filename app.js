@@ -16,6 +16,7 @@ const auth = require('./routes/authentication');
 const profiles = require('./routes/profiles');
 const results = require('./routes/result');
 const ratings = require('./routes/rating');
+const endorsement = require('./routes/endorsement');
 const cors = require('cors');
 
 /**
@@ -51,6 +52,7 @@ app.use('/auth', auth);
 app.use('/profiles', profiles);
 app.use('/results', results);
 app.use('/ratings', ratings);
+app.use('/endorsement', endorsement);
 
 // catch 404 and forward to error handler
 app.use((req, res) => {

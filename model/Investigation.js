@@ -22,6 +22,8 @@ const investigationSchema = new Schema({
   isPublished: Boolean,
   serialNumber: Number,
   endorsed: Boolean,
+  endorsedBy: { type: Schema.Types.ObjectId, ref: 'User' },
+  endorsedAt: Date,
   ratingValue: { type: Number, default: 0 },
   ratingCount: { type: Number, default: 0 },
   tags: []
