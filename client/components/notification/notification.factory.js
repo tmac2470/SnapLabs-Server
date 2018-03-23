@@ -8,7 +8,7 @@
   function factory(){
 
     var alerts = [
-      { type: 'warning', msg: 'This website is for Test only' }
+      { type: 'success', msg: 'Send any feedback to admin@snaplabs.online' }
     ];
 
     function addAlert(content) {
